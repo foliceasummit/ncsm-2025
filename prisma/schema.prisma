@@ -1,0 +1,203 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      UserRole
+  countyId  String?
+  county    County?  @relation(fields: [countyId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  players   Player[]
+  officials Official[]
+  matches   Match[]
+  reports   MatchReport[]
+  blogPosts BlogPost[]
+
+  @@map("users")
+}
+
+model County {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  group     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  users     User[]
+  players   Player[]
+  homeMatches Match[] @relation("HomeTeam")
+  awayMatches Match[] @relation("AwayTeam")
+
+  @@map("counties")
+}
+
+model Player {
+  id           String        @id @default(cuid())
+  photo        String?
+  lastName     String
+  firstName    String
+  middleName   String?
+  dateOfBirth  DateTime
+  nationality  String
+  pastClub     String?
+  currentClub  String?
+  level        String
+  discipline   Discipline
+  year         Int
+  group        String
+  status       ApprovalStatus @default(PENDING)
+  countyId     String
+  county       County         @relation(fields: [countyId], references: [id])
+  userId       String
+  user         User           @relation(fields: [userId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  // Relations
+  scorers      MatchScorer[]
+
+  @@map("players")
+}
+
+model Official {
+  id           String        @id @default(cuid())
+  photo        String?
+  lastName     String
+  firstName    String
+  middleName   String?
+  dateOfBirth  DateTime
+  nationality  String
+  currentCounty String
+  discipline   Discipline
+  year         Int
+  group        String
+  position     String
+  status       ApprovalStatus @default(PENDING)
+  userId       String
+  user         User           @relation(fields: [userId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@map("officials")
+}
+
+model Match {
+  id          String   @id @default(cuid())
+  homeTeamId  String
+  awayTeamId  String
+  homeTeam    County   @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  awayTeam    County   @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  date        DateTime
+  venue       String
+  discipline  Discipline
+  group       String
+  homeScore   Int?
+  awayScore   Int?
+  status      MatchStatus @default(SCHEDULED)
+  matchOfficialId String?
+  matchOfficial User? @relation(fields: [matchOfficialId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  reports     MatchReport[]
+  scorers     MatchScorer[]
+
+  @@map("matches")
+}
+
+model MatchReport {
+  id          String   @id @default(cuid())
+  matchId     String
+  match       Match    @relation(fields: [matchId], references: [id])
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  yellowCards Int      @default(0)
+  redCards    Int      @default(0)
+  comments    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("match_reports")
+}
+
+model MatchScorer {
+  id        String @id @default(cuid())
+  matchId   String
+  match     Match  @relation(fields: [matchId], references: [id])
+  playerId  String
+  player    Player @relation(fields: [playerId], references: [id])
+  goals     Int    @default(1)
+  createdAt DateTime @default(now())
+
+  @@map("match_scorers")
+}
+
+model BlogPost {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  image     String?
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("blog_posts")
+}
+
+model SystemSettings {
+  id                    String   @id @default(cuid())
+  playerRegistrationOpen Boolean  @default(true)
+  officialRegistrationOpen Boolean @default(true)
+  updatedAt             DateTime @updatedAt
+
+  @@map("system_settings")
+}
+
+enum UserRole {
+  COUNTY_OFFICIAL
+  MATCH_OFFICIAL
+  LFA_OFFICIAL
+  JOURNALIST
+  MYS_STAFF
+  GENERAL_ADMIN
+}
+
+enum Discipline {
+  FOOTBALL
+  KICKBALL
+  FEMALE_SOCCER
+  VOLLEYBALL
+  BASKETBALL
+  ATHLETICS
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  DISAPPROVED
+}
+
+enum MatchStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
