@@ -1,24 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+// Mock data for now - Prisma will be set up later
+const mockOfficials = [
+  {
+    id: '1',
+    firstName: 'John',
+    lastName: 'Referee',
+    middleName: 'M',
+    dateOfBirth: '1980-01-01',
+    nationality: 'Liberian',
+    discipline: 'FOOTBALL',
+    year: 2025,
+    group: 'A',
+    position: 'Referee',
+    countyId: '1',
+    status: 'PENDING'
+  }
+]
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const official = await prisma.official.findUnique({
-      where: { id: params.id },
-      include: {
-        user: {
-          select: {
-            id: true,
-            email: true,
-          },
-        },
-      },
-    })
+    const { id } = await params
+    const official = mockOfficials.find(o => o.id === id)
 
     if (!official) {
       return NextResponse.json(
@@ -39,33 +45,25 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
-    const { status } = body
-
-    if (!status || !['PENDING', 'APPROVED', 'DISAPPROVED'].includes(status)) {
+    
+    // Mock update - will be replaced with Prisma later
+    const officialIndex = mockOfficials.findIndex(o => o.id === id)
+    if (officialIndex === -1) {
       return NextResponse.json(
-        { error: 'Invalid status' },
-        { status: 400 }
+        { error: 'Official not found' },
+        { status: 404 }
       )
     }
-
-    const official = await prisma.official.update({
-      where: { id: params.id },
-      data: { status },
-      include: {
-        user: {
-          select: {
-            id: true,
-            email: true,
-          },
-        },
-      },
-    })
-
-    return NextResponse.json(official)
+    
+    const updatedOfficial = { ...mockOfficials[officialIndex], ...body }
+    mockOfficials[officialIndex] = updatedOfficial
+    
+    return NextResponse.json(updatedOfficial)
   } catch (error) {
     console.error('Error updating official:', error)
     return NextResponse.json(
@@ -77,14 +75,26 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await prisma.official.delete({
-      where: { id: params.id },
+    const { id } = await params
+    
+    // Mock delete - will be replaced with Prisma later
+    const officialIndex = mockOfficials.findIndex(o => o.id === id)
+    if (officialIndex === -1) {
+      return NextResponse.json(
+        { error: 'Official not found' },
+        { status: 404 }
+      )
+    }
+    
+    mockOfficials.splice(officialIndex, 1)
+    
+    return NextResponse.json({ 
+      message: 'Official deleted successfully',
+      id
     })
-
-    return NextResponse.json({ message: 'Official deleted successfully' })
   } catch (error) {
     console.error('Error deleting official:', error)
     return NextResponse.json(

@@ -14,10 +14,11 @@ const mockBlogPosts = [
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const blogPost = mockBlogPosts.find(post => post.id === params.id)
+    const { id } = await params
+    const blogPost = mockBlogPosts.find(post => post.id === id)
 
     if (!blogPost) {
       return NextResponse.json(
@@ -38,15 +39,16 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
     
     // Mock update - will be replaced with Prisma later
     return NextResponse.json({ 
       message: 'Blog post updated successfully',
-      id: params.id,
+      id,
       ...body
     })
   } catch (error) {
@@ -60,13 +62,15 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
+    
     // Mock delete - will be replaced with Prisma later
     return NextResponse.json({ 
       message: 'Blog post deleted successfully',
-      id: params.id
+      id
     })
   } catch (error) {
     console.error('Error deleting blog post:', error)

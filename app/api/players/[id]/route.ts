@@ -1,30 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+// Mock data for now - Prisma will be set up later
+const mockPlayers = [
+  {
+    id: '1',
+    firstName: 'John',
+    lastName: 'Doe',
+    middleName: 'M',
+    dateOfBirth: '2000-01-01',
+    nationality: 'Liberian',
+    discipline: 'FOOTBALL',
+    level: 'First Division',
+    year: 2025,
+    group: 'A',
+    countyId: '1',
+    pastClub: 'Liberia Stars',
+    currentClub: 'Bong United',
+    status: 'PENDING'
+  }
+]
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const player = await prisma.player.findUnique({
-      where: { id: params.id },
-      include: {
-        county: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        user: {
-          select: {
-            id: true,
-            email: true,
-          },
-        },
-      },
-    })
+    const { id } = await params
+    const player = mockPlayers.find(p => p.id === id)
 
     if (!player) {
       return NextResponse.json(
@@ -45,39 +47,25 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
-    const { status } = body
-
-    if (!status || !['PENDING', 'APPROVED', 'DISAPPROVED'].includes(status)) {
+    
+    // Mock update - will be replaced with Prisma later
+    const playerIndex = mockPlayers.findIndex(p => p.id === id)
+    if (playerIndex === -1) {
       return NextResponse.json(
-        { error: 'Invalid status' },
-        { status: 400 }
+        { error: 'Player not found' },
+        { status: 404 }
       )
     }
-
-    const player = await prisma.player.update({
-      where: { id: params.id },
-      data: { status },
-      include: {
-        county: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        user: {
-          select: {
-            id: true,
-            email: true,
-          },
-        },
-      },
-    })
-
-    return NextResponse.json(player)
+    
+    const updatedPlayer = { ...mockPlayers[playerIndex], ...body }
+    mockPlayers[playerIndex] = updatedPlayer
+    
+    return NextResponse.json(updatedPlayer)
   } catch (error) {
     console.error('Error updating player:', error)
     return NextResponse.json(
@@ -89,14 +77,26 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await prisma.player.delete({
-      where: { id: params.id },
+    const { id } = await params
+    
+    // Mock delete - will be replaced with Prisma later
+    const playerIndex = mockPlayers.findIndex(p => p.id === id)
+    if (playerIndex === -1) {
+      return NextResponse.json(
+        { error: 'Player not found' },
+        { status: 404 }
+      )
+    }
+    
+    mockPlayers.splice(playerIndex, 1)
+    
+    return NextResponse.json({ 
+      message: 'Player deleted successfully',
+      id
     })
-
-    return NextResponse.json({ message: 'Player deleted successfully' })
   } catch (error) {
     console.error('Error deleting player:', error)
     return NextResponse.json(

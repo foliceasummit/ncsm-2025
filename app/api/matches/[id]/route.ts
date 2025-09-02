@@ -1,57 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+// Mock data for now - Prisma will be set up later
+const mockMatches = [
+  {
+    id: '1',
+    homeTeam: 'Bong County',
+    awayTeam: 'Montserrado County',
+    date: '2025-01-20',
+    venue: 'Samuel Kanyon Doe Sports Complex',
+    status: 'scheduled',
+    score: null
+  }
+]
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const match = await prisma.match.findUnique({
-      where: { id: params.id },
-      include: {
-        homeTeam: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        awayTeam: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        matchOfficial: {
-          select: {
-            id: true,
-            email: true,
-          },
-        },
-        reports: {
-          include: {
-            user: {
-              select: {
-                id: true,
-                email: true,
-              },
-            },
-          },
-        },
-        scorers: {
-          include: {
-            player: {
-              select: {
-                id: true,
-                firstName: true,
-                lastName: true,
-              },
-            },
-          },
-        },
-      },
-    })
+    const { id } = await params
+    const match = mockMatches.find(m => m.id === id)
 
     if (!match) {
       return NextResponse.json(
@@ -72,54 +40,25 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
-    const {
-      homeScore,
-      awayScore,
-      status,
-      venue,
-      date,
-      matchOfficialId,
-    } = body
-
-    const updateData: any = {}
-
-    if (homeScore !== undefined) updateData.homeScore = homeScore
-    if (awayScore !== undefined) updateData.awayScore = awayScore
-    if (status) updateData.status = status
-    if (venue) updateData.venue = venue
-    if (date) updateData.date = new Date(date)
-    if (matchOfficialId) updateData.matchOfficialId = matchOfficialId
-
-    const match = await prisma.match.update({
-      where: { id: params.id },
-      data: updateData,
-      include: {
-        homeTeam: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        awayTeam: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        matchOfficial: {
-          select: {
-            id: true,
-            email: true,
-          },
-        },
-      },
-    })
-
-    return NextResponse.json(match)
+    
+    // Mock update - will be replaced with Prisma later
+    const matchIndex = mockMatches.findIndex(m => m.id === id)
+    if (matchIndex === -1) {
+      return NextResponse.json(
+        { error: 'Match not found' },
+        { status: 404 }
+      )
+    }
+    
+    const updatedMatch = { ...mockMatches[matchIndex], ...body }
+    mockMatches[matchIndex] = updatedMatch
+    
+    return NextResponse.json(updatedMatch)
   } catch (error) {
     console.error('Error updating match:', error)
     return NextResponse.json(
@@ -131,14 +70,26 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await prisma.match.delete({
-      where: { id: params.id },
+    const { id } = await params
+    
+    // Mock delete - will be replaced with Prisma later
+    const matchIndex = mockMatches.findIndex(m => m.id === id)
+    if (matchIndex === -1) {
+      return NextResponse.json(
+        { error: 'Match not found' },
+        { status: 404 }
+      )
+    }
+    
+    mockMatches.splice(matchIndex, 1)
+    
+    return NextResponse.json({ 
+      message: 'Match deleted successfully',
+      id
     })
-
-    return NextResponse.json({ message: 'Match deleted successfully' })
   } catch (error) {
     console.error('Error deleting match:', error)
     return NextResponse.json(
