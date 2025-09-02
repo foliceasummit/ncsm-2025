@@ -142,7 +142,7 @@ const JournalistDashboard: React.FC = () => {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
               <div className="bg-green-100 p-2 rounded-lg">
-                <FileText className="w-6 h-6 text-green-600" />
+                <FileTextIcon className="w-6 h-6 text-green-600" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">Journalist Dashboard</h1>
@@ -176,7 +176,7 @@ const JournalistDashboard: React.FC = () => {
           <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow">
             <div className="flex items-center space-x-4">
               <div className="bg-green-100 p-3 rounded-lg">
-                <FileText className="w-6 h-6 text-green-600" />
+                <FileTextIcon className="w-6 h-6 text-green-600" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">Post Story / Blog</h3>
@@ -236,7 +236,7 @@ const JournalistDashboard: React.FC = () => {
           >
             <div className="p-6 border-b border-gray-200 flex justify-between items-center">
               <h2 className="text-xl font-bold text-gray-900 flex items-center">
-                <FileText className="w-5 h-5 mr-2 text-green-600" />
+                <FileTextIcon className="w-5 h-5 mr-2 text-green-600" />
                 Blog Posts
               </h2>
               <button 
@@ -358,7 +358,7 @@ const JournalistDashboard: React.FC = () => {
           <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
             <div className="flex items-center">
               <div className="bg-green-100 p-3 rounded-lg">
-                <FileText className="w-6 h-6 text-green-600" />
+                <FileTextIcon className="w-6 h-6 text-green-600" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total Posts</p>
