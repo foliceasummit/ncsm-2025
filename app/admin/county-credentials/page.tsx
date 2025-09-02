@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Copy, Eye, EyeOff, Download, Building2 } from 'lucide-react';
-import { countyCredentials, getCountiesByGroup } from '../../../data/countyCredentials';
+import { countyCredentials, getCountiesByGroup } from '../../data/countyCredentials';
 
 const CountyCredentialsPage: React.FC = () => {
   const router = useRouter();

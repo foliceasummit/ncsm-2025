@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Shield, Building2 } from 'lucide-react';
-import { validateCredentials } from '../../../data/countyCredentials';
+import { validateCredentials } from '../../data/countyCredentials';
 
 const CountyOfficialLogin: React.FC = () => {
   const router = useRouter();
