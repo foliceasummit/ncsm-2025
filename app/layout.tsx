@@ -1,21 +1,20 @@
-import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import type { Metadata } from 'next'
 import './globals.css'
-import { Toaster } from 'react-hot-toast'
-import { AuthProvider } from '@/components/providers/AuthProvider'
-
-const inter = Inter({ subsets: ['latin'] })
+import Navigation from './components/layout/Navigation'
+import Footer from './components/layout/Footer'
+import { AuthProvider } from './contexts/AuthContext'
 
 export const metadata: Metadata = {
-  title: 'National County Sports Meet',
-  description: 'Official website for the National County Sports Meet - Liberia',
-  keywords: 'sports, county, Liberia, football, athletics, volleyball, basketball',
-  authors: [{ name: 'National County Sports Meet' }],
-}
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
+  title: 'NCSM 2025 - National County Sports Meet',
+  description: 'Official website for the National County Sports Meet 2025 in Liberia',
+  icons: {
+    icon: [
+      {
+        url: '/favicon.ico',
+        sizes: 'any',
+      },
+    ],
+  },
 }
 
 export default function RootLayout({
@@ -24,11 +23,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" suppressHydrationWarning={true}>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        {/* Mobile and cross-browser compatibility */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="theme-color" content="#1e40af" />
+      </head>
+      <body suppressHydrationWarning={true}>
         <AuthProvider>
+          <Navigation />
           {children}
-          <Toaster position="top-right" />
+          <Footer />
         </AuthProvider>
       </body>
     </html>

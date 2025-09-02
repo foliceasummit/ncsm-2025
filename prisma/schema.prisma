@@ -65,11 +65,14 @@ model Player {
   county       County         @relation(fields: [countyId], references: [id])
   userId       String
   user         User           @relation(fields: [userId], references: [id])
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  birthCertificate String?
+  medicalCertificate String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   // Relations
   scorers      MatchScorer[]
+  documentApprovals DocumentApproval[]
 
   @@map("players")
 }
@@ -171,6 +174,21 @@ model SystemSettings {
   @@map("system_settings")
 }
 
+model DocumentApproval {
+  id                String   @id @default(cuid())
+  playerId          String
+  player            Player   @relation(fields: [playerId], references: [id])
+  documentType      DocumentType
+  status            DocumentApprovalStatus @default(PENDING)
+  approvedBy        String?
+  approvedAt        DateTime?
+  comments          String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("document_approvals")
+}
+
 enum UserRole {
   COUNTY_OFFICIAL
   MATCH_OFFICIAL
@@ -193,6 +211,18 @@ enum ApprovalStatus {
   PENDING
   APPROVED
   DISAPPROVED
+}
+
+enum DocumentType {
+  PHOTO
+  BIRTH_CERTIFICATE
+  MEDICAL_CERTIFICATE
+}
+
+enum DocumentApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 enum MatchStatus {

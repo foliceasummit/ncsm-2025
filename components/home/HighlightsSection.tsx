@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { PlayIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
 const highlights = [
@@ -66,26 +66,82 @@ export default function HighlightsSection() {
   }
 
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="section-padding bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          className="absolute top-1/4 right-1/4 w-80 h-80 bg-primary-200 rounded-full blur-3xl opacity-20"
+          animate={{ 
+            scale: [1, 1.3, 1],
+            rotate: [0, 90, 180]
+          }}
+          transition={{ 
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-secondary-200 rounded-full blur-3xl opacity-15"
+          animate={{ 
+            scale: [1.3, 1, 1.3],
+            x: [0, 30, 0]
+          }}
+          transition={{ 
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </div>
+
+      <div className="container-custom relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Tournament Highlights
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200 mb-8"
+          >
+            <span className="text-sm font-semibold text-primary-700">
+              🎬 Tournament Highlights
+            </span>
+          </motion.div>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            Relive the{' '}
+            <span className="text-gradient">Greatest Moments</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Relive the most exciting moments from the National County Sports Meet
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Experience the most exciting moments from the National County Sports Meet
           </p>
         </motion.div>
 
         <div className="relative">
           {/* Main Highlight Display */}
-          <div className="relative h-96 md:h-[500px] rounded-lg overflow-hidden shadow-xl">
+          <motion.div 
+            className="relative h-96 md:h-[600px] rounded-3xl overflow-hidden shadow-2xl"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, scale: 1.1 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.5 }}
+                className="relative h-full"
+              >
             {highlights[currentIndex].type === 'video' ? (
               <div className="relative h-full">
                 <img
@@ -93,13 +149,15 @@ export default function HighlightsSection() {
                   alt={highlights[currentIndex].title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                  <button
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-center justify-center">
+                      <motion.button
                     onClick={() => openVideo(highlights[currentIndex].url!)}
-                    className="bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full p-4 transition-all duration-200 transform hover:scale-110"
+                        className="bg-white/90 hover:bg-white rounded-full p-6 transition-all duration-300 transform hover:scale-110 shadow-2xl"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
                   >
-                    <PlayIcon className="w-12 h-12 text-primary-600" />
-                  </button>
+                        <PlayIcon className="w-16 h-16 text-primary-600" />
+                      </motion.button>
                 </div>
               </div>
             ) : (
@@ -111,64 +169,105 @@ export default function HighlightsSection() {
             )}
             
             {/* Overlay with title and description */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
-              <h3 className="text-white text-xl md:text-2xl font-bold mb-2">
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-8">
+                  <motion.h3 
+                    className="text-white text-2xl md:text-3xl font-bold mb-3"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
                 {highlights[currentIndex].title}
-              </h3>
-              <p className="text-white text-sm md:text-base opacity-90">
+                  </motion.h3>
+                  <motion.p 
+                    className="text-white text-lg opacity-90 leading-relaxed"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                  >
                 {highlights[currentIndex].description}
-              </p>
+                  </motion.p>
             </div>
-          </div>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
 
           {/* Navigation Buttons */}
-          <button
+          <motion.button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
+            className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-4 shadow-xl transition-all duration-300 backdrop-blur-md border border-white/20"
+            whileHover={{ scale: 1.1, x: -5 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <ChevronLeftIcon className="w-6 h-6 text-gray-700" />
-          </button>
-          <button
+            <ChevronLeftIcon className="w-8 h-8 text-gray-700" />
+          </motion.button>
+          <motion.button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
+            className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-4 shadow-xl transition-all duration-300 backdrop-blur-md border border-white/20"
+            whileHover={{ scale: 1.1, x: 5 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <ChevronRightIcon className="w-6 h-6 text-gray-700" />
-          </button>
+            <ChevronRightIcon className="w-8 h-8 text-gray-700" />
+          </motion.button>
 
           {/* Thumbnail Navigation */}
-          <div className="flex justify-center mt-6 space-x-2">
+          <motion.div 
+            className="flex justify-center mt-8 space-x-3"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            viewport={{ once: true }}
+          >
             {highlights.map((_, index) => (
-              <button
+              <motion.button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                  index === currentIndex ? 'bg-primary-600' : 'bg-gray-300'
+                className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                  index === currentIndex 
+                    ? 'bg-gradient-to-r from-primary-600 to-secondary-600 scale-125' 
+                    : 'bg-gray-300 hover:bg-gray-400'
                 }`}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
               />
             ))}
-          </div>
+          </motion.div>
         </div>
 
         {/* Video Modal */}
+        <AnimatePresence>
         {selectedVideo && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-            <div className="relative w-full max-w-4xl">
-              <button
+            <motion.div 
+              className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4 backdrop-blur-md"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <motion.div 
+                className="relative w-full max-w-5xl"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.button
                 onClick={closeVideo}
-                className="absolute -top-10 right-0 text-white text-2xl hover:text-gray-300"
+                  className="absolute -top-12 right-0 text-white text-3xl hover:text-gray-300 transition-colors duration-200 bg-white/10 rounded-full w-10 h-10 flex items-center justify-center backdrop-blur-md"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
               >
                 ×
-              </button>
-              <div className="relative pt-[56.25%]">
+                </motion.button>
+                <div className="relative pt-[56.25%] rounded-2xl overflow-hidden shadow-2xl">
                 <iframe
                   src={selectedVideo.replace('watch?v=', 'embed/')}
-                  className="absolute top-0 left-0 w-full h-full rounded-lg"
+                    className="absolute top-0 left-0 w-full h-full"
                   allowFullScreen
                 />
               </div>
-            </div>
-          </div>
+              </motion.div>
+            </motion.div>
         )}
+        </AnimatePresence>
       </div>
     </section>
   )

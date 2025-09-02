@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useAuth } from '@/components/providers/AuthProvider'
-import Navigation from '@/components/layout/Navigation'
-import Footer from '@/components/layout/Footer'
+import { useAuth } from '../../contexts/AuthContext'
+import Navigation from '../../components/layout/Navigation'
+import Footer from '../../components/layout/Footer'
 import { 
   UsersIcon, 
   CheckIcon, 

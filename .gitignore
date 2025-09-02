@@ -8,6 +8,7 @@ yarn-error.log*
 .next/
 out/
 build/
+dist/
 
 # Environment variables
 .env
@@ -18,9 +19,6 @@ build/
 
 # Vercel
 .vercel
-
-# TypeScript
-*.tsbuildinfo
 
 # IDE
 .vscode/
@@ -33,7 +31,6 @@ build/
 Thumbs.db
 
 # Logs
-logs
 *.log
 
 # Runtime data
@@ -45,23 +42,11 @@ pids
 # Coverage directory used by tools like istanbul
 coverage/
 
-# nyc test coverage
-.nyc_output
-
 # Dependency directories
 jspm_packages/
 
 # Optional npm cache directory
 .npm
-
-# Optional eslint cache
-.eslintcache
-
-# Microbundle cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
 
 # Optional REPL history
 .node_repl_history
@@ -86,7 +71,7 @@ jspm_packages/
 .vuepress/dist
 
 # Serverless directories
-.serverless/
+.serverless
 
 # FuseBox cache
 .fusebox/
@@ -96,9 +81,3 @@ jspm_packages/
 
 # TernJS port file
 .tern-port
-
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
-
-# Prisma
-prisma/migrations/

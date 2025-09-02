@@ -73,6 +73,8 @@ export async function POST(request: NextRequest) {
       countyId,
       userId,
       photo,
+      birthCertificate,
+      medicalCertificate,
     } = body
 
     // Validate required fields
@@ -99,6 +101,8 @@ export async function POST(request: NextRequest) {
         countyId,
         userId,
         photo,
+        birthCertificate,
+        medicalCertificate,
         status: 'PENDING',
       },
       include: {
@@ -116,6 +120,49 @@ export async function POST(request: NextRequest) {
         },
       },
     })
+
+    // Create document approval records for uploaded documents
+    const documentApprovals = []
+    
+    if (photo) {
+      documentApprovals.push({
+        playerId: player.id,
+        documentType: 'PHOTO',
+        status: 'PENDING',
+        approvedBy: null,
+        approvedAt: null,
+        comments: null
+      })
+    }
+    
+    if (birthCertificate) {
+      documentApprovals.push({
+        playerId: player.id,
+        documentType: 'BIRTH_CERTIFICATE',
+        status: 'PENDING',
+        approvedBy: null,
+        approvedAt: null,
+        comments: null
+      })
+    }
+    
+    if (medicalCertificate) {
+      documentApprovals.push({
+        playerId: player.id,
+        documentType: 'MEDICAL_CERTIFICATE',
+        status: 'PENDING',
+        approvedBy: null,
+        approvedAt: null,
+        comments: null
+      })
+    }
+
+    // Create document approval records
+    if (documentApprovals.length > 0) {
+      await prisma.documentApproval.createMany({
+        data: documentApprovals
+      })
+    }
 
     return NextResponse.json(player, { status: 201 })
   } catch (error) {

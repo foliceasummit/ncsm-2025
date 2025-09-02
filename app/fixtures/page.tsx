@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Navigation from '@/components/layout/Navigation'
-import Footer from '@/components/layout/Footer'
+import Navigation from '../components/layout/Navigation'
+import Footer from '../components/layout/Footer'
 import { CalendarIcon, ClockIcon, MapPinIcon } from '@heroicons/react/24/outline'
 
 interface Fixture {
