@@ -6,7 +6,7 @@ import {
   Users, 
   UserPlus, 
   Shield, 
-  FileText, 
+  FileTextIcon, 
   Settings, 
   BarChart3, 
   Calendar,
@@ -263,7 +263,7 @@ const AdminDashboard: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm p-6 border-l-4 border-yellow-500">
           <div className="flex items-center">
             <div className="p-2 bg-yellow-100 rounded-lg">
-              <FileText className="w-6 h-6 text-yellow-600" />
+              <FileTextIcon className="w-6 h-6 text-yellow-600" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Pending Approvals</p>
@@ -939,7 +939,7 @@ const AdminDashboard: React.FC = () => {
                   activeTab === 'registrations' ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                <FileText className="w-5 h-5 mr-3" />
+                <FileTextIcon className="w-5 h-5 mr-3" />
                 Registrations
               </button>
               <button

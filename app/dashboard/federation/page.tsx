@@ -13,7 +13,7 @@ import {
   LogOut,
   User,
   Eye,
-  FileText,
+  FileTextIcon,
   AlertCircle
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
@@ -400,7 +400,7 @@ const FederationDashboard: React.FC = () => {
           className="mt-8 bg-white rounded-lg shadow-sm p-6 border border-gray-200"
         >
           <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-            <FileText className="w-5 h-5 mr-2 text-orange-600" />
+            <FileTextIcon className="w-5 h-5 mr-2 text-orange-600" />
             Submit Observations to MYS
           </h2>
           <div className="space-y-4">

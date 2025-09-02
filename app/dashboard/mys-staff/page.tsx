@@ -5,13 +5,16 @@ import { useRouter } from 'next/navigation';
 import { 
   Users, 
   UserPlus, 
-  FileText, 
+  Shield, 
+  FileTextIcon, 
   Settings, 
   BarChart3, 
   Calendar,
   Upload,
   Edit,
+  Trash2,
   CheckCircle,
+  XCircle,
   Eye,
   Download,
   Database,
@@ -20,14 +23,7 @@ import {
   Newspaper,
   Video,
   Image,
-  LogOut,
-  Search,
-  Filter,
-  Trophy,
-  Award,
-  Clipboard,
-  Camera,
-  Play
+  LogOut
 } from 'lucide-react';
 
 interface Player {
@@ -197,7 +193,7 @@ const MYSStaffDashboard: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm p-6 border-l-4 border-yellow-500">
           <div className="flex items-center">
             <div className="p-2 bg-yellow-100 rounded-lg">
-              <Clipboard className="w-6 h-6 text-yellow-600" />
+              <FileTextIcon className="w-6 h-6 text-yellow-600" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Pending Inspections</p>
@@ -211,7 +207,7 @@ const MYSStaffDashboard: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm p-6 border-l-4 border-purple-500">
           <div className="flex items-center">
             <div className="p-2 bg-purple-100 rounded-lg">
-              <Trophy className="w-6 h-6 text-purple-600" />
+              <Shield className="w-6 h-6 text-purple-600" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Active Counties</p>
@@ -267,7 +263,7 @@ const MYSStaffDashboard: React.FC = () => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <FileTextIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
                 placeholder="Search players..."
@@ -308,7 +304,7 @@ const MYSStaffDashboard: React.FC = () => {
           </div>
           <div className="flex items-end">
             <button className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-              <Filter className="w-4 h-4 inline mr-2" />
+              <Shield className="w-4 h-4 inline mr-2" />
               Apply Filters
             </button>
           </div>
@@ -530,7 +526,7 @@ const MYSStaffDashboard: React.FC = () => {
                         {county.logo ? (
                           <img className="h-10 w-10 rounded-full" src={county.logo} alt={county.name} />
                         ) : (
-                          <Award className="h-5 w-5 text-gray-600" />
+                          <Shield className="h-5 w-5 text-gray-600" />
                         )}
                       </div>
                       <div className="text-sm font-medium text-gray-900">{county.name}</div>
@@ -579,11 +575,11 @@ const MYSStaffDashboard: React.FC = () => {
           <h4 className="text-md font-semibold text-gray-900 mb-4">Publish Official Results</h4>
           <div className="space-y-3">
             <button className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
-              <Trophy className="w-4 h-4" />
+              <Shield className="w-4 h-4" />
               Publish Match Results
             </button>
             <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
-              <Award className="w-4 h-4" />
+              <Shield className="w-4 h-4" />
               Update Standings
             </button>
             <button className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center gap-2">
@@ -720,7 +716,7 @@ const MYSStaffDashboard: React.FC = () => {
                   activeTab === 'inspection' ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                <Clipboard className="w-5 h-5 mr-3" />
+                <Shield className="w-5 h-5 mr-3" />
                 Pre-Match Inspection
               </button>
               <button
@@ -738,7 +734,7 @@ const MYSStaffDashboard: React.FC = () => {
                   activeTab === 'results' ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                <Trophy className="w-5 h-5 mr-3" />
+                <Shield className="w-5 h-5 mr-3" />
                 Results & Standings
               </button>
             </nav>

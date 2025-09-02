@@ -13,7 +13,7 @@ import {
   Users,
   TrendingDown,
   Eye,
-  FileText,
+  FileTextIcon,
   PieChart,
   LineChart
 } from 'lucide-react';
@@ -576,7 +576,7 @@ const FinanceOfficerDashboard: React.FC = () => {
                 onClick={exportToPDF}
                 className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2"
               >
-                <FileText className="w-4 h-4" />
+                <FileTextIcon className="w-4 h-4" />
                 Export PDF
               </button>
               <button

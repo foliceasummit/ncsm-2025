@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { 
   Users, 
   UserCheck, 
-  FileText, 
+  FileTextIcon, 
   Clock, 
   BarChart3, 
   CreditCard,
@@ -191,11 +191,11 @@ const CountyOfficialDashboard: React.FC = () => {
     { id: 'overview', label: 'Overview', icon: BarChart3 },
     { id: 'register-players', label: 'Register Players', icon: Users },
     { id: 'register-officials', label: 'Register Officials', icon: UserCheck },
-    { id: 'view-registrations', label: 'View Registrations', icon: FileText },
+    { id: 'view-registrations', label: 'View Registrations', icon: FileTextIcon },
     { id: 'match-submission', label: 'Match Day List', icon: Clock },
     { id: 'status-dashboard', label: 'Status Dashboard', icon: BarChart3 },
     { id: 'player-cards', label: 'Player Cards', icon: CreditCard },
-    { id: 'document-approval', label: 'Document Approval', icon: FileText }
+    { id: 'document-approval', label: 'Document Approval', icon: FileTextIcon }
   ];
 
   const renderOverview = () => (

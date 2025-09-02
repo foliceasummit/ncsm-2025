@@ -10,7 +10,7 @@ import {
   PhotoIcon,
   CheckIcon,
   XMarkIcon,
-  FileText
+  DocumentTextIcon
 } from '@heroicons/react/24/outline'
 import toast from 'react-hot-toast'
 
@@ -531,7 +531,7 @@ export default function PlayerRegistrationPage() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <FileText className="w-8 h-8 text-gray-400" />
+                        <DocumentTextIcon className="w-8 h-8 text-gray-400" />
                       )}
                     </div>
                     <div className="flex-1">
@@ -546,7 +546,7 @@ export default function PlayerRegistrationPage() {
                         htmlFor="birth-certificate-upload"
                         className="block w-full p-4 border-2 border-dashed border-gray-300 rounded-lg text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-colors"
                       >
-                        <FileText className="w-6 h-6 mx-auto mb-2 text-gray-400" />
+                        <DocumentTextIcon className="w-6 h-6 mx-auto mb-2 text-gray-400" />
                         <span className="text-sm font-medium text-gray-700">
                           Click to upload or drag and drop
                         </span>
@@ -585,7 +585,7 @@ export default function PlayerRegistrationPage() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <FileText className="w-8 h-8 text-gray-400" />
+                        <DocumentTextIcon className="w-8 h-8 text-gray-400" />
                       )}
                     </div>
                     <div className="flex-1">
@@ -600,7 +600,7 @@ export default function PlayerRegistrationPage() {
                         htmlFor="medical-certificate-upload"
                         className="block w-full p-4 border-2 border-dashed border-gray-300 rounded-lg text-center cursor-pointer hover:border-green-400 hover:bg-green-50 transition-colors"
                       >
-                        <FileText className="w-6 h-6 mx-auto mb-2 text-gray-400" />
+                        <DocumentTextIcon className="w-6 h-6 mx-auto mb-2 text-gray-400" />
                         <span className="text-sm font-medium text-gray-700">
                           Click to upload or drag and drop
                         </span>

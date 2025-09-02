@@ -3,16 +3,27 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  FileText, 
   Users, 
-  Calendar, 
-  Clock, 
-  MapPin, 
-  Trophy, 
-  CheckCircle, 
-  AlertCircle,
-  LogOut,
-  User
+  UserPlus, 
+  Shield, 
+  FileTextIcon, 
+  Settings, 
+  BarChart3, 
+  Calendar,
+  Upload,
+  Edit,
+  Trash2,
+  CheckCircle,
+  XCircle,
+  Eye,
+  Download,
+  Database,
+  Lock,
+  Home,
+  Newspaper,
+  Video,
+  Image,
+  LogOut
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRouter } from 'next/navigation';

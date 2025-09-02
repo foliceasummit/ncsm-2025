@@ -6,23 +6,27 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { 
   Users, 
-  Calendar, 
-  Trophy, 
-  BarChart3, 
-  FileText, 
+  UserPlus, 
+  Shield, 
+  FileTextIcon, 
   Settings, 
-  LogOut, 
-  Shield,
-  Eye,
-  EyeOff,
-  Mail,
-  Lock,
+  BarChart3, 
+  Calendar,
+  Upload,
+  Edit,
+  Trash2,
   CheckCircle,
-  AlertCircle,
-  TrendingUp,
-  Activity,
-  ArrowRight
-} from 'lucide-react'
+  XCircle,
+  Eye,
+  Download,
+  Database,
+  Lock,
+  Home,
+  Newspaper,
+  Video,
+  Image,
+  LogOut
+} from 'lucide-react';
 import Navigation from '../components/layout/Navigation'
 import Footer from '../components/layout/Footer'
 
@@ -255,14 +259,14 @@ export default function AdminPanel() {
                 {
                   title: 'Blog & News',
                   description: 'Manage tournament news and announcements',
-                  icon: FileText,
+                  icon: FileTextIcon,
                   href: '/admin/blog',
                   color: 'from-red-500 to-red-600'
                 },
                 {
                   title: 'Match Reports',
                   description: 'Submit and manage match official reports',
-                  icon: FileText,
+                  icon: FileTextIcon,
                   href: '/admin/match-report',
                   color: 'from-green-500 to-green-600'
                 },

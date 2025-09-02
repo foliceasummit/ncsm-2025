@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  FileText, 
+  FileTextIcon, 
   Image, 
   Video, 
   Calendar, 

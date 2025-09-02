@@ -5,13 +5,16 @@ import { useRouter } from 'next/navigation';
 import { 
   Users, 
   UserPlus, 
-  FileText, 
+  Shield, 
+  FileTextIcon, 
   Settings, 
   BarChart3, 
   Calendar,
   Upload,
   Edit,
+  Trash2,
   CheckCircle,
+  XCircle,
   Eye,
   Download,
   Database,
@@ -20,22 +23,7 @@ import {
   Newspaper,
   Video,
   Image,
-  LogOut,
-  Search,
-  Filter,
-  Trophy,
-  Award,
-  Clipboard,
-  Camera,
-  Play,
-  Shield,
-  Flag,
-  Target,
-  Zap,
-  MessageSquare,
-  Send,
-  AlertCircle,
-  Basketball
+  LogOut
 } from 'lucide-react';
 
 interface Player {
