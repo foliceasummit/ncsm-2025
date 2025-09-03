@@ -386,19 +386,49 @@ export default function CountyOfficialDashboard() {
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex space-x-2">
                               {player.photo ? (
-                                <FileImage className="w-4 h-4 text-green-500" title="Photo uploaded" />
+                                <div className="relative group">
+                                  <FileImage className="w-4 h-4 text-green-500" />
+                                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                    Photo uploaded
+                                  </div>
+                                </div>
                               ) : (
-                                <FileImage className="w-4 h-4 text-red-500" title="Photo needed" />
+                                <div className="relative group">
+                                  <FileImage className="w-4 h-4 text-red-500" />
+                                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                    Photo needed
+                                  </div>
+                                </div>
                               )}
                               {player.birthCertificate ? (
-                                <FileCheck className="w-4 h-4 text-green-500" title="Birth Certificate uploaded" />
+                                <div className="relative group">
+                                  <FileCheck className="w-4 h-4 text-green-500" />
+                                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                    Birth Certificate uploaded
+                                  </div>
+                                </div>
                               ) : (
-                                <FileCheck className="w-4 h-4 text-red-500" title="Birth Certificate needed" />
+                                <div className="relative group">
+                                  <FileCheck className="w-4 h-4 text-red-500" />
+                                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                    Birth Certificate needed
+                                  </div>
+                                </div>
                               )}
                               {player.medicalCertificate ? (
-                                <Heart className="w-4 h-4 text-green-500" title="Medical Certificate uploaded" />
+                                <div className="relative group">
+                                  <Heart className="w-4 h-4 text-green-500" />
+                                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                    Medical Certificate uploaded
+                                  </div>
+                                </div>
                               ) : (
-                                <Heart className="w-4 h-4 text-red-500" title="Medical Certificate needed" />
+                                <div className="relative group">
+                                  <Heart className="w-4 h-4 text-red-500" />
+                                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                    Medical Certificate needed
+                                  </div>
+                                </div>
                               )}
                             </div>
                           </td>
@@ -483,9 +513,19 @@ export default function CountyOfficialDashboard() {
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex space-x-2">
                               {official.photo ? (
-                                <FileImage className="w-4 h-4 text-green-500" title="Photo uploaded" />
+                                <div className="relative group">
+                                  <FileImage className="w-4 h-4 text-green-500" />
+                                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                    Photo uploaded
+                                  </div>
+                                </div>
                               ) : (
-                                <FileImage className="w-4 h-4 text-red-500" title="Photo needed" />
+                                <div className="relative group">
+                                  <FileImage className="w-4 h-4 text-red-500" />
+                                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                    Photo needed
+                                  </div>
+                                </div>
                               )}
                             </div>
                           </td>
