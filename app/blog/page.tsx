@@ -395,59 +395,7 @@ export default function BlogPage() {
                   </div>
                 </div>
 
-                {/* Player Registration Form */}
-                <div className="p-6 hover:bg-gray-50 transition-colors duration-200">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                        <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-semibold text-gray-900">Player Registration Form</h4>
-                        <p className="text-sm text-gray-600">Official registration form for players participating in NCSM 2025</p>
-                        <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
-                          <span>📄 PDF • 1.8 MB</span>
-                          <span>📅 Updated: Jan 10, 2025</span>
-                        </div>
-                      </div>
-                    </div>
-                    <button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      <span>Download</span>
-                    </button>
-                  </div>
-                </div>
 
-                {/* Official Registration Form */}
-                <div className="p-6 hover:bg-gray-50 transition-colors duration-200">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                        <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-semibold text-gray-900">Official Registration Form</h4>
-                        <p className="text-sm text-gray-600">Registration form for match officials, referees, and technical staff</p>
-                        <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
-                          <span>📄 PDF • 1.5 MB</span>
-                          <span>📅 Updated: Jan 12, 2025</span>
-                        </div>
-                      </div>
-                    </div>
-                    <button className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      <span>Download</span>
-                    </button>
-                  </div>
-                </div>
 
                 {/* Match Schedule */}
                 <div className="p-6 hover:bg-gray-50 transition-colors duration-200">

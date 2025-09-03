@@ -196,6 +196,8 @@ enum UserRole {
   JOURNALIST
   MYS_STAFF
   GENERAL_ADMIN
+  FEDERATION
+  FINANCE_OFFICER
 }
 
 enum Discipline {
