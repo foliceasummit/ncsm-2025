@@ -37,7 +37,7 @@ interface County {
 }
 
 export default function PlayerRegistrationPage() {
-  const { user, loading } = useAuth()
+  const { user, isLoading } = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [photo, setPhoto] = useState<File | null>(null)
   const [photoPreview, setPhotoPreview] = useState<string>('')
@@ -243,7 +243,7 @@ export default function PlayerRegistrationPage() {
     }
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
         <main className="py-12 px-4 sm:px-6 lg:px-8">

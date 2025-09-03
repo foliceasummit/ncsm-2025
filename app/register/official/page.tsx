@@ -31,7 +31,7 @@ const officialSchema = z.object({
 type OfficialFormData = z.infer<typeof officialSchema>
 
 export default function OfficialRegistrationPage() {
-  const { user, loading } = useAuth()
+  const { user, isLoading } = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [photo, setPhoto] = useState<File | null>(null)
   const [photoPreview, setPhotoPreview] = useState<string>('')
@@ -123,7 +123,7 @@ export default function OfficialRegistrationPage() {
     }
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navigation />

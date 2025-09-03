@@ -1,7 +1,10 @@
+// RealTimeUpdates component temporarily disabled for initial deployment
+// Will be re-enabled when Socket.IO functionality is implemented
+
 'use client'
 
 import { useEffect, useState } from 'react'
-import { io, Socket } from 'socket.io-client'
+// import { io, Socket } from 'socket.io-client'
 import toast from 'react-hot-toast'
 import { 
   BellIcon,
@@ -20,6 +23,18 @@ interface Notification {
 }
 
 export default function RealTimeUpdates() {
+  // Component temporarily disabled
+  return (
+    <div className="fixed bottom-4 right-4 z-50">
+      <div className="bg-white rounded-full p-3 shadow-lg">
+        <BellIcon className="w-6 h-6 text-gray-400" />
+      </div>
+    </div>
+  )
+}
+
+// Full functionality will be restored when Socket.IO is implemented
+/*
   const [socket, setSocket] = useState<Socket | null>(null)
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [showNotifications, setShowNotifications] = useState(false)
@@ -109,7 +124,7 @@ export default function RealTimeUpdates() {
       case 'status':
         return <TrophyIcon className="w-5 h-5 text-blue-600" />
       case 'player':
-        return <UserIcon className="w-5 h-5 text-purple-600" />
+        return <UserIcon className="w-5 h-6 text-purple-600" />
       case 'official':
         return <UserIcon className="w-5 h-5 text-orange-600" />
       case 'blog':
@@ -214,4 +229,4 @@ export default function RealTimeUpdates() {
       )}
     </div>
   )
-}
+*/

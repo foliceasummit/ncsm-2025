@@ -29,10 +29,10 @@ interface BlogPost {
 }
 
 export default function AdminBlogPage() {
-  const { user, loading } = useAuth()
+  const { user, isLoading } = useAuth()
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [pageLoading, setPageLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null)
@@ -89,7 +89,7 @@ export default function AdminBlogPage() {
       console.error('Error fetching blog posts:', error)
       toast.error('Failed to fetch blog posts')
     } finally {
-      setIsLoading(false)
+      setPageLoading(false)
     }
   }
 
@@ -160,7 +160,7 @@ export default function AdminBlogPage() {
     return content.substring(0, maxLength) + '...'
   }
 
-  if (loading) {
+  if (pageLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navigation />
@@ -269,7 +269,7 @@ export default function AdminBlogPage() {
               </h2>
             </div>
 
-            {isLoading ? (
+            {pageLoading ? (
               <div className="p-6">
                 <div className="animate-pulse space-y-4">
                   {[...Array(5)].map((_, i) => (

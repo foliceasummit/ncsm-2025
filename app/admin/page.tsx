@@ -24,7 +24,8 @@ import {
   Home,
   Newspaper,
   Video,
-  Image,
+  ImageIcon,
+  Trophy,
   LogOut
 } from 'lucide-react';
 import Navigation from '../components/layout/Navigation'

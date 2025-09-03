@@ -114,7 +114,9 @@ const MatchReportForm: React.FC = () => {
       }
     `;
     document.head.appendChild(style);
-    return () => document.head.removeChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
   }, []);
 
   const updateField = (field: keyof MatchReport, value: any) => {

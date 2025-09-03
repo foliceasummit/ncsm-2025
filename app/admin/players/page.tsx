@@ -30,10 +30,10 @@ interface Player {
 }
 
 export default function AdminPlayersPage() {
-  const { user, loading } = useAuth()
+  const { user, isLoading } = useAuth()
   const [players, setPlayers] = useState<Player[]>([])
   const [filteredPlayers, setFilteredPlayers] = useState<Player[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [pageLoading, setPageLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [disciplineFilter, setDisciplineFilter] = useState('all')
@@ -100,7 +100,7 @@ export default function AdminPlayersPage() {
       console.error('Error fetching players:', error)
       toast.error('Failed to fetch players')
     } finally {
-      setIsLoading(false)
+      setPageLoading(false)
     }
   }
 
@@ -185,7 +185,7 @@ export default function AdminPlayersPage() {
     }
   }
 
-  if (loading) {
+  if (pageLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navigation />
@@ -301,7 +301,7 @@ export default function AdminPlayersPage() {
               </h2>
             </div>
 
-            {isLoading ? (
+            {pageLoading ? (
               <div className="p-6">
                 <div className="animate-pulse space-y-4">
                   {[...Array(5)].map((_, i) => (

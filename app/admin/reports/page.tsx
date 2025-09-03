@@ -30,10 +30,10 @@ interface MatchReport {
 }
 
 export default function AdminReportsPage() {
-  const { user, loading } = useAuth()
+  const { user, isLoading } = useAuth()
   const [reports, setReports] = useState<MatchReport[]>([])
   const [filteredReports, setFilteredReports] = useState<MatchReport[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [pageLoading, setPageLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [selectedReport, setSelectedReport] = useState<MatchReport | null>(null)
@@ -102,7 +102,7 @@ export default function AdminReportsPage() {
       console.error('Error fetching reports:', error)
       toast.error('Failed to fetch reports')
     } finally {
-      setIsLoading(false)
+      setPageLoading(false)
     }
   }
 
@@ -156,7 +156,7 @@ export default function AdminReportsPage() {
     }
   }
 
-  if (loading) {
+  if (pageLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navigation />
@@ -267,7 +267,7 @@ export default function AdminReportsPage() {
               </h2>
             </div>
 
-            {isLoading ? (
+            {pageLoading ? (
               <div className="p-6">
                 <div className="animate-pulse space-y-4">
                   {[...Array(5)].map((_, i) => (

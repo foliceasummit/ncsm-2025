@@ -30,10 +30,10 @@ interface Official {
 }
 
 export default function AdminOfficialsPage() {
-  const { user, loading } = useAuth()
+  const { user, isLoading } = useAuth()
   const [officials, setOfficials] = useState<Official[]>([])
   const [filteredOfficials, setFilteredOfficials] = useState<Official[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [pageLoading, setPageLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [disciplineFilter, setDisciplineFilter] = useState('all')
@@ -100,7 +100,7 @@ export default function AdminOfficialsPage() {
       console.error('Error fetching officials:', error)
       toast.error('Failed to fetch officials')
     } finally {
-      setIsLoading(false)
+      setPageLoading(false)
     }
   }
 
@@ -200,7 +200,7 @@ export default function AdminOfficialsPage() {
     }
   }
 
-  if (loading) {
+  if (pageLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navigation />
@@ -316,7 +316,7 @@ export default function AdminOfficialsPage() {
               </h2>
             </div>
 
-            {isLoading ? (
+            {pageLoading ? (
               <div className="p-6">
                 <div className="animate-pulse space-y-4">
                   {[...Array(5)].map((_, i) => (

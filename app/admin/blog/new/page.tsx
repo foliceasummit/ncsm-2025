@@ -29,7 +29,7 @@ const blogSchema = z.object({
 type BlogFormData = z.infer<typeof blogSchema>
 
 export default function NewBlogPostPage() {
-  const { user, loading } = useAuth()
+  const { user, isLoading } = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [image, setImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string>('')
@@ -147,7 +147,7 @@ export default function NewBlogPostPage() {
     'link', 'image'
   ]
 
-  if (loading) {
+      if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navigation />
