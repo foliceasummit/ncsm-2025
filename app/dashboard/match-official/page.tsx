@@ -23,6 +23,11 @@ import {
   Newspaper,
   Video,
   Image,
+  Clock,
+  AlertCircle,
+  FileText,
+  User,
+  MapPin,
   LogOut
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';

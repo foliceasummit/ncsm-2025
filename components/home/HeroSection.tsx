@@ -190,11 +190,12 @@ export default function HeroSection() {
       {/* Scroll Indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        animate={{ y: [0, 10, 0], opacity: 1 }}
+        transition={{ 
+          y: { duration: 2, repeat: Infinity },
+          opacity: { duration: 1, delay: 1.5 }
+        }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
       >
         <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center backdrop-blur-md">
           <motion.div 

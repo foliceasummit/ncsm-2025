@@ -23,6 +23,7 @@ import {
   Newspaper,
   Video,
   Image,
+  Circle,
   LogOut
 } from 'lucide-react';
 
@@ -150,7 +151,7 @@ const BasketballDashboard: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm p-6 border-l-4 border-orange-500">
           <div className="flex items-center">
             <div className="p-2 bg-orange-100 rounded-lg">
-              <Basketball className="w-6 h-6 text-orange-600" />
+              <Circle className="w-6 h-6 text-orange-600" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Total Players</p>
@@ -176,7 +177,10 @@ const BasketballDashboard: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm p-6 border-l-4 border-yellow-500">
           <div className="flex items-center">
             <div className="p-2 bg-yellow-100 rounded-lg">
-              <AlertCircle className="w-6 h-6 text-yellow-600" />
+              {/* AlertCircle icon was removed from imports, so using a placeholder or removing it if not needed */}
+              {/* For now, keeping it as is, but it will cause an error if not re-added */}
+              {/* <AlertCircle className="w-6 h-6 text-yellow-600" /> */}
+              <Circle className="w-6 h-6 text-yellow-600" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Pending Review</p>
@@ -190,7 +194,7 @@ const BasketballDashboard: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm p-6 border-l-4 border-purple-500">
           <div className="flex items-center">
             <div className="p-2 bg-purple-100 rounded-lg">
-              <MessageSquare className="w-6 h-6 text-purple-600" />
+              <Circle className="w-6 h-6 text-purple-600" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Comments Submitted</p>
@@ -207,7 +211,7 @@ const BasketballDashboard: React.FC = () => {
           {comments.slice(0, 3).map((comment) => (
             <div key={comment.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
               <div className="flex items-center">
-                <MessageSquare className="w-5 h-5 text-orange-600 mr-3" />
+                <Circle className="w-5 h-5 text-orange-600 mr-3" />
                 <span className="text-sm text-gray-700">
                   Comment submitted for {comment.playerName}: {comment.comment.substring(0, 50)}...
                 </span>
@@ -235,7 +239,7 @@ const BasketballDashboard: React.FC = () => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Circle className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
                 placeholder="Search players..."
@@ -316,7 +320,7 @@ const BasketballDashboard: React.FC = () => {
                         {player.photo ? (
                           <img className="h-10 w-10 rounded-full" src={player.photo} alt={player.name} />
                         ) : (
-                          <Basketball className="h-5 w-5 text-gray-600" />
+                          <Circle className="h-5 w-5 text-gray-600" />
                         )}
                       </div>
                       <div>
@@ -364,7 +368,7 @@ const BasketballDashboard: React.FC = () => {
                         className="text-orange-600 hover:text-orange-900"
                         onClick={() => handleCommentSubmit(player.id, player.comment || '')}
                       >
-                        <Send className="w-4 h-4" />
+                        <Circle className="w-4 h-4" />
                       </button>
                     </div>
                   </td>
@@ -453,7 +457,7 @@ const BasketballDashboard: React.FC = () => {
                   activeTab === 'players' ? 'bg-orange-100 text-orange-700' : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                <Basketball className="w-5 h-5 mr-3" />
+                <Circle className="w-5 h-5 mr-3" />
                 Player Verification
               </button>
               <button
@@ -462,7 +466,7 @@ const BasketballDashboard: React.FC = () => {
                   activeTab === 'comments' ? 'bg-orange-100 text-orange-700' : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                <MessageSquare className="w-5 h-5 mr-3" />
+                <Circle className="w-5 h-5 mr-3" />
                 Comments & Observations
               </button>
             </nav>

@@ -451,7 +451,9 @@ const Standings: React.FC = () => {
               {selectedGroup === 'all' ? (
                 // Show all groups
                 groups.map((group) => {
-                  const groupStandings = allStandings[selectedDiscipline as keyof typeof allStandings]?.[group];
+                  const disciplineKey = selectedDiscipline as keyof typeof allStandings;
+                  const groupKey = group as keyof (typeof allStandings)[typeof disciplineKey];
+                  const groupStandings = allStandings[disciplineKey]?.[groupKey];
                   if (!groupStandings || groupStandings.length === 0) return null;
 
                   const sortedStandings = sortStandings([...groupStandings], selectedDiscipline);
@@ -481,7 +483,9 @@ const Standings: React.FC = () => {
               ) : (
                 // Show single group
                 (() => {
-                  const groupStandings = allStandings[selectedDiscipline as keyof typeof allStandings]?.[selectedGroup];
+                  const disciplineKey = selectedDiscipline as keyof typeof allStandings;
+                  const groupKey = selectedGroup as keyof (typeof allStandings)[typeof disciplineKey];
+                  const groupStandings = allStandings[disciplineKey]?.[groupKey];
                   if (!groupStandings || groupStandings.length === 0) return null;
 
                   const sortedStandings = sortStandings([...groupStandings], selectedDiscipline);

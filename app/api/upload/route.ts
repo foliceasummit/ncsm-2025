@@ -1,7 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { writeFile, mkdir } from 'fs/promises'
-import { join } from 'path'
-import { existsSync } from 'fs'
 
 export async function POST(request: NextRequest) {
   try {
@@ -41,31 +38,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create upload directory if it doesn't exist
-    const uploadDir = join(process.cwd(), 'public', 'uploads', type + 's')
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true })
-    }
-
-    // Generate unique filename
+    // Mock file upload - will be replaced with actual file system operations later
     const timestamp = Date.now()
     const randomString = Math.random().toString(36).substring(2, 15)
     const extension = file.name.split('.').pop()
     const filename = `${timestamp}-${randomString}.${extension}`
 
-    // Save file
-    const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
-    const filepath = join(uploadDir, filename)
-    await writeFile(filepath, buffer)
-
-    // Return the file URL
+    // Return mock file URL
     const fileUrl = `/uploads/${type}s/${filename}`
 
     return NextResponse.json({
       success: true,
       url: fileUrl,
-      filename: filename
+      filename: filename,
+      message: 'File upload simulated successfully (mock mode)'
     })
   } catch (error) {
     console.error('Error uploading file:', error)

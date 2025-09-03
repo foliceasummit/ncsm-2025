@@ -31,7 +31,6 @@ import {
   Clipboard,
   Camera,
   Play,
-  Shield,
   Flag,
   Target,
   Zap,

@@ -2,6 +2,14 @@
 
 import { useEffect } from 'react'
 
+// Extend Window interface to include custom properties
+declare global {
+  interface Window {
+    _storageChangeDispatcher?: Function
+    _storageChangeDispatcherCallback?: Function
+  }
+}
+
 export default function ExtensionBlocker() {
   useEffect(() => {
     // Block the specific problematic extension that's causing JSON parsing errors
@@ -51,7 +59,8 @@ export default function ExtensionBlocker() {
         const originalOnError = window.onerror
         window.onerror = function(message, source, lineno, colno, error) {
           // Block errors from the problematic extension
-          if (source && source.includes('content.js') && message.includes('JSON')) {
+          if (source && typeof source === 'string' && source.includes('content.js') && 
+              message && typeof message === 'string' && message.includes('JSON')) {
             return true // Prevent the error from being logged
           }
           
@@ -73,7 +82,7 @@ export default function ExtensionBlocker() {
           
           // Allow other rejections to pass through
           if (originalOnUnhandledRejection) {
-            return originalOnUnhandledRejection.call(this, event)
+            return originalOnUnhandledRejection.call(window, event)
           }
         }
 

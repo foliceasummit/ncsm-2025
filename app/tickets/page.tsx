@@ -683,10 +683,13 @@ export default function TicketsPage() {
                              email: '',
                              phone: '',
                              quantity: 1,
+                             selectedTicketCategory: '',
+                             paymentMethod: '',
                              cardNumber: '',
                              expiryDate: '',
                              cvv: '',
-                             cardholderName: ''
+                             cardholderName: '',
+                             mobileMoneyNumber: ''
                            })
                          }}
                         className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors"

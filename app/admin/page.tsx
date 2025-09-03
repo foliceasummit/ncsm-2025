@@ -18,6 +18,7 @@ import {
   CheckCircle,
   XCircle,
   Eye,
+  EyeOff,
   Download,
   Database,
   Lock,
@@ -26,6 +27,11 @@ import {
   Video,
   ImageIcon,
   Trophy,
+  Activity,
+  TrendingUp,
+  Mail,
+  AlertCircle,
+  ArrowRight,
   LogOut
 } from 'lucide-react';
 import Navigation from '../components/layout/Navigation'

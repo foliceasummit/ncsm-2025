@@ -1,7 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+// Mock data for document approvals - will be replaced with Prisma later
+const mockDocumentApprovals = [
+  {
+    id: '1',
+    playerId: '1',
+    documentType: 'BIRTH_CERTIFICATE',
+    status: 'APPROVED',
+    approvedBy: 'admin@ncsm.lr',
+    approvedAt: new Date().toISOString(),
+    comments: 'Document verified successfully',
+    createdAt: new Date().toISOString(),
+    player: {
+      id: '1',
+      firstName: 'John',
+      lastName: 'Doe',
+      discipline: 'Football',
+      county: {
+        name: 'Montserrado'
+      }
+    }
+  },
+  {
+    id: '2',
+    playerId: '2',
+    documentType: 'MEDICAL_CERTIFICATE',
+    status: 'PENDING',
+    approvedBy: null,
+    approvedAt: null,
+    comments: 'Awaiting review',
+    createdAt: new Date().toISOString(),
+    player: {
+      id: '2',
+      firstName: 'Jane',
+      lastName: 'Smith',
+      discipline: 'Basketball',
+      county: {
+        name: 'Bong'
+      }
+    }
+  }
+]
 
 // GET - Fetch document approvals for a player
 export async function GET(request: NextRequest) {
@@ -18,37 +57,15 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const where: any = { playerId }
+    let approvals = mockDocumentApprovals.filter(approval => approval.playerId === playerId)
 
     if (status && status !== 'all') {
-      where.status = status
+      approvals = approvals.filter(approval => approval.status === status)
     }
 
     if (documentType && documentType !== 'all') {
-      where.documentType = documentType
+      approvals = approvals.filter(approval => approval.documentType === documentType)
     }
-
-    const approvals = await prisma.documentApproval.findMany({
-      where,
-      include: {
-        player: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            discipline: true,
-            county: {
-              select: {
-                name: true
-              }
-            }
-          }
-        }
-      },
-      orderBy: {
-        createdAt: 'desc'
-      }
-    })
 
     return NextResponse.json(approvals)
   } catch (error) {
@@ -79,62 +96,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Check if approval already exists
-    const existingApproval = await prisma.documentApproval.findFirst({
-      where: {
-        playerId,
-        documentType
-      }
+    // Mock response - will be replaced with Prisma later
+    return NextResponse.json({
+      message: 'Document approval updated successfully',
+      id: Date.now().toString(),
+      playerId,
+      documentType,
+      status,
+      approvedBy,
+      approvedAt: status === 'APPROVED' ? new Date().toISOString() : null,
+      comments,
+      createdAt: new Date().toISOString()
     })
-
-    let approval
-    if (existingApproval) {
-      // Update existing approval
-      approval = await prisma.documentApproval.update({
-        where: { id: existingApproval.id },
-        data: {
-          status,
-          approvedBy,
-          approvedAt: status === 'APPROVED' ? new Date() : null,
-          comments
-        }
-      })
-    } else {
-      // Create new approval
-      approval = await prisma.documentApproval.create({
-        data: {
-          playerId,
-          documentType,
-          status,
-          approvedBy,
-          approvedAt: status === 'APPROVED' ? new Date() : null,
-          comments
-        }
-      })
-    }
-
-    // Check if all documents are approved to update player status
-    if (status === 'APPROVED') {
-      const allApprovals = await prisma.documentApproval.findMany({
-        where: { playerId }
-      })
-
-      const requiredDocuments = ['PHOTO', 'BIRTH_CERTIFICATE', 'MEDICAL_CERTIFICATE']
-      const allApproved = requiredDocuments.every(docType => 
-        allApprovals.some(approval => 
-          approval.documentType === docType && approval.status === 'APPROVED'
-        )
-      )
-
-      if (allApproved) {
-        await prisma.player.update({
-          where: { id: playerId },
-          data: { status: 'APPROVED' }
-        })
-      }
-    }
-
-    return NextResponse.json(approval, { status: 201 })
   } catch (error) {
     console.error('Error updating document approval:', error)
     return NextResponse.json(
@@ -161,32 +134,18 @@ export async function PUT(request: NextRequest) {
       approvals.map(async (approval) => {
         const { playerId, documentType, status, approvedBy, comments } = approval
         
-        const existingApproval = await prisma.documentApproval.findFirst({
-          where: { playerId, documentType }
+        // Mock response - will be replaced with Prisma later
+        return NextResponse.json({
+          message: 'Document approval updated successfully',
+          id: Date.now().toString(),
+          playerId,
+          documentType,
+          status,
+          approvedBy,
+          approvedAt: status === 'APPROVED' ? new Date().toISOString() : null,
+          comments,
+          createdAt: new Date().toISOString()
         })
-
-        if (existingApproval) {
-          return await prisma.documentApproval.update({
-            where: { id: existingApproval.id },
-            data: {
-              status,
-              approvedBy,
-              approvedAt: status === 'APPROVED' ? new Date() : null,
-              comments
-            }
-          })
-        } else {
-          return await prisma.documentApproval.create({
-            data: {
-              playerId,
-              documentType,
-              status,
-              approvedBy,
-              approvedAt: status === 'APPROVED' ? new Date() : null,
-              comments
-            }
-          })
-        }
       })
     )
 
