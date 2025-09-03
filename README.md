@@ -1,49 +1,74 @@
-# National County Sports Meet (NCSM)
+# NCSM 2025 - National County Sports Meet
 
-Official website for the National County Sports Meet - Liberia's premier sporting event that brings together athletes from all 15 counties in a celebration of unity, talent, and national pride.
-
-## 🏆 About
-
-The National County Sports Meet is Liberia's premier sporting event that showcases the best of Liberian sports across multiple disciplines including football, kickball, female soccer, volleyball, basketball, and athletics.
+A comprehensive web application for managing the National County Sports Meet 2025 in Liberia. Built with Next.js 15, React, and TypeScript.
 
 ## 🚀 Features
 
-- **User Authentication** - Role-based access control with different user types
-- **Player Registration** - Complete player registration system with photo uploads
-- **Official Registration** - Match official registration and management
-- **Match Management** - Fixtures, live scores, and real-time updates
-- **Blog System** - Rich text editor for content creation and management
-- **Admin Dashboard** - Comprehensive administrative interface
-- **Real-time Updates** - WebSocket integration for live notifications
-- **Email Notifications** - Automated approval/rejection emails
-- **File Upload System** - Photo uploads for players, officials, and blog posts
+### 🏆 Sports Management
+- **Multi-Sport Support**: Football, Basketball, Volleyball, Athletics, Kickball, Female Soccer
+- **County-Based Organization**: 15 counties participating
+- **Match Scheduling & Results**: Comprehensive fixture management
+- **Standings & Rankings**: Real-time tournament tables
 
-## 👥 User Roles
+### 👥 User Management
+- **Role-Based Access Control**: Admin, County Officials, Federation Officials, Match Officials
+- **Player Registration**: Complete player profiles with document verification
+- **Official Management**: Referee and official registration system
+- **County Credentials**: Secure login for county representatives
 
-- **General Admin** - Full system access and management
-- **LFA Official** - Match and official management
-- **MYS Staff** - Administrative oversight
-- **Journalist** - Blog creation and content management
-- **County Official** - Player and official registration
+### 📊 Administrative Tools
+- **Dashboard Analytics**: Comprehensive overview for all user types
+- **Document Approval System**: Photo, birth certificate, and medical certificate verification
+- **Match Reports**: Detailed match documentation
+- **Blog Management**: News and updates system
 
-## 🛠️ Tech Stack
+### 🎫 Public Features
+- **Ticket Sales**: Multiple ticket categories with secure payment
+- **News & Updates**: Blog system for tournament information
+- **Results & Fixtures**: Public access to match information
+- **County Profiles**: Detailed information about participating counties
+
+## 🛠️ Technology Stack
 
 - **Frontend**: Next.js 15, React 18, TypeScript
-- **Styling**: Tailwind CSS
-- **Database**: PostgreSQL with Prisma ORM
-- **Authentication**: Custom session-based auth with HTTP-only cookies
-- **Forms**: React Hook Form with Zod validation
-- **Animations**: Framer Motion
-- **Real-time**: Socket.IO
-- **Email**: Nodemailer
-- **File Upload**: Custom upload API with validation
-- **Rich Text**: React Quill
+- **Styling**: Tailwind CSS, Framer Motion
+- **Forms**: React Hook Form, Zod validation
+- **Icons**: Lucide React, Heroicons
+- **Notifications**: React Hot Toast
+- **State Management**: React Context API
 
-## 📦 Installation
+## 📁 Project Structure
+
+```
+ncsmlr/
+├── app/                    # Next.js App Router
+│   ├── admin/             # Admin dashboard pages
+│   ├── api/               # API routes
+│   ├── dashboard/         # Role-specific dashboards
+│   ├── login/             # Authentication pages
+│   ├── register/          # Registration forms
+│   └── ...                # Public pages
+├── components/            # Reusable components
+│   ├── home/             # Homepage components
+│   ├── layout/           # Layout components
+│   └── ui/               # UI components
+├── contexts/              # React contexts
+├── data/                  # Mock data and configurations
+├── prisma/                # Database schema (commented out)
+└── public/                # Static assets
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/foliceasummit/ncsm-2025.git
    cd ncsmlr
    ```
 
@@ -55,125 +80,127 @@ The National County Sports Meet is Liberia's premier sporting event that showcas
 3. **Set up environment variables**
    ```bash
    cp .env.example .env.local
-   ```
-   Update the `.env.local` file with your database and email credentials.
-
-4. **Set up the database**
-   ```bash
-   npx prisma generate
-   npx prisma db push
-   npm run db:seed
+   # Edit .env.local with your configuration
    ```
 
-5. **Run the development server**
+4. **Run the development server**
    ```bash
    npm run dev
    ```
 
-6. **Open your browser**
+5. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
-## 🔐 Default Login Credentials
+## 🔐 Demo Credentials
 
-- **Admin**: `admin@ncsm.gov.lr` / `password123`
-- **LFA Official**: `lfa@ncsm.gov.lr` / `password123`
-- **MYS Staff**: `mys@ncsm.gov.lr` / `password123`
-- **Journalist**: `journalist@ncsm.gov.lr` / `password123`
-- **County Official**: `county@montserrado.gov.lr` / `password123`
+### Admin Access
+- **Email**: `admin@ncsm.gov.lr`
+- **Password**: `admin123`
 
-## 📁 Project Structure
+### County Officials
+- **Montserrado**: `montserrado@county.lr` / `county123`
+- **Nimba**: `nimba@county.lr` / `county123`
+- **Bong**: `bong@county.lr` / `county123`
+- **Lofa**: `lofa@county.lr` / `county123`
+- **Grand Bassa**: `grandbassa@county.lr` / `county123`
 
-```
-ncsmlr/
-├── app/                    # Next.js App Router
-│   ├── api/               # API routes
-│   ├── admin/             # Admin pages
-│   ├── register/          # Registration pages
-│   └── layout.tsx         # Root layout
-├── components/            # React components
-│   ├── layout/           # Layout components
-│   ├── home/             # Homepage components
-│   ├── admin/            # Admin components
-│   └── providers/        # Context providers
-├── prisma/               # Database schema and migrations
-├── public/               # Static assets
-└── types/                # TypeScript type definitions
-```
+### Federation Officials
+- **LFA**: `lfa@federation.lr` / `federation123`
+- **Basketball**: `basketball@federation.lr` / `federation123`
+- **Volleyball**: `volleyball@federation.lr` / `federation123`
+- **Kickball**: `kickball@federation.lr` / `federation123`
 
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
-
-1. **Connect to Vercel**
-   - Push your code to GitHub
-   - Connect your repository to Vercel
-   - Add environment variables in Vercel dashboard
-
-2. **Deploy**
-   ```bash
-   vercel --prod
-   ```
+1. Connect your GitHub repository to Vercel
+2. Vercel will automatically detect Next.js and deploy
+3. Environment variables can be set in Vercel dashboard
 
 ### Manual Deployment
+```bash
+npm run build
+npm start
+```
 
-1. **Build the application**
-   ```bash
-   npm run build
-   ```
+## 🔧 Development
 
-2. **Start the production server**
-   ```bash
-   npm start
-   ```
-
-## 🔧 Available Scripts
-
+### Available Scripts
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
-- `npm run db:generate` - Generate Prisma client
-- `npm run db:push` - Push database schema
-- `npm run db:seed` - Seed database with initial data
-- `npm run db:studio` - Open Prisma Studio
 
-## 📝 Environment Variables
+### Code Style
+- TypeScript for type safety
+- ESLint for code quality
+- Prettier for code formatting
+- Tailwind CSS for styling
 
-```env
-# Database
-DATABASE_URL="postgresql://..."
+## 📱 Responsive Design
 
-# Authentication
-NEXTAUTH_SECRET="your-secret-key"
-NEXTAUTH_URL="http://localhost:3000"
+The application is fully responsive and optimized for:
+- Desktop computers
+- Tablets
+- Mobile devices
+- All modern browsers
 
-# Email (Nodemailer)
-SMTP_HOST="smtp.gmail.com"
-SMTP_PORT="587"
-SMTP_USER="your-email@gmail.com"
-SMTP_PASS="your-app-password"
-SMTP_FROM="noreply@ncsm.gov.lr"
+## 🔒 Security Features
 
-# App
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-```
+- Role-based access control
+- Secure authentication
+- Input validation with Zod
+- XSS protection
+- CSRF protection
+
+## 🚧 Current Status
+
+- ✅ **Build**: Successfully building without errors
+- ✅ **TypeScript**: All type errors resolved
+- ✅ **Components**: All components rendering correctly
+- ✅ **API Routes**: Mock API endpoints working
+- 🔄 **Database**: Prisma integration planned for future
+- 🔄 **Real-time**: Socket.IO integration planned for future
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
-## 🆘 Support
+## 📞 Support
 
-For support, email support@ncsm.gov.lr or create an issue in the repository.
+For support and questions:
+- Create an issue on GitHub
+- Contact the development team
+- Check the documentation
+
+## 🎯 Roadmap
+
+### Phase 1 (Current)
+- ✅ Basic application structure
+- ✅ User authentication
+- ✅ Role-based dashboards
+- ✅ Player registration system
+
+### Phase 2 (Planned)
+- 🔄 Database integration with Prisma
+- 🔄 Real-time updates with Socket.IO
+- 🔄 Advanced analytics
+- 🔄 Mobile app
+
+### Phase 3 (Future)
+- 🔄 AI-powered insights
+- 🔄 Advanced reporting
+- 🔄 Integration with external systems
+- 🔄 Multi-language support
 
 ---
 
-**Built with ❤️ for the National County Sports Meet**
+**Built with ❤️ for the National County Sports Meet 2025**
