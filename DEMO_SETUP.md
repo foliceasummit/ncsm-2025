@@ -24,15 +24,15 @@ npm run db:seed
 ## Demo Credentials That Will Be Created
 
 ### Federation & Staff Users
-- **Match Official**: `official@ncsm.lr` / `password123`
-- **Journalist**: `journalist@ncsm.lr` / `password123`
-- **Basketball Federation**: `basketball@federation.lr` / `password123`
-- **LFA (Football)**: `lfa@federation.lr` / `password123`
-- **Kickball Federation**: `kickball@federation.lr` / `password123`
-- **Volleyball Federation**: `volleyball@federation.lr` / `password123`
-- **MYS Staff**: `mys@ncsm.lr` / `password123`
-- **Finance Officer**: `finance@ncsm.lr` / `password123`
-- **Admin**: `admin@ncsm.lr` / `password123`
+- **Match Official**: `official@ncsm.lr` / `password123` → Access to match management
+- **Journalist**: `journalist@ncsm.lr` / `password123` → Access to media dashboard
+- **Basketball Federation**: `basketball@federation.lr` / `password123` → Access to basketball dashboard
+- **LFA (Football)**: `lfa@federation.lr` / `password123` → Access to football dashboard
+- **Kickball Federation**: `kickball@federation.lr` / `password123` → Access to kickball dashboard
+- **Volleyball Federation**: `volleyball@federation.lr` / `password123` → Access to volleyball dashboard
+- **MYS Staff**: `mys@ncsm.lr` / `password123` → Access to MYS staff dashboard
+- **Finance Officer**: `finance@ncsm.lr` / `password123` → Access to finance dashboard
+- **Admin**: `admin@ncsm.lr` / `password123` → Access to admin dashboard
 
 ### County Officials
 - **Montserrado**: `montserrado@ncsm.lr` / `Montserrado2025!`
@@ -55,6 +55,20 @@ npm run db:seed
 2. Creates federation and staff users with `password123`
 3. Creates county officials with their specific passwords
 4. Sets proper user roles and county associations
+
+## Role-Based Access Control
+Each user type has access to different dashboards and features:
+
+- **BASKETBALL_FEDERATION**: Access to basketball-specific dashboard and management
+- **KICKBALL_FEDERATION**: Access to kickball-specific dashboard and management  
+- **VOLLEYBALL_FEDERATION**: Access to volleyball-specific dashboard and management
+- **LFA_OFFICIAL**: Access to football/soccer dashboard and management
+- **MATCH_OFFICIAL**: Access to match scheduling and reporting
+- **JOURNALIST**: Access to media and press dashboard
+- **MYS_STAFF**: Access to MYS staff dashboard
+- **FINANCE_OFFICER**: Access to financial management dashboard
+- **GENERAL_ADMIN**: Full system access
+- **COUNTY_OFFICIAL**: Access to county-specific dashboard
 
 ## After Seeding
 Once you run the seed script, all demo credentials will work properly and users will be able to log in to their respective dashboards.

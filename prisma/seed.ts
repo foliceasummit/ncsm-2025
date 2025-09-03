@@ -106,7 +106,7 @@ async function main() {
     {
       email: 'basketball@federation.lr',
       password: 'password123',
-      role: 'FEDERATION' as const,
+      role: 'BASKETBALL_FEDERATION' as const,
       firstName: 'Basketball',
       lastName: 'Federation',
       countyId: null,
@@ -115,7 +115,7 @@ async function main() {
     {
       email: 'lfa@federation.lr',
       password: 'password123',
-      role: 'FEDERATION' as const,
+      role: 'LFA_OFFICIAL' as const,
       firstName: 'Liberia',
       lastName: 'Football Association',
       countyId: null,
@@ -124,7 +124,7 @@ async function main() {
     {
       email: 'kickball@federation.lr',
       password: 'password123',
-      role: 'FEDERATION' as const,
+      role: 'KICKBALL_FEDERATION' as const,
       firstName: 'Kickball',
       lastName: 'Federation',
       countyId: null,
@@ -133,7 +133,7 @@ async function main() {
     {
       email: 'volleyball@federation.lr',
       password: 'password123',
-      role: 'FEDERATION' as const,
+      role: 'VOLLEYBALL_FEDERATION' as const,
       firstName: 'Volleyball',
       lastName: 'Federation',
       countyId: null,
@@ -237,6 +237,14 @@ async function main() {
   console.log('Finance Officer: finance@ncsm.lr / password123')
   console.log('Admin: admin@ncsm.lr / password123')
   console.log('County Officials: Use county-specific emails with their passwords')
+  console.log('')
+  console.log('🎯 Role-Based Access:')
+  console.log('- Basketball Federation users access basketball dashboard')
+  console.log('- LFA Officials access football dashboard')
+  console.log('- Kickball Federation users access kickball dashboard')
+  console.log('- Volleyball Federation users access volleyball dashboard')
+  console.log('- Match Officials access match management')
+  console.log('- County Officials access county-specific dashboards')
 }
 
 main()
