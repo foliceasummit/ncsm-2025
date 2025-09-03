@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useAuth } from '../../contexts/AuthContext'
 import { 
   UserPlus, 
   Users, 
@@ -42,63 +43,85 @@ interface Official {
 }
 
 export default function CountyOfficialDashboard() {
+  const { user, isLoading } = useAuth()
   const [activeTab, setActiveTab] = useState('overview')
   const [players, setPlayers] = useState<Player[]>([])
   const [officials, setOfficials] = useState<Official[]>([])
   const [registrationDeadline, setRegistrationDeadline] = useState<Date>(new Date('2025-02-15'))
   const [countdown, setCountdown] = useState('')
+  const [countyName, setCountyName] = useState<string>('')
+  const [isLoadingData, setIsLoadingData] = useState(true)
 
-  // Mock data - replace with actual API calls
+  // Security check - only COUNTY_OFFICIAL users can access this dashboard
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="container mx-auto px-4 py-8">
+          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (!user || user.role !== 'COUNTY_OFFICIAL') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="container mx-auto px-4 py-8">
+          <div className="bg-red-50 border border-red-200 rounded-xl shadow-lg p-8 text-center">
+            <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-red-800 mb-2">Access Denied</h2>
+            <p className="text-red-600">Only County Officials can access this dashboard.</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Fetch county-specific data
   useEffect(() => {
-    // Mock players data
-    setPlayers([
-      {
-        id: '1',
-        firstName: 'John',
-        lastName: 'Doe',
-        discipline: 'FOOTBALL',
-        status: 'APPROVED',
-        photo: '/images/player1.jpg',
-        documentsNeeded: []
-      },
-      {
-        id: '2',
-        firstName: 'Jane',
-        lastName: 'Smith',
-        discipline: 'BASKETBALL',
-        status: 'PENDING',
-        documentsNeeded: ['Photo', 'Medical Certificate']
-      },
-      {
-        id: '3',
-        firstName: 'Mike',
-        lastName: 'Johnson',
-        discipline: 'VOLLEYBALL',
-        status: 'REJECTED',
-        documentsNeeded: ['Birth Certificate', 'Medical Certificate']
-      }
-    ])
+    if (!user || !user.countyId) {
+      setIsLoadingData(false)
+      return
+    }
 
-    // Mock officials data
-    setOfficials([
-      {
-        id: '1',
-        firstName: 'Sarah',
-        lastName: 'Wilson',
-        discipline: 'FOOTBALL',
-        status: 'APPROVED',
-        photo: '/images/official1.jpg',
-        documentsNeeded: []
-      },
-      {
-        id: '2',
-        firstName: 'David',
-        lastName: 'Brown',
-        discipline: 'BASKETBALL',
-        status: 'PENDING',
-        documentsNeeded: ['Photo']
+    const fetchCountyData = async () => {
+      try {
+        setIsLoadingData(true)
+        
+        // Fetch county information
+        const countyResponse = await fetch(`/api/counties/${user.countyId}`)
+        if (countyResponse.ok) {
+          const countyData = await countyResponse.json()
+          setCountyName(countyData.name)
+        }
+
+        // Fetch players for this county
+        const playersResponse = await fetch(`/api/players?countyId=${user.countyId}`)
+        if (playersResponse.ok) {
+          const playersData = await playersResponse.json()
+          setPlayers(playersData)
+        }
+
+        // Fetch officials for this county
+        const officialsResponse = await fetch(`/api/officials?countyId=${user.countyId}`)
+        if (officialsResponse.ok) {
+          const officialsData = await officialsResponse.json()
+          setOfficials(officialsData)
+        }
+      } catch (error) {
+        console.error('Error fetching county data:', error)
+        // Fallback to empty arrays if API fails
+        setPlayers([])
+        setOfficials([])
+      } finally {
+        setIsLoadingData(false)
       }
-    ])
+    }
+
+    fetchCountyData()
 
     // Calculate countdown
     const updateCountdown = () => {
@@ -158,9 +181,41 @@ export default function CountyOfficialDashboard() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">County Dashboard</h1>
-          <p className="text-gray-600">Manage your county's players, officials, and registrations</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            {countyName ? `${countyName} County Dashboard` : 'County Dashboard'}
+          </h1>
+          <p className="text-gray-600">
+            {countyName 
+              ? `Manage ${countyName} County's players, officials, and registrations`
+              : 'Manage your county\'s players, officials, and registrations'
+            }
+          </p>
         </motion.div>
+
+        {/* Loading State */}
+        {isLoadingData && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-white rounded-xl shadow-lg p-8 mb-8 text-center"
+          >
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading county data...</p>
+          </motion.div>
+        )}
+
+        {/* No County Access */}
+        {!isLoadingData && (!user || !user.countyId) && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-red-50 border border-red-200 rounded-xl shadow-lg p-8 mb-8 text-center"
+          >
+            <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-red-800 mb-2">Access Restricted</h2>
+            <p className="text-red-600">You don't have access to any county dashboard. Please contact an administrator.</p>
+          </motion.div>
+        )}
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -642,6 +697,8 @@ export default function CountyOfficialDashboard() {
             )}
           </div>
         </div>
+          </>
+        )}
       </div>
     </div>
   )

@@ -6,6 +6,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const status = searchParams.get('status')
     const discipline = searchParams.get('discipline')
+    const countyId = searchParams.get('countyId')
 
     const where: any = {}
 
@@ -17,6 +18,13 @@ export async function GET(request: NextRequest) {
       where.discipline = discipline
     }
 
+    // If countyId is provided, filter by user's county
+    if (countyId) {
+      where.user = {
+        countyId: countyId
+      }
+    }
+
     const officials = await prisma.official.findMany({
       where,
       include: {
@@ -24,6 +32,7 @@ export async function GET(request: NextRequest) {
           select: {
             id: true,
             email: true,
+            countyId: true,
           },
         },
       },
@@ -32,7 +41,18 @@ export async function GET(request: NextRequest) {
       },
     })
 
-    return NextResponse.json(officials)
+    // Transform data to match dashboard interface
+    const transformedOfficials = officials.map(official => ({
+      id: official.id,
+      firstName: official.firstName,
+      lastName: official.lastName,
+      discipline: official.discipline,
+      status: official.status,
+      photo: official.photo,
+      documentsNeeded: getDocumentsNeeded(official),
+    }))
+
+    return NextResponse.json(transformedOfficials)
   } catch (error) {
     console.error('Error fetching officials:', error)
     return NextResponse.json(
@@ -40,6 +60,14 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     )
   }
+}
+
+function getDocumentsNeeded(official: any): string[] {
+  const needed: string[] = []
+  
+  if (!official.photo) needed.push('Photo')
+  
+  return needed
 }
 
 export async function POST(request: NextRequest) {
