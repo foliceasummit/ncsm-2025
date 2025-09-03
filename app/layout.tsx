@@ -3,6 +3,12 @@ import './globals.css'
 import Navigation from './components/layout/Navigation'
 import Footer from './components/layout/Footer'
 import { AuthProvider } from './contexts/AuthContext'
+import { checkPrismaBuild } from '@/lib/buildCheck'
+
+// Ensure Prisma is available during build
+if (typeof window === 'undefined') {
+  checkPrismaBuild()
+}
 
 export const metadata: Metadata = {
   title: 'NCSM 2025 - National County Sports Meet',

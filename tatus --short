@@ -1,0 +1,5 @@
+[33madf9d72[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Add comprehensive README with project documentation and deployment instructions
+[33m06dbff0[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Add Vercel configuration for deployment
+[33mbba723a[m Fix build errors and prepare for Vercel deployment - Fix missing icon imports and duplicate identifiers - Fix TypeScript errors in standings and tickets pages - Fix JSX syntax errors in HeroSection and RealTimeUpdates - Comment out Prisma seed file for initial deployment - Fix useEffect hook in player registration page
+[33mb0c0961[m Fix build errors: resolve naming conflicts and add missing imports
+[33mad4438b[m Fix API route params types for Next.js 15+ compatibility
