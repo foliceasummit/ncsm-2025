@@ -66,7 +66,22 @@ export default function CountyOfficialDashboard() {
     )
   }
 
-  if (!user || user.role !== 'COUNTY_OFFICIAL') {
+  // Debug information
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="container mx-auto px-4 py-8">
+          <div className="bg-red-50 border border-red-200 rounded-xl shadow-lg p-8 text-center">
+            <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-red-800 mb-2">No User Found</h2>
+            <p className="text-red-600">Please log in to access this dashboard.</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (user.role !== 'COUNTY_OFFICIAL') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
         <div className="container mx-auto px-4 py-8">
@@ -74,10 +89,12 @@ export default function CountyOfficialDashboard() {
             <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
             <h2 className="text-xl font-semibold text-red-800 mb-2">Access Denied</h2>
             <p className="text-red-600">Only County Officials can access this dashboard.</p>
+            <p className="text-red-600 mt-2">Your role: {user.role}</p>
+            <p className="text-red-600">Your email: {user.email}</p>
           </div>
         </div>
       </div>
-    )
+      )
   }
 
   // Fetch county-specific data

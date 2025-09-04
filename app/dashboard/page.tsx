@@ -20,13 +20,17 @@ const Dashboard: React.FC = () => {
       if (user?.role) {
         // Direct routing to role-specific dashboard - no intermediate loading
         const roleRoutes: { [key: string]: string } = {
-          'match_official': '/dashboard/match-official',
-          'journalist': '/dashboard/journalist',
-          'federation': '/dashboard/federation',
-          'mys_staff': '/dashboard/mys-staff',
-          'finance_officer': '/dashboard/finance-officer',
-          'admin': '/dashboard/admin',
-          'county_official': '/dashboard/county-official'
+          'MATCH_OFFICIAL': '/dashboard/match-official',
+          'JOURNALIST': '/dashboard/journalist',
+          'BASKETBALL_FEDERATION': '/dashboard/basketball',
+          'KICKBALL_FEDERATION': '/dashboard/kickball',
+          'VOLLEYBALL_FEDERATION': '/dashboard/volleyball',
+          'ATHLETICS_FEDERATION': '/dashboard/athletics',
+          'LFA_OFFICIAL': '/dashboard/lfa',
+          'MYS_STAFF': '/dashboard/mys-staff',
+          'FINANCE_OFFICER': '/dashboard/finance-officer',
+          'GENERAL_ADMIN': '/dashboard/admin',
+          'COUNTY_OFFICIAL': '/dashboard/county-official'
         };
 
         const targetRoute = roleRoutes[user.role];

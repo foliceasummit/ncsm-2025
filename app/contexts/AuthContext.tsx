@@ -57,7 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    // Optimized authentication logic
+    // Find user in mock users
     const user = mockUsers.find(u => u.email === email);
     
     if (!user) {
@@ -66,7 +66,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     let isAuthenticated = false;
 
-    // Simplified password checking
+    // Password checking based on role
     if (user.role === 'COUNTY_OFFICIAL') {
       const countyPasswords: { [key: string]: string } = {
         'montserrado@ncsm.lr': 'Montserrado2025!',
@@ -86,6 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       };
       isAuthenticated = countyPasswords[email] === password;
     } else {
+      // All other users use password123
       isAuthenticated = password === 'password123';
     }
 
