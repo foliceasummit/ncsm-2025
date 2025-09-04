@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     let isAuthenticated = false;
 
     // Simplified password checking
-    if (user.role === 'county_official') {
+    if (user.role === 'COUNTY_OFFICIAL') {
       const countyPasswords: { [key: string]: string } = {
         'montserrado@ncsm.lr': 'Montserrado2025!',
         'bong@ncsm.lr': 'Bong2025!',

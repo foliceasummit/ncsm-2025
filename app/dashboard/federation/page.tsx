@@ -45,7 +45,7 @@ const FederationDashboard: React.FC = () => {
   const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
-    if (!user || user.role !== 'federation') {
+    if (!user || !['FEDERATION', 'BASKETBALL_FEDERATION', 'KICKBALL_FEDERATION', 'VOLLEYBALL_FEDERATION', 'ATHLETICS_FEDERATION'].includes(user.role)) {
       router.push('/login');
       return;
     }

@@ -217,8 +217,11 @@ export default function CountyOfficialDashboard() {
           </motion.div>
         )}
 
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Main Dashboard Content - Only show if user has county access */}
+        {!isLoadingData && user && user.countyId && (
+          <>
+            {/* Summary Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -697,8 +700,8 @@ export default function CountyOfficialDashboard() {
             )}
           </div>
         </div>
-          </>
-        )}
+        </>
+      )}
       </div>
     </div>
   )
