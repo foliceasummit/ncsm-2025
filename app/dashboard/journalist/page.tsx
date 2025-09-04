@@ -54,7 +54,7 @@ const JournalistDashboard: React.FC = () => {
   const [showUploadModal, setShowUploadModal] = useState(false);
 
   useEffect(() => {
-    if (!user || user.role !== 'journalist') {
+    if (!user || user.role !== 'JOURNALIST') {
       router.push('/login');
       return;
     }

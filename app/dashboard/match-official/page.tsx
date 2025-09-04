@@ -53,7 +53,7 @@ const MatchOfficialDashboard: React.FC = () => {
   const [recentReports, setRecentReports] = useState<any[]>([]);
 
   useEffect(() => {
-    if (!user || user.role !== 'match_official') {
+    if (!user || user.role !== 'MATCH_OFFICIAL') {
       router.push('/login');
       return;
     }

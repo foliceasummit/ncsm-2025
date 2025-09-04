@@ -195,8 +195,6 @@ async function main() {
         email: userData.email,
         password: hashedPassword,
         role: userData.role,
-        firstName: userData.firstName,
-        lastName: userData.lastName,
         countyId: userData.countyId,
       },
     })
@@ -216,8 +214,6 @@ async function main() {
           email: countyUser.email,
           password: hashedPassword,
           role: 'COUNTY_OFFICIAL',
-          firstName: countyUser.county,
-          lastName: 'Official',
           countyId: county.id,
         },
       })
