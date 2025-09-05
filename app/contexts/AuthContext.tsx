@@ -27,6 +27,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
   const [mounted, setMounted] = useState(false);
 
+  // Debug: Log mock users on component mount
+  useEffect(() => {
+    console.log('AuthProvider mounted, mock users:', mockUsers.length);
+    console.log('Sample mock user:', mockUsers[0]);
+  }, []);
+
   useEffect(() => {
     setMounted(true);
     // Check for stored user session only after mounting
@@ -98,13 +104,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     console.log('Authentication result:', { isAuthenticated, mounted });
 
-    if (isAuthenticated && mounted) {
+    // Remove the mounted check temporarily to see if that's the issue
+    if (isAuthenticated) {
       setAuthState({
         user,
         isAuthenticated: true,
         isLoading: false
       });
-      localStorage.setItem('ncsm_user', JSON.stringify(user));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('ncsm_user', JSON.stringify(user));
+      }
       console.log('Login successful, user set in state');
       return true;
     }
