@@ -1,0 +1,58 @@
+[1mdiff --git a/app/api/players/submit-for-inspection/route.ts b/app/api/players/submit-for-inspection/route.ts[m
+[1mindex 26eb525..7c31c91 100644[m
+[1m--- a/app/api/players/submit-for-inspection/route.ts[m
+[1m+++ b/app/api/players/submit-for-inspection/route.ts[m
+[36m@@ -16,23 +16,37 @@[m [mexport async function POST(req: Request) {[m
+     const data = await req.json()[m
+     const { playerIds, sport, matchId, matchTime } = data[m
+ [m
+[31m-    // Create submission record[m
+[31m-    const submission = await prisma.submission.create({[m
+[31m-      data: {[m
+[31m-        sport,[m
+[31m-        matchId,[m
+[31m-        matchTime: new Date(matchTime),[m
+[31m-        countyId: session.user.countyId,[m
+[31m-        players: {[m
+[31m-          connect: playerIds.map((id: string) => ({ id }))[m
+[31m-        }[m
+[31m-      },[m
+[31m-      include: {[m
+[31m-        players: true[m
+[31m-      }[m
+[31m-    })[m
+[32m+[m[32m    // Create player inspection records for each player[m
+[32m+[m[32m    const inspections = await Promise.all([m
+[32m+[m[32m      playerIds.map((playerId: string) =>[m
+[32m+[m[32m        prisma.playerInspection.create({[m
+[32m+[m[32m          data: {[m
+[32m+[m[32m            matchId,[m
+[32m+[m[32m            playerId,[m
+[32m+[m[32m            status: 'PENDING',[m
+[32m+[m[32m            inspectedById: session.user.id,[m
+[32m+[m[32m            notes: `Submitted for inspection by ${session.user.firstName} ${session.user.lastName}`[m
+[32m+[m[32m          },[m
+[32m+[m[32m          include: {[m
+[32m+[m[32m            player: {[m
+[32m+[m[32m              select: {[m
+[32m+[m[32m                id: true,[m
+[32m+[m[32m                firstName: true,[m
+[32m+[m[32m                lastName: true,[m
+[32m+[m[32m                discipline: true,[m
+[32m+[m[32m                status: true[m
+[32m+[m[32m              }[m
+[32m+[m[32m            }[m
+[32m+[m[32m          }[m
+[32m+[m[32m        })[m
+[32m+[m[32m      )[m
+[32m+[m[32m    )[m
+ [m
+[31m-    return NextResponse.json(submission)[m
+[32m+[m[32m    return NextResponse.json({[m
+[32m+[m[32m      message: 'Players submitted for inspection successfully',[m
+[32m+[m[32m      inspections,[m
+[32m+[m[32m      count: inspections.length[m
+[32m+[m[32m    })[m
+   } catch (error) {[m
+     console.error('Submission error:', error)[m
+     return NextResponse.json([m

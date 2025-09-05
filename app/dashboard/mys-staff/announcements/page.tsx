@@ -112,7 +112,7 @@ export default function Announcements() {
                 <select
                   className="w-full border rounded-lg p-2"
                   value={newAnnouncement.type}
-                  onChange={(e) => setNewAnnouncement(prev => ({ ...prev, type: e.target.value }))}
+                  onChange={(e) => setNewAnnouncement(prev => ({ ...prev, type: e.target.value as 'General' | 'Results' | 'Schedule' | 'Important' }))}
                   aria-label="Announcement type"
                 >
                   <option value="General">General</option>
@@ -128,7 +128,7 @@ export default function Announcements() {
                 <select
                   className="w-full border rounded-lg p-2"
                   value={newAnnouncement.status}
-                  onChange={(e) => setNewAnnouncement(prev => ({ ...prev, status: e.target.value }))}
+                  onChange={(e) => setNewAnnouncement(prev => ({ ...prev, status: e.target.value as 'Draft' | 'Published' }))}
                   aria-label="Announcement status"
                 >
                   <option value="Draft">Draft</option>

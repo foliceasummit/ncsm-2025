@@ -31,6 +31,7 @@ model User {
   matchInspections MatchInspection[]
   blogPosts BlogPost[]
   observations FederationObservation[]
+  submissions Submission[]
 
   @@map("users")
 }
@@ -352,6 +353,12 @@ enum ObservationStatus {
   RESOLVED
 }
 
+enum SubmissionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model FederationObservation {
   id            String   @id @default(cuid())
   content       String
@@ -402,4 +409,18 @@ model InspectionPhoto {
   createdAt       DateTime @default(now())
 
   @@map("inspection_photos")
+}
+
+model Submission {
+  id          String   @id @default(cuid())
+  sport       Discipline
+  matchId     String
+  matchTime   DateTime
+  submittedById String
+  submittedBy  User     @relation(fields: [submittedById], references: [id])
+  status      SubmissionStatus @default(PENDING)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("submissions")
 }

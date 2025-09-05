@@ -1,0 +1,5 @@
+[33m962b9df[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Add comprehensive demo credentials documentation
+[33m7d8eb18[m Setup demo users: Add 23 demo users with proper role-based access control and authentication system
+[33mcb83e53[m Fix lockfile: Regenerate package-lock.json to resolve Vercel build issues
+[33mcf94bdf[m Fix player inspection: Use PlayerInspection model instead of updating Player with non-existent fields
+[33m0a3eb12[m Fix match creation: Add missing kickoffTime field to match Prisma schema requirements
