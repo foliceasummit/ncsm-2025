@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma'
 // GET /api/matches/[matchId]/inspection
 export async function GET(
   request: Request,
-  { params }: { params: { matchId: string } }
+  { params }: { params: Promise<{ matchId: string }> }
 ) {
   try {
     const session = await auth()
@@ -13,7 +13,7 @@ export async function GET(
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
-    const { matchId } = params
+    const { matchId } = await params
 
     // Validate official's assignment to the match
     const matchAssignment = await prisma.matchOfficial.findFirst({
@@ -87,7 +87,7 @@ export async function GET(
 // POST /api/matches/[matchId]/complete-inspection
 export async function POST(
   request: Request,
-  { params }: { params: { matchId: string } }
+  { params }: { params: Promise<{ matchId: string }> }
 ) {
   try {
     const session = await auth()
@@ -95,7 +95,7 @@ export async function POST(
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
-    const { matchId } = params
+    const { matchId } = await params
 
     // Validate all players have been inspected
     const match = await prisma.match.findUnique({

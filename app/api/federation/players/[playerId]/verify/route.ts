@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma'
 // POST /api/federation/players/[playerId]/verify
 export async function POST(
   request: Request,
-  { params }: { params: { playerId: string } }
+  { params }: { params: Promise<{ playerId: string }> }
 ) {
   try {
     const session = await auth()
@@ -13,7 +13,7 @@ export async function POST(
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
-    const { playerId } = params
+    const { playerId } = await params
     const { verified } = await request.json()
 
     // Create or update document approval
