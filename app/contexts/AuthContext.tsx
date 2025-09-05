@@ -57,10 +57,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
+    console.log('Login attempt:', { email, password, mounted });
+    
     // Find user in mock users
     const user = mockUsers.find(u => u.email === email);
+    console.log('Found user:', user);
     
     if (!user) {
+      console.log('User not found');
       return false;
     }
 
@@ -85,10 +89,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         'maryland@ncsm.lr': 'Maryland2025!'
       };
       isAuthenticated = countyPasswords[email] === password;
+      console.log('County password check:', { email, expectedPassword: countyPasswords[email], providedPassword: password, isAuthenticated });
     } else {
       // All other users use password123
       isAuthenticated = password === 'password123';
+      console.log('Standard password check:', { password, isAuthenticated });
     }
+
+    console.log('Authentication result:', { isAuthenticated, mounted });
 
     if (isAuthenticated && mounted) {
       setAuthState({
@@ -97,9 +105,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isLoading: false
       });
       localStorage.setItem('ncsm_user', JSON.stringify(user));
+      console.log('Login successful, user set in state');
       return true;
     }
 
+    console.log('Login failed');
     return false;
   };
 
