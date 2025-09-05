@@ -46,7 +46,6 @@ export default function NoHydrationWrapper({ children, fallback }: NoHydrationWr
   const [isHydrated, setIsHydrated] = useState(false)
 
   useEffect(() => {
-    // Aggressive cleanup of browser extension attributes
     const cleanExtensions = () => {
       const problematicAttrs = [
         'bis_skin_checked',

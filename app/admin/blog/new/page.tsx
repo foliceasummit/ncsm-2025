@@ -5,20 +5,39 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useAuth } from '../../../contexts/AuthContext'
-import Navigation from '../../../components/layout/Navigation'
-import Footer from '../../../components/layout/Footer'
-import { 
-  ArrowLeftIcon,
-  PhotoIcon,
-  CheckIcon,
-  XMarkIcon
-} from '@heroicons/react/24/outline'
 import toast from 'react-hot-toast'
 import dynamic from 'next/dynamic'
+import { ArrowLeftIcon, PhotoIcon, CheckIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import 'react-quill/dist/quill.snow.css'
+
+const Navigation = dynamic(() => import('../../../components/layout/Navigation'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-20 bg-gray-100 animate-pulse"></div>
+  )
+})
+
+const Footer = dynamic(() => import('../../../components/layout/Footer'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-16 bg-gray-100 animate-pulse"></div>
+  )
+})
 
 // Dynamically import ReactQuill to avoid SSR issues
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
-import 'react-quill/dist/quill.snow.css'
+const ReactQuill = dynamic(() => import('react-quill'), { 
+  ssr: false,
+  loading: () => (
+    <div className="border border-gray-300 rounded-lg h-[300px] animate-pulse bg-gray-50"></div>
+  )
+})
+
+// Dynamically import the form components
+const BlogForm = dynamic(() => Promise.resolve(({ children }: { children: React.ReactNode }) => (
+  <div className="bg-white rounded-lg shadow-md p-6">
+    {children}
+  </div>
+)), { ssr: false })
 
 const blogSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters'),
@@ -189,15 +208,16 @@ export default function NewBlogPostPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navigation />
-      <main className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+        <Navigation />
+        <main className="py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center space-x-4 mb-4">
               <button
                 onClick={() => window.history.back()}
                 className="p-2 text-gray-400 hover:text-gray-600"
+                aria-label="Go back"
               >
                 <ArrowLeftIcon className="w-5 h-5" />
               </button>
@@ -260,6 +280,7 @@ export default function NewBlogPostPage() {
                       {image && (
                         <button
                           type="button"
+                          aria-label="Remove uploaded image"
                           onClick={() => {
                             setImage(null)
                             setImagePreview('')

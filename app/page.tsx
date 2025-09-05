@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import NoHydrationWrapper from './components/NoHydrationWrapper';
+import HydrationSafeImage from './components/HydrationSafeImage';
+import VideoThumbnail from './components/VideoThumbnail';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Users, ArrowRight, Star, Users2, Trophy, Globe, Target, Award } from 'lucide-react';
 import Navigation from './components/layout/Navigation';
@@ -145,8 +148,9 @@ const HomePage = () => {
   ];
 
   return (
-    <div suppressHydrationWarning={true}>
-      <Navigation />
+    <NoHydrationWrapper>
+      <div suppressHydrationWarning={true}>
+        <Navigation />
       
       {/* Hero Section with Slider */}
       <section className="relative min-h-screen">

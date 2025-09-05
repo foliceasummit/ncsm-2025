@@ -1,0 +1,378 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import { io } from 'socket.io-client'
+import { toast } from 'react-hot-toast'
+import { 
+  FaClipboardCheck, FaExclamationTriangle, FaCheckCircle,
+  FaTimesCircle, FaCamera, FaPaperclip, FaComments, FaSpinner
+} from 'react-icons/fa'
+import type { MatchInspection } from '@/app/types/match-inspection'
+
+export default function MatchInspectionPage() {
+  const router = useRouter()
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [matches, setMatches] = useState<MatchInspection[]>([])
+  const [activeMatch, setActiveMatch] = useState<MatchInspection | null>(null)
+
+  // Set up real-time connection
+  useEffect(() => {
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3001')
+    
+    socket.on('connect', () => {
+      console.log('Connected to WebSocket server')
+    })
+
+    socket.on('matchInspectionUpdate', (updatedMatch: MatchInspection) => {
+      setMatches(prev => 
+        prev.map(match => 
+          match.id === updatedMatch.id ? updatedMatch : match
+        )
+      )
+      
+      if (activeMatch?.id === updatedMatch.id) {
+        setActiveMatch(updatedMatch)
+      }
+    })
+
+    return () => {
+      socket.disconnect()
+    }
+  }, [activeMatch])
+
+  // Fetch initial match data
+  useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        const response = await fetch('/api/matches/inspection')
+        if (!response.ok) throw new Error('Failed to fetch matches')
+        const data = await response.json()
+        setMatches(data)
+      } catch (error) {
+        console.error('Error fetching matches:', error)
+        toast.error('Failed to load matches')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchMatches()
+  }, [])
+
+  const handleChecklistUpdate = async (
+    itemId: string, 
+    status: 'PASS' | 'FAIL',
+    remarks?: string
+  ) => {
+    if (!activeMatch) return
+
+    const updatedChecklist = activeMatch.checklist.map(item =>
+      item.id === itemId ? { ...item, status, remarks: remarks || item.remarks } : item
+    )
+
+    try {
+      setSaving(true)
+      const response = await fetch('/api/matches/inspection', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          matchId: activeMatch.matchId,
+          status: updatedChecklist.every(item => item.status === 'PASS') 
+            ? 'COMPLETED' 
+            : updatedChecklist.some(item => item.status === 'FAIL')
+            ? 'ISSUES'
+            : 'PENDING',
+          checklist: updatedChecklist
+        })
+      })
+
+      if (!response.ok) throw new Error('Failed to update inspection')
+      
+      const updatedInspection = await response.json()
+      setActiveMatch(prev => prev ? { ...prev, ...updatedInspection } : null)
+      toast.success('Inspection updated successfully')
+    } catch (error) {
+      console.error('Error updating inspection:', error)
+      toast.error('Failed to update inspection')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handlePhotoUpload = async (files: FileList) => {
+    if (!activeMatch) return
+    
+    const formData = new FormData()
+    formData.append('matchId', activeMatch.matchId)
+    Array.from(files).forEach(file => {
+      formData.append('photos', file)
+    })
+
+    try {
+      setSaving(true)
+      const response = await fetch('/api/matches/inspection', {
+        method: 'PATCH',
+        body: formData
+      })
+
+      if (!response.ok) throw new Error('Failed to upload photos')
+      
+      const uploadedPhotos = await response.json()
+      setActiveMatch(prev => prev ? {
+        ...prev,
+        photos: [...prev.photos, ...uploadedPhotos]
+      } : null)
+      
+      toast.success('Photos uploaded successfully')
+    } catch (error) {
+      console.error('Error uploading photos:', error)
+      toast.error('Failed to upload photos')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <FaSpinner className="w-8 h-8 animate-spin text-blue-600" />
+      </div>
+    )
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'COMPLETED':
+        return 'bg-green-100 text-green-800'
+      case 'ISSUES':
+        return 'bg-red-100 text-red-800'
+      default:
+        return 'bg-yellow-100 text-yellow-800'
+    }
+  }
+
+  const getChecklistStatusColor = (status: string) => {
+    switch (status) {
+      case 'PASS':
+        return 'text-green-600'
+      case 'FAIL':
+        return 'text-red-600'
+      default:
+        return 'text-yellow-600'
+    }
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">Match Inspection</h1>
+      </div>
+
+      {/* Stats Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-500">Pending Inspections</p>
+              <h3 className="text-2xl font-bold">
+                {matches.filter(m => m.status === 'PENDING').length}
+              </h3>
+            </div>
+            <div className="bg-yellow-100 p-3 rounded-full">
+              <FaClipboardCheck className="text-yellow-600 w-6 h-6" />
+            </div>
+          </div>
+        </div>
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-500">Completed Today</p>
+              <h3 className="text-2xl font-bold">
+                {matches.filter(m => 
+                  m.status === 'COMPLETED' && 
+                  new Date(m.updatedAt).toDateString() === new Date().toDateString()
+                ).length}
+              </h3>
+            </div>
+            <div className="bg-green-100 p-3 rounded-full">
+              <FaCheckCircle className="text-green-600 w-6 h-6" />
+            </div>
+          </div>
+        </div>
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-500">Issues Reported</p>
+              <h3 className="text-2xl font-bold">
+                {matches.filter(m => m.status === 'ISSUES').length}
+              </h3>
+            </div>
+            <div className="bg-red-100 p-3 rounded-full">
+              <FaExclamationTriangle className="text-red-600 w-6 h-6" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Matches List */}
+      <div className="bg-white rounded-lg shadow">
+        <div className="p-4 border-b">
+          <h2 className="text-lg font-semibold">Upcoming Matches</h2>
+        </div>
+        <div className="divide-y">
+          {matches.map((match) => (
+            <div key={match.id} className="p-4 hover:bg-gray-50">
+              <div className="flex justify-between items-center">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-4">
+                    <div>
+                      <h3 className="text-lg font-medium">
+                        {match.match.homeTeam.name} vs {match.match.awayTeam.name}
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        Match #{match.match.matchNumber} • {match.match.venue.name}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {new Date(match.match.date).toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(match.status)}`}>
+                    {match.status}
+                  </span>
+                  <button
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    onClick={() => setActiveMatch(match)}
+                    title="View inspection details"
+                  >
+                    {match.status === 'PENDING' ? 'Start Inspection' : 'View Details'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Inspection Form */}
+      {activeMatch && (
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg font-semibold">
+              Match Inspection - {activeMatch.match.matchNumber}
+            </h2>
+            <button
+              className="text-gray-500 hover:text-gray-700"
+              onClick={() => setActiveMatch(null)}
+            >
+              Close
+            </button>
+          </div>
+
+          {/* Checklist */}
+          <div className="space-y-4">
+            {activeMatch.checklist.map((item) => (
+              <div key={item.id} className="border rounded-lg p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className={getChecklistStatusColor(item.status)}>
+                      {item.status === 'PASS' ? (
+                        <FaCheckCircle className="w-5 h-5" />
+                      ) : item.status === 'FAIL' ? (
+                        <FaTimesCircle className="w-5 h-5" />
+                      ) : (
+                        <FaClipboardCheck className="w-5 h-5" />
+                      )}
+                    </div>
+                    <div>
+                      <h3 className="font-medium">{item.item}</h3>
+                      {item.remarks && (
+                        <p className="text-sm text-gray-500">{item.remarks}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex space-x-4">
+                    <button
+                      className="text-green-600 hover:text-green-800"
+                      onClick={() => handleChecklistUpdate(item.id, 'PASS')}
+                      title="Mark as passed"
+                      disabled={saving}
+                    >
+                      <FaCheckCircle />
+                    </button>
+                    <button
+                      className="text-red-600 hover:text-red-800"
+                      onClick={() => handleChecklistUpdate(item.id, 'FAIL')}
+                      title="Mark as failed"
+                      disabled={saving}
+                    >
+                      <FaTimesCircle />
+                    </button>
+                    <button
+                      className="text-blue-600 hover:text-blue-800"
+                      onClick={() => {
+                        const remarks = prompt('Add remarks:', item.remarks)
+                        if (remarks !== null) {
+                          handleChecklistUpdate(item.id, item.status as 'PASS' | 'FAIL', remarks)
+                        }
+                      }}
+                      title="Add comment"
+                      disabled={saving}
+                    >
+                      <FaComments />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Photos Section */}
+          <div className="mt-6 border-t pt-6">
+            <h3 className="text-lg font-semibold mb-4">Photos</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {activeMatch.photos.map((photo) => (
+                <div key={photo.id} className="relative aspect-square">
+                  <Image
+                    src={photo.url}
+                    alt="Inspection photo"
+                    fill
+                    className="object-cover rounded-lg"
+                  />
+                </div>
+              ))}
+              <label className="border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:border-blue-500">
+                <FaCamera className="w-8 h-8 text-gray-400 mb-2" />
+                <span className="text-sm text-gray-500">Add Photos</span>
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => e.target.files && handlePhotoUpload(e.target.files)}
+                  disabled={saving}
+                />
+              </label>
+            </div>
+          </div>
+
+          {/* Status Badge */}
+          <div className="mt-6 flex justify-between items-center">
+            <div className="flex items-center space-x-2">
+              <span className="text-sm text-gray-500">Inspector:</span>
+              <span className="font-medium">{activeMatch.inspector.name}</span>
+            </div>
+            <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(activeMatch.status)}`}>
+              {activeMatch.status}
+            </span>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}

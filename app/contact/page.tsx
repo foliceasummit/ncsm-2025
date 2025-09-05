@@ -139,14 +139,10 @@ export default function ContactPage() {
                                          <div className="h-48 w-full">
                        <iframe
                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.6006399488076!2d-10.800745984928863!3d6.300391495490863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xf0b3b3b3b3b3b3b%3A0xb3b3b3b3b3b3b3b!2sMonrovia%2C%20Liberia!5e0!3m2!1sen!2sus!4v1640995200000"
-                         width="100%"
-                         height="100%"
-                         style={{ border: 0 }}
+                         aria-label="Map showing location of Ministry of Youth & Sports"
+                         className="w-full h-full rounded-lg border-0"
                          allowFullScreen
-                         loading="lazy"
-                         referrerPolicy="no-referrer-when-downgrade"
                          title="Ministry of Youth & Sports Location"
-                         className="w-full h-full rounded-lg"
                        ></iframe>
                      </div>
                   </div>
@@ -158,7 +154,7 @@ export default function ContactPage() {
                       Journalists and media personnel can apply for tournament accreditation through our online form.
                     </p>
                     <a
-                      href="https://forms.google.com/media-accreditation"
+                      href="https://forms.gle/DkWExB2hQchXemFf7"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center bg-white text-red-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors"

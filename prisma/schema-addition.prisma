@@ -1,0 +1,18 @@
+model FederationObservation {
+  id            String   @id @default(cuid())
+  content       String
+  discipline    Discipline
+  submittedById String
+  submittedBy   User     @relation(fields: [submittedById], references: [id])
+  status        ObservationStatus @default(PENDING)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("federation_observations")
+}
+
+enum ObservationStatus {
+  PENDING
+  REVIEWED
+  RESOLVED
+}

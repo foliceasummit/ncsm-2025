@@ -23,9 +23,12 @@ model User {
   // Relations
   players   Player[]
   officials Official[]
-  matches   Match[]
-  reports   MatchReport[]
+  matchAssignments MatchOfficial[]
+  submittedReports MatchReport[]
+  playerInspections PlayerInspection[]
+  matchInspections MatchInspection[]
   blogPosts BlogPost[]
+  observations FederationObservation[]
 
   @@map("users")
 }
@@ -73,6 +76,11 @@ model Player {
   // Relations
   scorers      MatchScorer[]
   documentApprovals DocumentApproval[]
+  yellowCards  YellowCard[]
+  redCards     RedCard[]
+  substitutionsOut Substitution[] @relation("PlayerOut")
+  substitutionsIn  Substitution[] @relation("PlayerIn")
+  inspections  PlayerInspection[]
 
   @@map("players")
 }
@@ -106,20 +114,22 @@ model Match {
   homeTeam    County   @relation("HomeTeam", fields: [homeTeamId], references: [id])
   awayTeam    County   @relation("AwayTeam", fields: [awayTeamId], references: [id])
   date        DateTime
+  kickoffTime DateTime
   venue       String
   discipline  Discipline
   group       String
   homeScore   Int?
   awayScore   Int?
   status      MatchStatus @default(SCHEDULED)
-  matchOfficialId String?
-  matchOfficial User? @relation(fields: [matchOfficialId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   // Relations
   reports     MatchReport[]
   scorers     MatchScorer[]
+  officials   MatchOfficial[]
+  inspections PlayerInspection[]
+  matchInspection MatchInspection?
 
   @@map("matches")
 }
@@ -128,15 +138,88 @@ model MatchReport {
   id          String   @id @default(cuid())
   matchId     String
   match       Match    @relation(fields: [matchId], references: [id])
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  yellowCards Int      @default(0)
-  redCards    Int      @default(0)
-  comments    String?
+  submittedById String
+  submittedBy  User     @relation(fields: [submittedById], references: [id])
+  homeTeamScore Int
+  awayTeamScore Int
+  yellowCards   YellowCard[]
+  redCards      RedCard[]
+  substitutions Substitution[]
+  notes         String?
+  status        ReportStatus @default(SUBMITTED)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("match_reports")
+}
+
+model YellowCard {
+  id            String   @id @default(cuid())
+  matchReportId String
+  matchReport   MatchReport @relation(fields: [matchReportId], references: [id])
+  playerId      String
+  player        Player   @relation(fields: [playerId], references: [id])
+  minute        Int
+  reason        String?
+  createdAt     DateTime @default(now())
+
+  @@map("yellow_cards")
+}
+
+model RedCard {
+  id            String   @id @default(cuid())
+  matchReportId String
+  matchReport   MatchReport @relation(fields: [matchReportId], references: [id])
+  playerId      String
+  player        Player   @relation(fields: [playerId], references: [id])
+  minute        Int
+  reason        String
+  createdAt     DateTime @default(now())
+
+  @@map("red_cards")
+}
+
+model Substitution {
+  id            String   @id @default(cuid())
+  matchReportId String
+  matchReport   MatchReport @relation(fields: [matchReportId], references: [id])
+  playerOutId   String
+  playerOut     Player   @relation("PlayerOut", fields: [playerOutId], references: [id])
+  playerInId    String
+  playerIn      Player   @relation("PlayerIn", fields: [playerInId], references: [id])
+  minute        Int
+  createdAt     DateTime @default(now())
+
+  @@map("substitutions")
+}
+
+model MatchOfficial {
+  id          String   @id @default(cuid())
+  matchId     String
+  match       Match    @relation(fields: [matchId], references: [id])
+  officialId  String
+  official    User     @relation(fields: [officialId], references: [id])
+  role        OfficialRole
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@map("match_reports")
+  @@map("match_officials")
+}
+
+model PlayerInspection {
+  id          String   @id @default(cuid())
+  matchId     String
+  match       Match    @relation(fields: [matchId], references: [id])
+  playerId    String
+  player      Player   @relation(fields: [playerId], references: [id])
+  status      InspectionStatus @default(PENDING)
+  inspectedById String
+  inspectedBy  User    @relation(fields: [inspectedById], references: [id])
+  notes       String?
+  inspectedAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("player_inspections")
 }
 
 model MatchScorer {
@@ -156,6 +239,8 @@ model BlogPost {
   title     String
   content   String
   image     String?
+  category  String
+  tags      String[]
   authorId  String
   author    User     @relation(fields: [authorId], references: [id])
   published Boolean  @default(false)
@@ -233,7 +318,86 @@ enum DocumentApprovalStatus {
 
 enum MatchStatus {
   SCHEDULED
+  PENDING_INSPECTION
   IN_PROGRESS
   COMPLETED
   CANCELLED
+}
+
+enum OfficialRole {
+  REFEREE
+  ASSISTANT_REFEREE
+  FOURTH_OFFICIAL
+  MATCH_COMMISSIONER
+}
+
+enum ReportStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+enum InspectionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ObservationStatus {
+  PENDING
+  REVIEWED
+  RESOLVED
+}
+
+model FederationObservation {
+  id            String   @id @default(cuid())
+  content       String
+  discipline    Discipline
+  submittedById String
+  submittedBy   User     @relation(fields: [submittedById], references: [id])
+  status        ObservationStatus @default(PENDING)
+  evidence      Json?    // Array of file URLs
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("federation_observations")
+}
+
+model MatchInspection {
+  id          String   @id @default(cuid())
+  matchId     String   @unique
+  match       Match    @relation(fields: [matchId], references: [id])
+  status      InspectionStatus @default(PENDING)
+  inspectorId String
+  inspector   User     @relation(fields: [inspectorId], references: [id])
+  checklist   InspectionChecklist[]
+  photos      InspectionPhoto[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("match_inspections")
+}
+
+model InspectionChecklist {
+  id              String   @id @default(cuid())
+  inspectionId    String
+  inspection      MatchInspection @relation(fields: [inspectionId], references: [id])
+  item            String
+  status          Boolean
+  comments        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("inspection_checklists")
+}
+
+model InspectionPhoto {
+  id              String   @id @default(cuid())
+  inspectionId    String
+  inspection      MatchInspection @relation(fields: [inspectionId], references: [id])
+  url             String
+  createdAt       DateTime @default(now())
+
+  @@map("inspection_photos")
 }
