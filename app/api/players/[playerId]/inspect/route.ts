@@ -28,20 +28,28 @@ export async function POST(
       return new NextResponse('Not assigned to this match', { status: 403 })
     }
 
-    // Update player inspection status
-    const player = await prisma.player.update({
-      where: { id: playerId },
+    // Create player inspection record
+    const inspection = await prisma.playerInspection.create({
       data: {
+        matchId,
+        playerId,
         status,
         notes,
-        inspectedBy: {
-          connect: { id: session.user.id },
+        inspectedById: session.user.id,
+      },
+      include: {
+        player: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            status: true,
+          },
         },
-        inspectedAt: new Date(),
       },
     })
 
-    return NextResponse.json(player)
+    return NextResponse.json(inspection)
   } catch (error) {
     console.error('Error updating player inspection:', error)
     return new NextResponse('Internal Server Error', { status: 500 })
