@@ -16,23 +16,37 @@ export async function POST(req: Request) {
     const data = await req.json()
     const { playerIds, sport, matchId, matchTime } = data
 
-    // Create submission record
-    const submission = await prisma.submission.create({
-      data: {
-        sport,
-        matchId,
-        matchTime: new Date(matchTime),
-        countyId: session.user.countyId,
-        players: {
-          connect: playerIds.map((id: string) => ({ id }))
-        }
-      },
-      include: {
-        players: true
-      }
-    })
+    // Create player inspection records for each player
+    const inspections = await Promise.all(
+      playerIds.map((playerId: string) =>
+        prisma.playerInspection.create({
+          data: {
+            matchId,
+            playerId,
+            status: 'PENDING',
+            inspectedById: session.user.id,
+            notes: `Submitted for inspection by ${session.user.firstName} ${session.user.lastName}`
+          },
+          include: {
+            player: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                discipline: true,
+                status: true
+              }
+            }
+          }
+        })
+      )
+    )
 
-    return NextResponse.json(submission)
+    return NextResponse.json({
+      message: 'Players submitted for inspection successfully',
+      inspections,
+      count: inspections.length
+    })
   } catch (error) {
     console.error('Submission error:', error)
     return NextResponse.json(
