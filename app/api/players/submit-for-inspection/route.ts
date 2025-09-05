@@ -25,7 +25,7 @@ export async function POST(req: Request) {
             playerId,
             status: 'PENDING',
             inspectedById: session.user.id,
-            notes: `Submitted for inspection by ${session.user.firstName} ${session.user.lastName}`
+            notes: `Submitted for inspection by ${session.user.name || session.user.email}`
           },
           include: {
             player: {
