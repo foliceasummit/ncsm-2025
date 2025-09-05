@@ -50,6 +50,8 @@ export async function POST(request: NextRequest) {
       content,
       image,
       authorId,
+      category = 'General',
+      tags = [],
       published = false,
     } = body
 
@@ -67,6 +69,8 @@ export async function POST(request: NextRequest) {
         content,
         image,
         authorId,
+        category,
+        tags,
         published,
       },
       include: {
