@@ -37,10 +37,16 @@ export async function GET(request: NextRequest) {
             name: true,
           },
         },
-        matchOfficial: {
+        officials: {
           select: {
             id: true,
-            email: true,
+            role: true,
+            official: {
+              select: {
+                id: true,
+                email: true,
+              },
+            },
           },
         },
       },
@@ -69,7 +75,6 @@ export async function POST(request: NextRequest) {
       venue,
       discipline,
       group,
-      matchOfficialId,
     } = body
 
     // Validate required fields
@@ -96,7 +101,6 @@ export async function POST(request: NextRequest) {
         venue,
         discipline,
         group,
-        matchOfficialId,
         status: 'SCHEDULED',
       },
       include: {
@@ -112,10 +116,16 @@ export async function POST(request: NextRequest) {
             name: true,
           },
         },
-        matchOfficial: {
+        officials: {
           select: {
             id: true,
-            email: true,
+            role: true,
+            official: {
+              select: {
+                id: true,
+                email: true,
+              },
+            },
           },
         },
       },
