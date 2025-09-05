@@ -72,13 +72,14 @@ export async function POST(request: NextRequest) {
       homeTeamId,
       awayTeamId,
       date,
+      kickoffTime,
       venue,
       discipline,
       group,
     } = body
 
     // Validate required fields
-    if (!homeTeamId || !awayTeamId || !date || !venue || !discipline || !group) {
+    if (!homeTeamId || !awayTeamId || !date || !kickoffTime || !venue || !discipline || !group) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -98,6 +99,7 @@ export async function POST(request: NextRequest) {
         homeTeamId,
         awayTeamId,
         date: new Date(date),
+        kickoffTime: new Date(kickoffTime),
         venue,
         discipline,
         group,
