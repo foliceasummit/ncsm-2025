@@ -48,6 +48,37 @@ export async function middleware(req: NextRequest) {
     if (req.nextUrl.pathname.startsWith('/dashboard/county-official') && role !== 'COUNTY_OFFICIAL') {
       return NextResponse.redirect(new URL('/dashboard', req.url))
     }
+
+    // Admin routes protection
+    if (req.nextUrl.pathname.startsWith('/dashboard/admin') && role !== 'GENERAL_ADMIN') {
+      return NextResponse.redirect(new URL('/dashboard', req.url))
+    }
+
+    // Federation routes protection
+    if (req.nextUrl.pathname.startsWith('/dashboard/federation') && 
+        !['LFA_OFFICIAL', 'BASKETBALL_FEDERATION', 'KICKBALL_FEDERATION', 'VOLLEYBALL_FEDERATION', 'ATHLETICS_FEDERATION'].includes(role)) {
+      return NextResponse.redirect(new URL('/dashboard', req.url))
+    }
+
+    // MYS Staff routes protection
+    if (req.nextUrl.pathname.startsWith('/dashboard/mys-staff') && role !== 'MYS_STAFF') {
+      return NextResponse.redirect(new URL('/dashboard', req.url))
+    }
+
+    // Finance Officer routes protection
+    if (req.nextUrl.pathname.startsWith('/dashboard/finance-officer') && role !== 'FINANCE_OFFICER') {
+      return NextResponse.redirect(new URL('/dashboard', req.url))
+    }
+
+    // Match Official routes protection
+    if (req.nextUrl.pathname.startsWith('/dashboard/match-official') && role !== 'MATCH_OFFICIAL') {
+      return NextResponse.redirect(new URL('/dashboard', req.url))
+    }
+
+    // Journalist routes protection
+    if (req.nextUrl.pathname.startsWith('/dashboard/journalist') && role !== 'JOURNALIST') {
+      return NextResponse.redirect(new URL('/dashboard', req.url))
+    }
   }
 
   return res

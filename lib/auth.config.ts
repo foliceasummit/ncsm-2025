@@ -20,9 +20,6 @@ export const authOptions: AuthOptions = {
           where: {
             email: credentials.email,
           },
-          include: {
-            roles: true,
-          },
         })
 
         if (!user || !user.password) {
@@ -40,7 +37,7 @@ export const authOptions: AuthOptions = {
           email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
-          roles: user.roles.map(role => role.name),
+          role: user.role,
         }
       },
     }),
@@ -57,7 +54,7 @@ export const authOptions: AuthOptions = {
         return {
           ...token,
           id: user.id,
-          roles: user.roles,
+          role: user.role,
         }
       }
       return token
@@ -68,7 +65,7 @@ export const authOptions: AuthOptions = {
         user: {
           ...session.user,
           id: token.id as string,
-          roles: token.roles as string[],
+          role: token.role as string,
         },
       }
     },
