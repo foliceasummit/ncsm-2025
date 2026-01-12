@@ -29,66 +29,18 @@ export default function FixturesPage() {
 
   const fetchFixtures = async () => {
     try {
-      // Mock data - in a real app, this would be an API call
-      const mockFixtures: Fixture[] = [
-        {
-          id: '1',
-          homeTeam: { name: 'Montserrado' },
-          awayTeam: { name: 'Nimba' },
-          date: '2024-01-20',
-          time: '14:00',
-          venue: 'Antoinette Tubman Stadium',
-          discipline: 'FOOTBALL',
-          group: 'A',
-          status: 'SCHEDULED'
-        },
-        {
-          id: '2',
-          homeTeam: { name: 'Bong' },
-          awayTeam: { name: 'Lofa' },
-          date: '2024-01-20',
-          time: '16:00',
-          venue: 'Antoinette Tubman Stadium',
-          discipline: 'FOOTBALL',
-          group: 'A',
-          status: 'SCHEDULED'
-        },
-        {
-          id: '3',
-          homeTeam: { name: 'Grand Bassa' },
-          awayTeam: { name: 'Margibi' },
-          date: '2024-01-21',
-          time: '14:00',
-          venue: 'SKD Sports Complex',
-          discipline: 'FOOTBALL',
-          group: 'B',
-          status: 'SCHEDULED'
-        },
-        {
-          id: '4',
-          homeTeam: { name: 'Bomi' },
-          awayTeam: { name: 'Grand Cape Mount' },
-          date: '2024-01-21',
-          time: '16:00',
-          venue: 'SKD Sports Complex',
-          discipline: 'VOLLEYBALL',
-          group: 'C',
-          status: 'SCHEDULED'
-        },
-        {
-          id: '5',
-          homeTeam: { name: 'Maryland' },
-          awayTeam: { name: 'Grand Kru' },
-          date: '2024-01-22',
-          time: '14:00',
-          venue: 'Antoinette Tubman Stadium',
-          discipline: 'BASKETBALL',
-          group: 'D',
-          status: 'SCHEDULED'
-        }
+      const upcomingFixtures: Fixture[] = [
+        { id: '44', homeTeam: { name: 'Nimba' }, awayTeam: { name: 'Margibi' }, date: '2025-01-28', time: '15:00', venue: 'SKD Sports Complex', discipline: 'FOOTBALL', group: 'A', status: 'SCHEDULED' },
+        { id: '45', homeTeam: { name: 'Lofa' }, awayTeam: { name: 'Sinoe' }, date: '2025-01-28', time: '17:00', venue: 'Antoinette Tubman Stadium', discipline: 'VOLLEYBALL', group: 'B', status: 'SCHEDULED' },
+        { id: '46', homeTeam: { name: 'Grand Cape Mount' }, awayTeam: { name: 'Grand Gedeh' }, date: '2025-01-28', time: '19:00', venue: 'SKD Sports Complex', discipline: 'KICKBALL', group: 'C', status: 'SCHEDULED' },
+        { id: '47', homeTeam: { name: 'River Cess' }, awayTeam: { name: 'Maryland' }, date: '2025-01-28', time: '21:00', venue: 'Antoinette Tubman Stadium', discipline: 'FEMALE_SOCCER', group: 'D', status: 'SCHEDULED' },
+        { id: '48', homeTeam: { name: 'Grand Kru' }, awayTeam: { name: 'Montserrado' }, date: '2025-01-29', time: '15:00', venue: 'SKD Sports Complex', discipline: 'BASKETBALL', group: 'A', status: 'SCHEDULED' },
+        { id: '49', homeTeam: { name: 'River Gee' }, awayTeam: { name: 'Bong' }, date: '2025-01-29', time: '17:00', venue: 'Antoinette Tubman Stadium', discipline: 'ATHLETICS', group: 'B', status: 'SCHEDULED' },
+        { id: '50', homeTeam: { name: 'Gbarpolu' }, awayTeam: { name: 'Grand Bassa' }, date: '2025-01-29', time: '19:00', venue: 'SKD Sports Complex', discipline: 'FOOTBALL', group: 'C', status: 'SCHEDULED' },
+        { id: '51', homeTeam: { name: 'Bomi' }, awayTeam: { name: 'River Cess' }, date: '2025-01-29', time: '21:00', venue: 'Antoinette Tubman Stadium', discipline: 'VOLLEYBALL', group: 'D', status: 'SCHEDULED' }
       ]
 
-      setFixtures(mockFixtures)
+      setFixtures(upcomingFixtures)
     } catch (error) {
       console.error('Error fetching fixtures:', error)
     } finally {

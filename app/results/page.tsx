@@ -89,15 +89,7 @@ const allMatches = [
   { id: '42', team1: 'Montserrado', team2: 'Bong', scoreTeam1: 1, scoreTeam2: 0, date: '2025-01-27', time: '15:00', venue: 'SKD Sports Complex', discipline: 'football', group: 'A', status: 'live', minute: '65' },
   { id: '43', team1: 'Grand Bassa', team2: 'Bomi', scoreTeam1: 2, scoreTeam2: 1, date: '2025-01-27', time: '17:00', venue: 'Antoinette Tubman Stadium', discipline: 'basketball', group: 'C', status: 'live', minute: '32' },
 
-  // Upcoming Matches
-  { id: '44', team1: 'Nimba', team2: 'Margibi', date: '2025-01-28', time: '15:00', venue: 'SKD Sports Complex', discipline: 'football', group: 'A', status: 'upcoming' },
-  { id: '45', team1: 'Lofa', team2: 'Sinoe', date: '2025-01-28', time: '17:00', venue: 'Antoinette Tubman Stadium', discipline: 'volleyball', group: 'B', status: 'upcoming' },
-  { id: '46', team1: 'Grand Cape Mount', team2: 'Grand Gedeh', date: '2025-01-28', time: '19:00', venue: 'SKD Sports Complex', discipline: 'kickball', group: 'C', status: 'upcoming' },
-  { id: '47', team1: 'River Cess', team2: 'Maryland', date: '2025-01-28', time: '21:00', venue: 'Antoinette Tubman Stadium', discipline: 'female_soccer', group: 'D', status: 'upcoming' },
-  { id: '48', team1: 'Grand Kru', team2: 'Montserrado', date: '2025-01-29', time: '15:00', venue: 'SKD Sports Complex', discipline: 'basketball', group: 'A', status: 'upcoming' },
-  { id: '49', team1: 'River Gee', team2: 'Bong', date: '2025-01-29', time: '17:00', venue: 'Antoinette Tubman Stadium', discipline: 'athletics', group: 'B', status: 'upcoming' },
-  { id: '50', team1: 'Gbarpolu', team2: 'Grand Bassa', date: '2025-01-29', time: '19:00', venue: 'SKD Sports Complex', discipline: 'football', group: 'C', status: 'upcoming' },
-  { id: '51', team1: 'Bomi', team2: 'River Cess', date: '2025-01-29', time: '21:00', venue: 'Antoinette Tubman Stadium', discipline: 'volleyball', group: 'D', status: 'upcoming' }
+ 
 ];
 
 // Team component with flag
@@ -131,7 +123,7 @@ const Results: React.FC = () => {
 
   const disciplines = ['football', 'female_soccer', 'basketball', 'volleyball', 'kickball', 'athletics'];
   const groups = ['A', 'B', 'C', 'D'];
-  const statuses = ['completed', 'live', 'upcoming'];
+  const statuses = ['completed', 'live'];
 
   // Filter matches based on selections
   const filteredMatches = allMatches.filter(match => {
@@ -144,7 +136,7 @@ const Results: React.FC = () => {
   // Separate matches by status
   const liveMatches = filteredMatches.filter(match => match.status === 'live');
   const completedMatches = filteredMatches.filter(match => match.status === 'completed');
-  const upcomingMatches = filteredMatches.filter(match => match.status === 'upcoming');
+ 
 
   // Get discipline display name
   const getDisciplineName = (discipline: string) => {
@@ -181,7 +173,7 @@ const Results: React.FC = () => {
                 </span>
               </h1>
               <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-                Stay updated with all match results and upcoming fixtures from the National County Sports Meet
+                Stay updated with all match results from the National County Sports Meet
               </p>
             </div>
           </div>
@@ -243,7 +235,7 @@ const Results: React.FC = () => {
                     <option value="all">All Matches</option>
                     <option value="completed">Completed</option>
                     <option value="live">Live</option>
-                    <option value="upcoming">Upcoming</option>
+ 
                   </select>
                 </div>
               </div>
@@ -360,57 +352,7 @@ const Results: React.FC = () => {
               </div>
             )}
 
-            {/* Upcoming Fixtures */}
-            {upcomingMatches.length > 0 && (
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                  <Calendar className="w-6 h-6 mr-2 text-blue-600" />
-                  Upcoming Fixtures
-                </h2>
-                <div className="space-y-4">
-                  {upcomingMatches.map((match) => (
-                    <div key={match.id} className="bg-white rounded-xl shadow-xl p-6 hover:shadow-2xl transition-shadow duration-300">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="text-sm text-gray-600">
-                          {new Date(match.date).toLocaleDateString('en-US', {
-                            weekday: 'long',
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                          })}
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getGroupColor(match.group)}`}>
-                            Group {match.group}
-                          </span>
-                          <span className="text-sm text-gray-600">
-                            {getDisciplineName(match.discipline)}
-                          </span>
-                        </div>
-                      </div>
-                      
-                      <div className="grid grid-cols-3 items-center text-center">
-                        <div>
-                          <TeamWithFlag teamName={match.team1} />
-                        </div>
-                        <div className="bg-blue-50 rounded-lg py-4 border-2 border-blue-200">
-                          <div className="text-lg font-bold text-blue-600">VS</div>
-                          <div className="text-sm text-blue-600 mt-1">{match.time}</div>
-                        </div>
-                        <div>
-                          <TeamWithFlag teamName={match.team2} />
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center justify-center mt-4 text-sm text-gray-600">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        {match.venue}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+ 
 
             {/* No matches message */}
             {filteredMatches.length === 0 && (
