@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Navigation from '../components/layout/Navigation'
 import { CalendarIcon, ClockIcon, MapPinIcon } from '@heroicons/react/24/outline'
 
@@ -110,6 +111,24 @@ export default function FixturesPage() {
     }
   }
 
+  const countyFlags: Record<string, string> = {
+    'Montserrado': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Montserrado_County.png?updatedAt=1756427586924',
+    'Bong': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Bong_County.png?updatedAt=1756427581521',
+    'Nimba': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Nimba.png?updatedAt=1756427586970',
+    'Grand Bassa': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Grand_Bassa.png?updatedAt=1756427581433',
+    'Lofa': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Lofa_County.png?updatedAt=1756427585768',
+    'Grand Cape Mount': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Grand_Cape_Mount_County..png?updatedAt=1756427582121',
+    'Bomi': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Bomi.png?updatedAt=1756427580872',
+    'Margibi': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/margibi.png?updatedAt=1756427585894',
+    'River Cess': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Rivercess_County.png?updatedAt=1756427587968',
+    'Grand Gedeh': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Grand_Gedeh_County.png?updatedAt=1756427582316',
+    'Sinoe': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Sinoe_County.png?updatedAt=1756427587986',
+    'Maryland': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Maryland_County.png?updatedAt=1756427587986',
+    'Grand Kru': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Grand_Kru_County.png?updatedAt=1756427582433',
+    'River Gee': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/River_Gee_County.png?updatedAt=1756427587799',
+    'Gbarpolu': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Gbarpolu_County.png?updatedAt=1756427581732'
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -204,17 +223,27 @@ export default function FixturesPage() {
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex-1 text-right">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex-1 text-right">
+                      <div className="inline-flex items-center justify-end gap-2">
+                        <div className="relative w-8 h-8 rounded-full overflow-hidden border border-gray-200">
+                          <Image src={countyFlags[fixture.homeTeam.name] || 'https://ik.imagekit.io/foliceasummit/mysncsm/cm.png?updatedAt=1756427570941'} alt={`${fixture.homeTeam.name} flag`} fill className="object-cover" sizes="32px" />
+                        </div>
                         <h3 className="text-lg font-semibold">{fixture.homeTeam.name}</h3>
                       </div>
-                      <div className="mx-6 text-center">
-                        <span className="text-2xl font-bold text-primary-600">VS</span>
-                      </div>
-                      <div className="flex-1 text-left">
+                    </div>
+                    <div className="mx-6 text-center">
+                      <span className="text-2xl font-bold text-primary-600">VS</span>
+                    </div>
+                    <div className="flex-1 text-left">
+                      <div className="inline-flex items-center gap-2">
+                        <div className="relative w-8 h-8 rounded-full overflow-hidden border border-gray-200">
+                          <Image src={countyFlags[fixture.awayTeam.name] || 'https://ik.imagekit.io/foliceasummit/mysncsm/cm.png?updatedAt=1756427570941'} alt={`${fixture.awayTeam.name} flag`} fill className="object-cover" sizes="32px" />
+                        </div>
                         <h3 className="text-lg font-semibold">{fixture.awayTeam.name}</h3>
                       </div>
                     </div>
+                  </div>
 
                     {/* Match Info */}
                     <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-6 text-sm text-gray-600">

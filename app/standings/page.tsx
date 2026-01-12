@@ -1,9 +1,27 @@
 'use client'
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Trophy, TrendingUp, TrendingDown, Medal, Filter } from 'lucide-react';
 import Navigation from '../components/layout/Navigation';
 
+const countyFlags: Record<string, string> = {
+  'Montserrado': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Montserrado_County.png?updatedAt=1756427586924',
+  'Bong': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Bong_County.png?updatedAt=1756427581521',
+  'Nimba': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Nimba.png?updatedAt=1756427586970',
+  'Grand Bassa': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Grand_Bassa.png?updatedAt=1756427581433',
+  'Lofa': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Lofa_County.png?updatedAt=1756427585768',
+  'Grand Cape Mount': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Grand_Cape_Mount_County..png?updatedAt=1756427582121',
+  'Bomi': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Bomi.png?updatedAt=1756427580872',
+  'Margibi': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/margibi.png?updatedAt=1756427585894',
+  'River Cess': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Rivercess_County.png?updatedAt=1756427587968',
+  'Grand Gedeh': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Grand_Gedeh_County.png?updatedAt=1756427582316',
+  'Sinoe': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Sinoe_County.png?updatedAt=1756427587986',
+  'Maryland': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Maryland_County.png?updatedAt=1756427587986',
+  'Grand Kru': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Grand_Kru_County.png?updatedAt=1756427582433',
+  'River Gee': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/River_Gee_County.png?updatedAt=1756427587799',
+  'Gbarpolu': 'https://ik.imagekit.io/foliceasummit/mysncsm/Counties%20Flag/Gbarpolu_County.png?updatedAt=1756427581732'
+}
 // Comprehensive standings data with correct formats for each discipline
 const allStandings = {
   football: {
@@ -241,7 +259,7 @@ const Standings: React.FC = () => {
   };
 
   const getRowColor = (position: number, groupSize: number) => {
-    if (position <= 2) return 'bg-green-50 border-l-4 border-green-500';
+    if (position <= 2) return 'bg-green-50 border-l-8 border-green-600';
     if (position >= groupSize - 1) return 'bg-red-50 border-l-4 border-red-500';
     return 'bg-white';
   };
@@ -273,7 +291,18 @@ const Standings: React.FC = () => {
           </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
-          <div className="text-sm font-medium text-gray-900">{team.county}</div>
+          <div className="flex items-center gap-2">
+            <div className="relative w-8 h-8 rounded-full overflow-hidden border border-gray-200">
+              <Image
+                src={countyFlags[team.county as keyof typeof countyFlags] || 'https://ik.imagekit.io/foliceasummit/mysncsm/cm.png?updatedAt=1756427570941'}
+                alt={`${team.county} flag`}
+                fill
+                className="object-cover"
+                sizes="32px"
+              />
+            </div>
+            <div className="text-sm font-medium text-gray-900">{team.county}</div>
+          </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-900">{team.played}</td>
         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-900">{team.won}</td>

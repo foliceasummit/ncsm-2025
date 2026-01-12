@@ -62,7 +62,6 @@ function NavigationContent() {
         { name: 'Important Documents', href: '/media/documents' }
       ]
     },
-    { name: 'Tickets', href: '/tickets'},
     { name: 'Contact', href: '/contact'},
   ]
 
