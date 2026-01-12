@@ -140,7 +140,7 @@ const HomePage = () => {
     { name: 'Liberia Football Association (LFA)', logo: 'https://ik.imagekit.io/foliceasummit/mysncsm/images.png?updatedAt=1756653282045', url: 'https://liberia.gov.lr/' },
     { name: 'Liberia Kickball Association', logo: 'https://ik.imagekit.io/foliceasummit/mysncsm/images.png?updatedAt=1756653282045', url: 'https://liberia.gov.lr/' },
     { name: 'Liberia Basketball Association', logo: 'https://ik.imagekit.io/foliceasummit/mysncsm/images.png?updatedAt=1756653282045', url: 'https://liberia.gov.lr/' },
-    { name: 'Volleyball Association', logo: 'https://ik.imagekit.io/foliceasummit/mysncsm/images.png?updatedAt=1756653282045', url: 'https://liberia.gov.lr/' },
+    { name: 'Liberia Volleyball Association', logo: 'https://ik.imagekit.io/foliceasummit/mysncsm/images.png?updatedAt=1756653282045', url: 'https://liberia.gov.lr/' },
   ];
 
   const sponsors = [
@@ -581,7 +581,7 @@ const HomePage = () => {
               ))}
             </div>
 
-            {/* Our Partners Section - Sliding */}
+            {/* Our Partners Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -596,69 +596,40 @@ const HomePage = () => {
                 Driving the success of the National County Sports Meet.
               </p>
 
-              {/* Sliding Partners Carousel */}
-              <div className="relative overflow-hidden max-w-6xl mx-auto">
-                <div className="relative">
-                  <div 
-                    className="flex transition-transform duration-500 ease-in-out"
-                    style={{ transform: `translateX(-${partnersSlide * (100 / 3)}%)` }}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {partners.map((partner, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-xl text-center card-hover border border-gray-100 hover:shadow-2xl hover:scale-105 transition-all duration-300"
                   >
-                    {partners.map((partner, index) => (
-                      <div key={index} className="min-w-[33.333%] px-4">
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.6, delay: index * 0.1 }}
-                          viewport={{ once: true }}
-                          className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-xl text-center card-hover border border-gray-100 hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                        >
-                          <div className="h-32 mb-6 flex items-center justify-center">
-                            <img
-                              src={partner.logo}
-                              alt={partner.name}
-                              className="max-h-28 max-w-full object-contain filter drop-shadow-lg hover:scale-110 transition-transform duration-300"
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                target.style.display = 'none';
-                                const nextSibling = target.nextSibling as HTMLElement;
-                                if (nextSibling) {
-                                  nextSibling.style.display = 'block';
-                                }
-                              }}
-                            />
-                            <div className="hidden text-primary-600 font-semibold text-xl">
-                              {partner.name}
-                            </div>
-                          </div>
-                          <h3 className="text-xl font-bold text-gray-900 mb-2">
-                            {partner.name}
-                          </h3>
-                          <div className="w-16 h-1 bg-gradient-to-r from-primary-600 to-secondary-600 mx-auto rounded-full"></div>
-                        </motion.div>
+                    <div className="h-32 mb-6 flex items-center justify-center">
+                      <img
+                        src={partner.logo}
+                        alt={partner.name}
+                        className="max-h-28 max-w-full object-contain filter drop-shadow-lg hover:scale-110 transition-transform duration-300"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const nextSibling = target.nextSibling as HTMLElement;
+                          if (nextSibling) {
+                            nextSibling.style.display = 'block';
+                          }
+                        }}
+                      />
+                      <div className="hidden text-primary-600 font-semibold text-xl">
+                        {partner.name}
                       </div>
-                    ))}
-                  </div>
-
-                  {/* Navigation Arrows */}
-                  {partners.length > 3 && (
-                    <>
-                      <button
-                        onClick={() => setPartnersSlide((prev) => Math.max(0, prev - 1))}
-                        disabled={partnersSlide === 0}
-                        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <ArrowRight className="h-6 w-6 rotate-180" />
-                      </button>
-                      <button
-                        onClick={() => setPartnersSlide((prev) => Math.min(Math.ceil(partners.length / 3) - 1, prev + 1))}
-                        disabled={partnersSlide >= Math.ceil(partners.length / 3) - 1}
-                        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <ArrowRight className="h-6 w-6" />
-                      </button>
-                    </>
-                  )}
-                </div>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                      {partner.name}
+                    </h3>
+                    <div className="w-16 h-1 bg-gradient-to-r from-primary-600 to-secondary-600 mx-auto rounded-full"></div>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
           </motion.div>
