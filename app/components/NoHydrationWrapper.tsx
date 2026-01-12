@@ -152,7 +152,6 @@ export default function NoHydrationWrapper({ children, fallback }: NoHydrationWr
       <main>
         {children}
       </main>
-      <DynamicFooter />
     </>
   )
 }

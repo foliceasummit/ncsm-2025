@@ -18,13 +18,16 @@ import {
   PhoneIcon,
   HomeIcon,
   FlagIcon,
-  StarIcon
+  StarIcon,
+  ChevronDownIcon
 } from '@heroicons/react/24/outline'
 
 function NavigationContent() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [mediaDropdownOpen, setMediaDropdownOpen] = useState(false)
+  const [matchCenterDropdownOpen, setMatchCenterDropdownOpen] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -36,12 +39,28 @@ function NavigationContent() {
   }, [])
 
   const navigation = [
-    { name: 'Home', href: '/Home'},
+    { name: 'Home', href: '/'},
     { name: 'About Us', href: '/about'},
     { name: 'Counties', href: '/counties'},
-    { name: 'Results', href: '/results'},
-    { name: 'Standings', href: '/standings'},
-    { name: 'News', href: '/blog',},
+    { 
+      name: 'Match Center', 
+      href: '#',
+      dropdown: [
+        { name: 'Fixtures', href: '/fixtures' },
+        { name: 'Results', href: '/results' },
+        { name: 'Table Standings', href: '/standings' }
+      ]
+    },
+    { 
+      name: 'Media', 
+      href: '#',
+      dropdown: [
+        { name: 'News', href: '/blog' },
+        { name: 'Video Highlights', href: '/media/video-highlights' },
+        { name: 'Gallery', href: '/media/gallery' },
+        { name: 'Important Documents', href: '/media/documents' }
+      ]
+    },
     { name: 'Tickets', href: '/tickets'},
     { name: 'Contact', href: '/contact'},
   ]
@@ -113,14 +132,58 @@ function NavigationContent() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="relative"
+                onMouseEnter={() => {
+                  if (item.dropdown) {
+                    if (item.name === 'Media') setMediaDropdownOpen(true)
+                    if (item.name === 'Match Center') setMatchCenterDropdownOpen(true)
+                  }
+                }}
+                onMouseLeave={() => {
+                  if (item.name === 'Media') setMediaDropdownOpen(false)
+                  if (item.name === 'Match Center') setMatchCenterDropdownOpen(false)
+                }}
               >
-                <Link
-                  href={item.href}
-                  className="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-semibold transition-all duration-300 relative group"
-                >
-                  {item.name}
-                  <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary-600 to-secondary-600 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
-                </Link>
+                {item.dropdown ? (
+                  <div className="relative">
+                    <button
+                      className="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-semibold transition-all duration-300 relative group flex items-center"
+                    >
+                      {item.name}
+                      <ChevronDownIcon className="ml-1 h-4 w-4" />
+                      <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary-600 to-secondary-600 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+                    </button>
+                    <AnimatePresence>
+                      {(item.name === 'Media' && mediaDropdownOpen) || (item.name === 'Match Center' && matchCenterDropdownOpen) ? (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50"
+                        >
+                          {item.dropdown.map((subItem) => (
+                            <Link
+                              key={subItem.name}
+                              href={subItem.href}
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors duration-200"
+                            >
+                              {subItem.name}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      ) : null}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-semibold transition-all duration-300 relative group"
+                  >
+                    {item.name}
+                    <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary-600 to-secondary-600 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+                  </Link>
+                )}
               </motion.div>
             ))}
             
@@ -173,13 +236,50 @@ function NavigationContent() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <Link
-                    href={item.href}
-                    className="text-gray-700 hover:text-primary-600 block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 hover:bg-white/50"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
+                  {item.dropdown ? (
+                    <div>
+                      <button
+                        onClick={() => {
+                          if (item.name === 'Media') setMediaDropdownOpen(!mediaDropdownOpen)
+                          if (item.name === 'Match Center') setMatchCenterDropdownOpen(!matchCenterDropdownOpen)
+                        }}
+                        className="text-gray-700 hover:text-primary-600 w-full flex items-center justify-between px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 hover:bg-white/50"
+                      >
+                        {item.name}
+                        <ChevronDownIcon className={`h-5 w-5 transition-transform ${(item.name === 'Media' && mediaDropdownOpen) || (item.name === 'Match Center' && matchCenterDropdownOpen) ? 'rotate-180' : ''}`} />
+                      </button>
+                      <AnimatePresence>
+                        {((item.name === 'Media' && mediaDropdownOpen) || (item.name === 'Match Center' && matchCenterDropdownOpen)) && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="pl-4 mt-2 space-y-1"
+                          >
+                            {item.dropdown.map((subItem) => (
+                              <Link
+                                key={subItem.name}
+                                href={subItem.href}
+                                className="text-gray-600 hover:text-primary-600 block px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-white/50"
+                                onClick={() => setIsOpen(false)}
+                              >
+                                {subItem.name}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="text-gray-700 hover:text-primary-600 block px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 hover:bg-white/50"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
                 </motion.div>
               ))}
               

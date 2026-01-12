@@ -8,11 +8,11 @@ import HydrationSafeImage from './components/HydrationSafeImage';
 import VideoThumbnail from './components/VideoThumbnail';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Users, ArrowRight, Star, Users2, Trophy, Globe, Target, Award } from 'lucide-react';
-import Navigation from './components/layout/Navigation';
 
 
 const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [partnersSlide, setPartnersSlide] = useState(0);
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
@@ -138,6 +138,9 @@ const HomePage = () => {
     { name: 'Government of Liberia', logo: 'https://ik.imagekit.io/foliceasummit/mysncsm/Seal%20of%20Liberia.png?updatedAt=1756427577634', url: 'https://liberia.gov.lr/' },
     { name: 'Ministry of Internal Affairs', logo: 'https://ik.imagekit.io/foliceasummit/mysncsm/MIA%20Logo.png?updatedAt=1756427576208', url: 'https://liberia.gov.lr/' },
     { name: 'Liberia Football Association (LFA)', logo: 'https://ik.imagekit.io/foliceasummit/mysncsm/images.png?updatedAt=1756653282045', url: 'https://liberia.gov.lr/' },
+    { name: 'Liberia Kickball Association', logo: 'https://ik.imagekit.io/foliceasummit/mysncsm/images.png?updatedAt=1756653282045', url: 'https://liberia.gov.lr/' },
+    { name: 'Liberia Basketball Association', logo: 'https://ik.imagekit.io/foliceasummit/mysncsm/images.png?updatedAt=1756653282045', url: 'https://liberia.gov.lr/' },
+    { name: 'Volleyball Association', logo: 'https://ik.imagekit.io/foliceasummit/mysncsm/images.png?updatedAt=1756653282045', url: 'https://liberia.gov.lr/' },
   ];
 
   const sponsors = [
@@ -150,8 +153,6 @@ const HomePage = () => {
   return (
     <NoHydrationWrapper>
       <div suppressHydrationWarning={true}>
-        <Navigation />
-      
       {/* Hero Section with Slider */}
       <section className="relative min-h-screen">
         {/* Hero Slider */}
@@ -530,64 +531,13 @@ const HomePage = () => {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Our Partners
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Driving the success of the National County Sports Meet.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {partners.map((partner, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-xl text-center card-hover border border-gray-100 hover:shadow-2xl hover:scale-105 transition-all duration-300"
-              >
-                <div className="h-32 mb-6 flex items-center justify-center">
-                  <img
-                    src={partner.logo}
-                    alt={partner.name}
-                    className="max-h-28 max-w-full object-contain filter drop-shadow-lg hover:scale-110 transition-transform duration-300"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const nextSibling = target.nextSibling as HTMLElement;
-                      if (nextSibling) {
-                        nextSibling.style.display = 'block';
-                      }
-                    }}
-                  />
-                  <div className="hidden text-primary-600 font-semibold text-xl">
-                    {partner.name}
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  {partner.name}
-                </h3>
-                <div className="w-16 h-1 bg-gradient-to-r from-primary-600 to-secondary-600 mx-auto rounded-full"></div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Our Valued Sponsors
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
               We are grateful for the support of our sponsors who made this event possible.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
               {sponsors.map((sponsor, index) => (
                 <motion.div
                   key={index}
@@ -630,107 +580,90 @@ const HomePage = () => {
                 </motion.div>
               ))}
             </div>
-          </motion.div>
+
+            {/* Our Partners Section - Sliding */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Our Partners
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                Driving the success of the National County Sports Meet.
+              </p>
+
+              {/* Sliding Partners Carousel */}
+              <div className="relative overflow-hidden max-w-6xl mx-auto">
+                <div className="relative">
+                  <div 
+                    className="flex transition-transform duration-500 ease-in-out"
+                    style={{ transform: `translateX(-${partnersSlide * (100 / 3)}%)` }}
+                  >
+                    {partners.map((partner, index) => (
+                      <div key={index} className="min-w-[33.333%] px-4">
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6, delay: index * 0.1 }}
+                          viewport={{ once: true }}
+                          className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-xl text-center card-hover border border-gray-100 hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                        >
+                          <div className="h-32 mb-6 flex items-center justify-center">
+                            <img
+                              src={partner.logo}
+                              alt={partner.name}
+                              className="max-h-28 max-w-full object-contain filter drop-shadow-lg hover:scale-110 transition-transform duration-300"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                                const nextSibling = target.nextSibling as HTMLElement;
+                                if (nextSibling) {
+                                  nextSibling.style.display = 'block';
+                                }
+                              }}
+                            />
+                            <div className="hidden text-primary-600 font-semibold text-xl">
+                              {partner.name}
+                            </div>
+                          </div>
+                          <h3 className="text-xl font-bold text-gray-900 mb-2">
+                            {partner.name}
+                          </h3>
+                          <div className="w-16 h-1 bg-gradient-to-r from-primary-600 to-secondary-600 mx-auto rounded-full"></div>
+                        </motion.div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Navigation Arrows */}
+                  {partners.length > 3 && (
+                    <>
+                      <button
+                        onClick={() => setPartnersSlide((prev) => Math.max(0, prev - 1))}
+                        disabled={partnersSlide === 0}
+                        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <ArrowRight className="h-6 w-6 rotate-180" />
+                      </button>
+                      <button
+                        onClick={() => setPartnersSlide((prev) => Math.min(Math.ceil(partners.length / 3) - 1, prev + 1))}
+                        disabled={partnersSlide >= Math.ceil(partners.length / 3) - 1}
+                        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <ArrowRight className="h-6 w-6" />
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </motion.div>
         </div>
       </section>
 
-      {/* Video Highlights Section */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Video Highlights
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Relive the most exciting moments from past competitions
-            </p>
-          </motion.div>
-          
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                                 {[
-                           {
-                             id: 'P44Y3TwN374',
-                             title: 'Grand Bassa Vs Grand Gedeh',
-                             thumbnail: 'https://img.youtube.com/vi/P44Y3TwN374/hqdefault.jpg',
-                             url: 'https://youtu.be/P44Y3TwN374'
-                           },
-                           {
-                             id: 'WCsK9ZFxzno',
-                             title: 'National County Sports Meet 2024: Football Final: River Gee vs Lofa',
-                             thumbnail: 'https://img.youtube.com/vi/WCsK9ZFxzno/hqdefault.jpg',
-                             url: 'https://youtu.be/WCsK9ZFxzno'
-                           },
-                           {
-                             id: '14PtN9HKPDk',
-                             title: 'National County Sports Meet 2025: Football Grand Final: Grand Gedeh VS Lofa County',
-                             thumbnail: 'https://img.youtube.com/vi/14PtN9HKPDk/hqdefault.jpg',
-                             url: 'https://youtu.be/14PtN9HKPDk'
-                           },
-                           {
-                             id: 'jFDIJX-wdwI',
-                             title: '2025 NATIONAL COUNTY MEET FINAL (LOFA VS GRAND GEDEH)',
-                             thumbnail: 'https://img.youtube.com/vi/jFDIJX-wdwI/hqdefault.jpg',
-                             url: 'https://youtu.be/jFDIJX-wdwI'
-                           },
-                           {
-                             id: 'M60SidbSB2Q',
-                             title: 'Liberia National County Sports Meet 2024-2025 ( Lofa vs G. Gedeh ) highlight',
-                             thumbnail: 'https://img.youtube.com/vi/M60SidbSB2Q/hqdefault.jpg',
-                             url: 'https://youtu.be/M60SidbSB2Q'
-                           },
-                           {
-                             id: 'KQGXlh0B2ws',
-                             title: 'NCSM 2024 Closing Ceremony - Awards & Celebrations final 2024-2025',
-                             thumbnail: 'https://img.youtube.com/vi/KQGXlh0B2ws/hqdefault.jpg',
-                             url: 'https://youtu.be/KQGXlh0B2ws'
-                           }
-                         ].map((video, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group cursor-pointer"
-              >
-                                 <div className="relative overflow-hidden rounded-lg shadow-md">
-                   <img
-                     src={video.thumbnail}
-                     alt={video.title}
-                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                     onError={(e) => {
-                       const target = e.target as HTMLImageElement;
-                       // Fallback to a default sports image if thumbnail fails to load
-                       target.src = 'https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg?auto=compress&cs=tinysrgb&w=400&h=225&dpr=1';
-                     }}
-                   />
-                                     <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-60 transition-colors duration-300 flex items-center justify-center">
-                     <a
-                       href={video.url}
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       className="bg-primary-600 hover:bg-primary-700 text-white p-4 rounded-full transition-colors"
-                     >
-                       <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                         <path d="M8 5v14l11-7z"/>
-                       </svg>
-                     </a>
-                   </div>
-                </div>
-                <h3 className="mt-4 text-lg font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
-                  {video.title}
-                </h3>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Latest News Section */}
       <section className="py-16 bg-gray-50">
