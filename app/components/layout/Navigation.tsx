@@ -48,7 +48,8 @@ function NavigationContent() {
       dropdown: [
         { name: 'Fixtures', href: '/fixtures' },
         { name: 'Results', href: '/results' },
-        { name: 'Table Standings', href: '/standings' }
+        { name: 'Table Standings', href: '/standings' },
+        { name: 'Tickets', href: '/tickets' }
       ]
     },
     { 
