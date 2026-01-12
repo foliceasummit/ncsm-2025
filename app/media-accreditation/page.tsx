@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Navigation from '../components/layout/Navigation'
+import Footer from '../components/layout/Footer'
 
 export default function MediaAccreditationPage() {
   return (
