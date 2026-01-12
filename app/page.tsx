@@ -665,7 +665,6 @@ const HomePage = () => {
         </div>
       </section>
 
-
       {/* Latest News Section */}
       <section className="py-16 bg-gray-50">
         <div className="container-custom">
