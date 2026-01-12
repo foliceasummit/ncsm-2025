@@ -60,64 +60,7 @@ const blogPosts = [
   }
 ]
 
-const mediaGallery = [
-  {
-    id: 1,
-    title: 'NCSM Tournament Action',
-    type: 'photo',
-    url: 'https://ik.imagekit.io/foliceasummit/mysncsm/496844567_1269835491817365_1481792822351409750_n.jpg?updatedAt=1756754287063',
-    category: 'Tournament'
-  },
-  {
-    id: 2,
-    title: 'Sports Competition',
-    type: 'photo',
-    url: 'https://ik.imagekit.io/foliceasummit/mysncsm/496803515_1269921561808758_7339364751935250824_n.jpg?updatedAt=1756652252442',
-    category: 'Competition'
-  },
-  {
-    id: 3,
-    title: 'Athletic Events',
-    type: 'photo',
-    url: 'https://ik.imagekit.io/foliceasummit/mysncsm/496768014_1269921891808725_5906856978432921037_n.jpg?updatedAt=1756754286593',
-    category: 'Athletics'
-  },
-  {
-    id: 4,
-    title: 'Team Performance',
-    type: 'photo',
-    url: 'https://ik.imagekit.io/foliceasummit/mysncsm/496709241_1269921885142059_8692249399282192438_n.jpg?updatedAt=1756754277593',
-    category: 'Teams'
-  },
-  {
-    id: 5,
-    title: 'Championship Moments',
-    type: 'photo',
-    url: 'https://ik.imagekit.io/foliceasummit/mysncsm/481089621_3368977803232427_8925673469741527384_n.jpg?updatedAt=1756754277811',
-    category: 'Championship'
-  },
-  {
-    id: 6,
-    title: 'Tournament Highlights',
-    type: 'photo',
-    url: 'https://ik.imagekit.io/foliceasummit/mysncsm/495807510_1269721765162071_2070315643414321067_n.jpg?updatedAt=1756754277360',
-    category: 'Highlights'
-  },
-  {
-    id: 7,
-    title: 'Sports Excellence',
-    type: 'photo',
-    url: 'https://ik.imagekit.io/foliceasummit/mysncsm/495245223_1269721668495414_1410248435149635373_n.jpg?updatedAt=1756652243749',
-    category: 'Excellence'
-  },
-  {
-    id: 8,
-    title: 'NCSM Web Coverage',
-    type: 'photo',
-    url: 'https://ik.imagekit.io/foliceasummit/mysncsm/web.jpg?updatedAt=1756650605675',
-    category: 'Media'
-  }
-]
+ 
 
 export default function BlogPage() {
     return (
@@ -254,69 +197,7 @@ export default function BlogPage() {
           </div>
         </section>
 
-        {/* Media Gallery - Modern Design */}
-        <section className="py-16 bg-white">
-          <div className="container-custom">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Media Gallery</h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Browse through photos and videos from past National County Sports Meet events
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {mediaGallery.map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    className="bg-white rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden transform transition-all duration-300 hover:-translate-y-2 group"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={item.url}
-                        alt={item.title}
-                        className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                        <div className="p-4 w-full">
-                          <div className="flex items-center justify-between">
-                            <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                              item.type === 'video' 
-                                ? 'bg-red-500 text-white' 
-                                : 'bg-blue-500 text-white'
-                            }`}>
-                              {item.type === 'video' ? 'Video' : 'Photo'}
-                            </span>
-                            {item.type === 'video' && (
-                              <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
-                                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                  <path d="M8 5v14l11-7z"/>
-                                </svg>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h3>
-                      <p className="text-sm text-gray-600">{item.category}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
+ 
 
 
 
