@@ -174,7 +174,7 @@ export default function FixturesPage() {
             </div>
           </div>
         </main>
-        <Footer />
+
       </div>
     )
   }
@@ -299,7 +299,7 @@ export default function FixturesPage() {
           </div>
         </div>
       </main>
-      <Footer />
+
     </div>
   )
 }

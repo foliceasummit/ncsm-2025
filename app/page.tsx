@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import NoHydrationWrapper from './components/NoHydrationWrapper';
 import HydrationSafeImage from './components/HydrationSafeImage';
-import VideoThumbnail from './components/VideoThumbnail';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Users, ArrowRight, Star, Users2, Trophy, Globe, Target, Award } from 'lucide-react';
 
@@ -596,40 +595,54 @@ const HomePage = () => {
                 Driving the success of the National County Sports Meet.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {partners.map((partner, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-xl text-center card-hover border border-gray-100 hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                  >
-                    <div className="h-32 mb-6 flex items-center justify-center">
-                      <img
-                        src={partner.logo}
-                        alt={partner.name}
-                        className="max-h-28 max-w-full object-contain filter drop-shadow-lg hover:scale-110 transition-transform duration-300"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const nextSibling = target.nextSibling as HTMLElement;
-                          if (nextSibling) {
-                            nextSibling.style.display = 'block';
-                          }
-                        }}
-                      />
-                      <div className="hidden text-primary-600 font-semibold text-xl">
-                        {partner.name}
+              <div className="relative w-full overflow-hidden">
+                <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
+                
+                <motion.div
+                  className="flex gap-8 py-8"
+                  animate={{
+                    x: [0, -1920], // Approximate width to scroll
+                  }}
+                  transition={{
+                    x: {
+                      repeat: Infinity,
+                      repeatType: "loop",
+                      duration: 30,
+                      ease: "linear",
+                    },
+                  }}
+                  style={{ width: "fit-content" }}
+                >
+                  {[...partners, ...partners, ...partners].map((partner, index) => (
+                    <div
+                      key={index}
+                      className="bg-white rounded-xl p-6 shadow-md border border-gray-100 w-64 flex-shrink-0 flex flex-col items-center justify-center h-48 hover:shadow-xl transition-shadow duration-300"
+                    >
+                      <div className="h-24 mb-4 flex items-center justify-center w-full">
+                        <img
+                          src={partner.logo}
+                          alt={partner.name}
+                          className="max-h-full max-w-full object-contain"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            const nextSibling = target.nextSibling as HTMLElement;
+                            if (nextSibling) {
+                              nextSibling.style.display = 'block';
+                            }
+                          }}
+                        />
+                        <div className="hidden text-primary-600 font-semibold text-center text-sm">
+                          {partner.name}
+                        </div>
                       </div>
+                      <h3 className="text-sm font-bold text-gray-900 text-center line-clamp-2">
+                        {partner.name}
+                      </h3>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {partner.name}
-                    </h3>
-                    <div className="w-16 h-1 bg-gradient-to-r from-primary-600 to-secondary-600 mx-auto rounded-full"></div>
-                  </motion.div>
-                ))}
+                  ))}
+                </motion.div>
               </div>
             </motion.div>
           </motion.div>

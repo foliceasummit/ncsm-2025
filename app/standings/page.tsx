@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Trophy, TrendingUp, TrendingDown, Medal, Filter } from 'lucide-react';
 import Navigation from '../components/layout/Navigation';
-import Footer from '../components/layout/Footer';
 
 // Comprehensive standings data with correct formats for each discipline
 const allStandings = {
@@ -517,7 +516,7 @@ const Standings: React.FC = () => {
           </div>
         </section>
       </main>
-      <Footer />
+
     </div>
   );
 };
