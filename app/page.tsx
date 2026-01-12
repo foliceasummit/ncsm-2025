@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import NoHydrationWrapper from './components/NoHydrationWrapper';
-import HydrationSafeImage from './components/HydrationSafeImage';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Users, ArrowRight, Star, Users2, Trophy, Globe, Target, Award } from 'lucide-react';
 
