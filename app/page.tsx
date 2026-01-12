@@ -661,6 +661,7 @@ const HomePage = () => {
                 </div>
               </div>
             </motion.div>
+          </motion.div>
         </div>
       </section>
 
