@@ -154,7 +154,7 @@ const HomePage = () => {
       <div className="h-20" />
       <div className="w-full h-[2px] bg-gradient-to-r from-primary-600 via-gray-200 to-secondary-600" />
       <section className="relative">
-        <div className="relative w-full h-[60vh] overflow-hidden">
+        <div className="relative w-full h-[75vh] overflow-hidden">
           {heroImages.map((image, index) => (
             <div
               key={index}
@@ -174,24 +174,24 @@ const HomePage = () => {
               </p>
             </div>
             {isClient && (
-              <div className="mb-4 sm:mb-6">
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 md:p-6 max-w-2xl mx-auto border border-white/20">
+              <div className="mb-4 sm:mb-6 w-full">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-5 max-w-4xl mx-auto border border-white/20">
                   <h3 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-5">Kickoff Countdown</h3>
-                  <div className="grid grid-cols-4 gap-4">
+                  <div className="grid grid-cols-4 gap-6">
                     <div className="text-center group">
-                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.days}</div>
+                      <div className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.days}</div>
                       <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">DAYS</div>
                     </div>
                     <div className="text-center group">
-                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.hours.toString().padStart(2, '0')}</div>
+                      <div className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.hours.toString().padStart(2, '0')}</div>
                       <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">HOURS</div>
                     </div>
                     <div className="text-center group">
-                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.minutes.toString().padStart(2, '0')}</div>
+                      <div className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.minutes.toString().padStart(2, '0')}</div>
                       <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">MINUTES</div>
                     </div>
                     <div className="text-center group">
-                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.seconds.toString().padStart(2, '0')}</div>
+                      <div className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.seconds.toString().padStart(2, '0')}</div>
                       <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">SECONDS</div>
                     </div>
                   </div>
