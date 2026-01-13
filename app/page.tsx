@@ -162,12 +162,57 @@ const HomePage = () => {
             >
               <Image src={image.url} alt={image.title} fill className="object-cover" />
               <div className="absolute inset-0 bg-black/30" />
-              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center text-white px-4">
-                <h2 className="text-2xl md:text-4xl font-bold">{image.title}</h2>
-                <p className="text-sm md:text-base">{image.description}</p>
-              </div>
             </div>
           ))}
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white px-4">
+            <div className="text-center mb-4 sm:mb-6">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-2">
+                National County Sports Meet 2025
+              </h1>
+              <p className="text-base sm:text-lg md:text-xl text-white/90 font-medium">
+                The Pride of Our Counties, The Spirit of Liberia
+              </p>
+            </div>
+            {isClient && (
+              <div className="mb-4 sm:mb-6">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 md:p-6 max-w-2xl mx-auto border border-white/20">
+                  <h3 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-5">Kickoff Countdown</h3>
+                  <div className="grid grid-cols-4 gap-4">
+                    <div className="text-center group">
+                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.days}</div>
+                      <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">DAYS</div>
+                    </div>
+                    <div className="text-center group">
+                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.hours.toString().padStart(2, '0')}</div>
+                      <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">HOURS</div>
+                    </div>
+                    <div className="text-center group">
+                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.minutes.toString().padStart(2, '0')}</div>
+                      <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">MINUTES</div>
+                    </div>
+                    <div className="text-center group">
+                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.seconds.toString().padStart(2, '0')}</div>
+                      <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">SECONDS</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link
+                href="/counties"
+                className="bg-red-600 hover:bg-red-700 text-white px-7 py-3 rounded-lg text-base font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Explore Counties
+              </Link>
+              <Link
+                href="/results"
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white px-7 py-3 rounded-lg text-base font-semibold transition-all duration-300 transform hover:scale-105"
+              >
+                View Results
+              </Link>
+            </div>
+          </div>
           <div className="absolute inset-x-0 bottom-6 flex justify-center gap-2">
             {heroImages.map((_, i) => (
               <button
