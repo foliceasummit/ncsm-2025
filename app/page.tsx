@@ -151,6 +151,7 @@ const HomePage = () => {
   return (
     <NoHydrationWrapper>
       <div suppressHydrationWarning={true}>
+      <div className="h-20" />
       <div className="w-full h-[2px] bg-gradient-to-r from-primary-600 via-gray-200 to-secondary-600" />
       <section className="relative">
         <div className="relative w-full h-[60vh] overflow-hidden">
