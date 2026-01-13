@@ -198,6 +198,9 @@ const HomePage = () => {
                 </div>
               </div>
             )}
+            <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed mb-4 sm:mb-6">
+              Don't miss Liberia's biggest sporting festival – where passion, pride, and county spirit come alive!
+            </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href="/counties"
