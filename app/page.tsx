@@ -151,82 +151,46 @@ const HomePage = () => {
   return (
     <NoHydrationWrapper>
       <div suppressHydrationWarning={true}>
-      {/* Hero Section simplified (reduced height, no slider) */}
-      <section className="relative min-h-[60vh]">
-        <div className="absolute inset-0 bg-gradient-to-br from-red-900 via-white/10 to-blue-900" />
-        <div className="absolute inset-0 z-10 flex flex-col justify-center pt-28 pb-8">
-          <div className="container-custom text-center text-white flex-1 flex flex-col justify-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="max-w-6xl mx-auto px-4"
+      <div className="w-full h-[2px] bg-gradient-to-r from-primary-600 via-gray-200 to-secondary-600" />
+      <section className="relative">
+        <div className="relative w-full h-[60vh] overflow-hidden">
+          {heroImages.map((image, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-700 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
             >
-
-
-                             {/* Title Above Countdown */}
-                <div className="mb-4 sm:mb-6">
-                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-2">
-                   National County Sports Meet 2025
-                 </h1>
-                 <p className="text-base sm:text-lg md:text-xl text-white/90 font-medium">
-                   The Pride of Our Counties, The Spirit of Liberia
-                 </p>
-                </div>
-
-               {/* Countdown */}
-               {isClient && (
-                <div className="mb-4 sm:mb-6">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 md:p-6 max-w-2xl mx-auto border border-white/20">
-                    <h3 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-5">Kickoff Countdown</h3>
-                    <div className="grid grid-cols-4 gap-4">
-                      <div className="text-center group">
-                        <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.days}</div>
-                        <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">DAYS</div>
-                      </div>
-                       <div className="text-center group">
-                         <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.hours.toString().padStart(2, '0')}</div>
-                         <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">HOURS</div>
-                       </div>
-                       <div className="text-center group">
-                         <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.minutes.toString().padStart(2, '0')}</div>
-                         <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">MINUTES</div>
-                       </div>
-                       <div className="text-center group">
-                         <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.seconds.toString().padStart(2, '0')}</div>
-                         <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">SECONDS</div>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-               )}
-
-               {/* Subtitle Under Countdown */}
-                <div className="mb-4 sm:mb-6">
-                 <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
-                   Don't miss Liberia's biggest sporting festival – where passion, pride, and county spirit come alive!
-                 </p>
-                </div>
-
-              
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/counties"
-                  className="bg-red-600 hover:bg-red-700 text-white px-7 py-3 rounded-lg text-base font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                >
-                  Explore Counties
-                </Link>
-                <Link
-                  href="/results"
-                  className="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white px-7 py-3 rounded-lg text-base font-semibold transition-all duration-300 transform hover:scale-105"
-                >
-                  View Results
-                </Link>
+              <Image src={image.url} alt={image.title} fill className="object-cover" />
+              <div className="absolute inset-0 bg-black/30" />
+              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center text-white px-4">
+                <h2 className="text-2xl md:text-4xl font-bold">{image.title}</h2>
+                <p className="text-sm md:text-base">{image.description}</p>
               </div>
-            </motion.div>
+            </div>
+          ))}
+          <div className="absolute inset-x-0 bottom-6 flex justify-center gap-2">
+            {heroImages.map((_, i) => (
+              <button
+                key={i}
+                aria-label={`Go to slide ${i + 1}`}
+                onClick={() => setCurrentSlide(i)}
+                className={`w-2.5 h-2.5 rounded-full ${i === currentSlide ? 'bg-white' : 'bg-white/50'}`}
+              />
+            ))}
           </div>
+          <button
+            aria-label="Previous slide"
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-2 rounded-md"
+          >
+            ‹
+          </button>
+          <button
+            aria-label="Next slide"
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-2 rounded-md"
+          >
+            ›
+          </button>
         </div>
       </section>
 
@@ -477,14 +441,17 @@ const HomePage = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[{
+              id:1,
               title:'County Registration Opens',
               image:'https://ik.imagekit.io/foliceasummit/mysncsm/APM-Terminals.jpg.gif?updatedAt=1756427571024',
               date:'2024-08-01'
             },{
+              id:2,
               title:'New Venues Announced',
               image:'https://ik.imagekit.io/foliceasummit/mysncsm/images-1.jpg?updatedAt=1756427575553',
               date:'2024-07-28'
             },{
+              id:3,
               title:'Montserrado Wins 2023',
               image:'https://ik.imagekit.io/foliceasummit/mysncsm/495822530_1269835475150700_6768048624691836323_n.jpg?updatedAt=1756754277667',
               date:'2024-07-25'
@@ -501,7 +468,7 @@ const HomePage = () => {
                 <div className="p-5">
                   <span className="text-xs text-gray-500">{new Date(post.date).toLocaleDateString()}</span>
                   <h3 className="text-lg font-bold text-gray-900 mt-2">{post.title}</h3>
-                  <Link href="/blog" className="text-blue-600 hover:text-blue-700 font-semibold text-sm mt-3 inline-block">View more</Link>
+                  <Link href={`/blog?post=${post.id}`} className="text-blue-600 hover:text-blue-700 font-semibold text-sm mt-3 inline-block">View more</Link>
                 </div>
               </motion.article>
             ))}
@@ -639,106 +606,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Latest News Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="flex justify-between items-center mb-12"
-          >
-            <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">Latest News</h2>
-              <p className="text-xl text-gray-600">
-                Stay updated with the latest from NCSM
-              </p>
-    </div>
-            <Link
-              href="/blog"
-              className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-            >
-              View All News
-            </Link>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "MYS Unveils 2025-2026 National County Sports Meet Group Stage Fixtures",
-                excerpt: "The Ministry of Youth and Sports has officially announced the complete group stage fixtures for the upcoming National County Sports Meet...",
-                image: "https://ik.imagekit.io/foliceasummit/mysncsm/496757105_1269921848475396_2079520982404392725_n.jpg?updatedAt=1756754286394",
-                url: "https://knewsonline.com/MYS-Unveils-2025-2026-National-County-Sports-Meet-Group-Stage-Fixtures",
-                category: "Official Announcement"
-              },
-              {
-                title: "Liberia: Bong County Sports Steering Committee Eyes Stadium Expansion and Turf Installation",
-                excerpt: "Despite financial hurdles, the Bong County Sports Steering Committee is determined to expand their stadium and install modern turf...",
-                image: "https://ik.imagekit.io/foliceasummit/mysncsm/Mr.%20Paul%20sackie.jpg?updatedAt=1756755016334",
-                url: "https://frontpageafricaonline.com/sports/liberia-bong-county-sports-steering-committee-eyes-stadium-expansion-and-turf-installation-despite-financial-hurdles/",
-                category: "Infrastructure"
-              },
-              {
-                title: "APM Terminals Liberia Renews Sponsorship for 2024-2025 National County Sports Meet",
-                excerpt: "APM Terminals Liberia has announced the renewal of their sponsorship for the National County Sports Meet, continuing their support...",
-                image: "https://ik.imagekit.io/foliceasummit/mysncsm/images.jpg?updatedAt=1756650605776",
-                url: "https://www.thenewdawnliberia.com/apm-terminals-liberia-renews-sponsorship-for-2024-2025-national-county-sports-meet/",
-                category: "Sponsorship"
-              }
-            ].map((article, index) => (
-              <motion.article
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-              >
-                <div className="relative w-full h-48 bg-gray-200">
-                  <Image
-                    src={article.image}
-                    alt={article.title}
-                    fill
-                    className="object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      target.parentElement!.innerHTML = `
-                        <div class="flex items-center justify-center w-full h-full bg-gray-300">
-                          <div class="text-gray-500 text-center">
-                            <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
-                              <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
-                            </svg>
-                            <p class="text-sm">Image not available</p>
-                          </div>
-                        </div>
-                      `;
-                    }}
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="text-sm text-primary-600 mb-2">{article.category}</div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {article.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    {article.excerpt}
-                  </p>
-                  <Link
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary-600 hover:text-primary-700 font-semibold transition-colors"
-                  >
-                    Read More →
-                  </Link>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
              {/* Tournament at a Glance Section */}
        <section className="py-6 sm:py-8 bg-gradient-to-r from-primary-600 to-secondary-600 text-white">

@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion'
 import Navigation from '../components/layout/Navigation'
+import Link from 'next/link'
+import { useSearchParams, useRouter } from 'next/navigation'
 
 const blogPosts = [
   {
@@ -11,7 +13,8 @@ const blogPosts = [
     image: 'https://ik.imagekit.io/foliceasummit/mysncsm/APM-Terminals.jpg.gif?updatedAt=1756427571024',
     category: 'Sports News',
     date: '2024-08-01',
-    author: 'NCSM Media Team'
+    author: 'NCSM Media Team',
+    content: 'All 15 counties can now register their players and officials for the upcoming National County Sports Meet. Registration remains open until August 15th. Teams are encouraged to complete the process early to avoid last-minute delays. Required documents include player identification, county affiliation confirmation, and medical clearance. Visit the official portal for step-by-step guidance.'
   },
   {
     id: 2,
@@ -20,7 +23,8 @@ const blogPosts = [
     image: 'https://ik.imagekit.io/foliceasummit/mysncsm/images-1.jpg?updatedAt=1756427575553',
     category: 'Tournament Updates',
     date: '2024-07-28',
-    author: 'NCSM Media Team'
+    author: 'NCSM Media Team',
+    content: 'The organizing committee has confirmed official venues for the 2024 tournament with upgrades to seating, lighting, and turf. County stadiums across Liberia will host group stage matches, while the finals return to SKD Sports Complex. Further improvements focus on accessibility and safety for fans and athletes.'
   },
   {
     id: 3,
@@ -29,7 +33,8 @@ const blogPosts = [
     image: 'https://ik.imagekit.io/foliceasummit/mysncsm/495822530_1269835475150700_6768048624691836323_n.jpg?updatedAt=1756754277667',
     category: 'Results',
     date: '2024-07-25',
-    author: 'NCSM Media Team'
+    author: 'NCSM Media Team',
+    content: 'Montserrado County secured the 2023 championship with dominant performances in football and kickball. The team displayed exceptional discipline and teamwork throughout the tournament. Celebrations were held across the county, honoring players, coaching staff, and supporters.'
   },
   {
     id: 4,
@@ -38,7 +43,8 @@ const blogPosts = [
     image: 'https://ik.imagekit.io/foliceasummit/mysncsm/496033404_1269738428493738_5974493614702706510_n.jpg?updatedAt=1756754278065',
     category: 'Development',
     date: '2024-07-20',
-    author: 'NCSM Media Team'
+    author: 'NCSM Media Team',
+    content: 'The youth development initiative aims to identify emerging talent across Liberia, offering training camps and mentorship programs. County coordinators will collaborate with local schools and clubs to recruit promising athletes and provide pathways to elite competition.'
   },
   {
     id: 5,
@@ -47,7 +53,8 @@ const blogPosts = [
     image: 'https://ik.imagekit.io/foliceasummit/mysncsm/495151821_1269738188493762_5609674405781213538_n.jpg?updatedAt=1756754277661',
     category: 'Partnerships',
     date: '2024-07-15',
-    author: 'NCSM Media Team'
+    author: 'NCSM Media Team',
+    content: 'A new partnership with the International Sports Federation will provide technical support, officiating workshops, and visibility for NCSM beyond Liberia. The collaboration strengthens the tournament\'s standards and presents opportunities for international friendlies.'
   },
   {
     id: 6,
@@ -56,14 +63,19 @@ const blogPosts = [
     image: 'https://ik.imagekit.io/foliceasummit/mysncsm/496694489_1269913548476226_2422094397377560905_n.jpg?updatedAt=1756652252223',
     category: 'Volunteers',
     date: '2024-07-10',
-    author: 'NCSM Media Team'
+    author: 'NCSM Media Team',
+    content: 'Volunteer registration is open for roles in operations, media, hospitality, and logistics. Volunteers receive training and certificates of participation. Interested individuals can apply online and will be contacted by county coordinators.'
   }
 ]
 
  
-
+ 
 export default function BlogPage() {
-    return (
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const selectedId = searchParams.get('post')
+  const selectedPost = selectedId ? blogPosts.find(p => String(p.id) === selectedId) : undefined
+  return (
     <div className="min-h-screen bg-gradient-primary">
         <Navigation />
       <main className="pt-16 lg:pt-20">
@@ -182,12 +194,12 @@ export default function BlogPage() {
                       </p>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-gray-500">By {post.author}</span>
-                        <button className="text-blue-600 hover:text-blue-700 font-semibold transition-colors flex items-center gap-1">
-                          Read More 
+                        <Link href={`/blog?post=${post.id}`} className="text-blue-600 hover:text-blue-700 font-semibold transition-colors flex items-center gap-1">
+                          Read More
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </motion.article>
@@ -198,9 +210,8 @@ export default function BlogPage() {
         </section>
 
  
-
-
-
+ 
+ 
         {/* Newsletter Signup - Modern Design */}
         <section className="py-12 bg-gradient-to-r from-slate-800 to-blue-900 relative overflow-hidden">
           {/* Modern Background Elements */}
@@ -260,6 +271,27 @@ export default function BlogPage() {
           </div>
         </section>
       </main>
+      {selectedPost && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl max-w-2xl w-full mx-4 overflow-hidden">
+            <div className="relative h-56 bg-gray-100">
+              <img src={selectedPost.image} alt={selectedPost.title} className="w-full h-full object-cover" />
+              <button
+                onClick={() => router.push('/blog')}
+                className="absolute top-3 right-3 bg-black/40 text-white rounded-md px-3 py-1"
+              >
+                Close
+              </button>
+            </div>
+            <div className="p-6">
+              <div className="text-sm text-gray-500 mb-2">{new Date(selectedPost.date).toLocaleDateString()}</div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">{selectedPost.title}</h2>
+              <p className="text-gray-700 mb-4">{selectedPost.content}</p>
+              <div className="text-sm text-gray-500">By {selectedPost.author}</div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
