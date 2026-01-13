@@ -59,7 +59,9 @@ function NavigationContent() {
         { name: 'News', href: '/blog' },
         { name: 'Video Highlights', href: '/media/video-highlights' },
         { name: 'Gallery', href: '/media/gallery' },
-        { name: 'Important Documents', href: '/media/documents' }
+        { name: 'Important Documents', href: '/media/documents' },
+        { name: 'Media Accreditation', href: '/media-accreditation' },
+        { name: 'Organizing Committee', href: '/media/organizing-committee' }
       ]
     },
     { name: 'Contact', href: '/contact'},

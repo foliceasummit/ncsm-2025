@@ -68,7 +68,7 @@ const ticketCategories = [
     price: 0,
     currency: 'USD',
     features: ['Premium seating', 'Meet & greet with players', 'Exclusive parking', 'Complimentary access'],
-    color: 'from-yellow-400 to-orange-500',
+    color: 'from-red-300 to-blue-400',
     available: false,
     note: 'Complimentary - Not for sale'
   },
@@ -78,7 +78,7 @@ const ticketCategories = [
     price: 30,
     currency: 'USD',
     features: ['Premium seating near VIP area', 'Covered seating', 'Excellent view'],
-    color: 'from-purple-400 to-pink-500',
+    color: 'from-red-400 to-blue-500',
     available: true
   },
   {
@@ -87,7 +87,7 @@ const ticketCategories = [
     price: 15,
     currency: 'USD',
     features: ['Comfortable seating in stadium wings', 'Covered area', 'Good view of the field'],
-    color: 'from-blue-400 to-indigo-500',
+    color: 'from-blue-400 to-red-500',
     available: true
   },
   {
@@ -96,7 +96,7 @@ const ticketCategories = [
     price: 500,
     currency: 'LRD',
     features: ['General admission around the field', 'Access to all facilities', 'Food vendors available', 'Gate 5-15 access'],
-    color: 'from-green-400 to-blue-500',
+    color: 'from-red-500 to-blue-600',
     available: true
   }
 ]
@@ -205,7 +205,7 @@ export default function TicketsPage() {
       <Navigation />
       <main className="pt-16 lg:pt-20">
         {/* Hero Section - Reduced Height */}
-        <section className="py-12 bg-gradient-to-br from-primary-900 via-primary-800 to-secondary-900 relative overflow-hidden">
+        <section className="py-12 bg-gradient-to-br from-red-900 via-white/10 to-blue-900 relative overflow-hidden">
           <div className="absolute inset-0">
             <motion.div
               className="absolute top-10 right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl"
@@ -237,7 +237,7 @@ export default function TicketsPage() {
                 viewport={{ once: true }}
               >
                 Buy{' '}
-                <span className="text-gradient bg-gradient-to-r from-primary-300 to-secondary-300 bg-clip-text text-transparent">
+                <span className="text-gradient bg-gradient-to-r from-red-300 to-blue-300 bg-clip-text text-transparent">
                   Tickets
                 </span>
               </motion.h1>
@@ -284,7 +284,7 @@ export default function TicketsPage() {
                     <div className={`absolute top-0 left-0 right-0 h-2 bg-gradient-to-r ${category.color}`}></div>
                     <div className="p-6">
                       <h3 className="text-2xl font-bold text-gray-900 mb-2">{category.name}</h3>
-                      <div className="text-3xl font-bold text-primary-600 mb-6">{formatPrice(category.price, category.currency)}</div>
+                      <div className="text-3xl font-bold text-blue-700 mb-6">{formatPrice(category.price, category.currency)}</div>
                       
                       <ul className="space-y-3 mb-6">
                         {category.features.map((feature, idx) => (
@@ -317,34 +317,34 @@ export default function TicketsPage() {
               
               {/* Market Ticket Pricing */}
               <motion.div
-                className="mt-12 bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-2xl p-6"
+                className="mt-12 bg-gradient-to-r from-red-50 to-blue-50 border border-blue-200 rounded-2xl p-6"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-orange-900 mb-2">Market Ticket Pricing</h3>
-                  <p className="text-orange-700">Alternative pricing available through authorized vendors</p>
+                  <h3 className="text-2xl font-bold text-blue-900 mb-2">Market Ticket Pricing</h3>
+                  <p className="text-blue-700">Alternative pricing available through authorized vendors</p>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="bg-white rounded-lg p-4 border border-orange-200">
-                    <h4 className="font-semibold text-orange-900 mb-2">Around VIP</h4>
-                    <div className="text-2xl font-bold text-orange-600">$50 USD</div>
-                    <p className="text-sm text-orange-700 mt-1">Premium market rate</p>
+                  <div className="bg-white rounded-lg p-4 border border-blue-200">
+                    <h4 className="font-semibold text-blue-900 mb-2">Around VIP</h4>
+                    <div className="text-2xl font-bold text-red-600">$50 USD</div>
+                    <p className="text-sm text-blue-700 mt-1">Premium market rate</p>
                   </div>
                   
-                  <div className="bg-white rounded-lg p-4 border border-orange-200">
-                    <h4 className="font-semibold text-orange-900 mb-2">Stadium Wing</h4>
-                    <div className="text-2xl font-bold text-orange-600">Variable</div>
-                    <p className="text-sm text-orange-700 mt-1">Based on market type</p>
+                  <div className="bg-white rounded-lg p-4 border border-blue-200">
+                    <h4 className="font-semibold text-blue-900 mb-2">Stadium Wing</h4>
+                    <div className="text-2xl font-bold text-red-600">Variable</div>
+                    <p className="text-sm text-blue-700 mt-1">Based on market type</p>
                   </div>
                   
-                  <div className="bg-white rounded-lg p-4 border border-orange-200">
-                    <h4 className="font-semibold text-orange-900 mb-2">Around the Field</h4>
-                    <div className="text-2xl font-bold text-orange-600">Variable</div>
-                    <p className="text-sm text-orange-700 mt-1">Based on market type</p>
+                  <div className="bg-white rounded-lg p-4 border border-blue-200">
+                    <h4 className="font-semibold text-blue-900 mb-2">Around the Field</h4>
+                    <div className="text-2xl font-bold text-red-600">Variable</div>
+                    <p className="text-sm text-blue-700 mt-1">Based on market type</p>
                   </div>
                 </div>
               </motion.div>
@@ -380,7 +380,7 @@ export default function TicketsPage() {
                   >
                     <div className="p-6">
                       <div className="text-center mb-6">
-                        <div className="flex items-center justify-center text-lg font-bold text-primary-600 mb-2">
+                        <div className="flex items-center justify-center text-lg font-bold text-blue-700 mb-2">
                           <Calendar className="w-5 h-5 mr-2" />
                           {new Date(matchDay.date).toLocaleDateString('en-US', { 
                             weekday: 'long', 
@@ -398,14 +398,14 @@ export default function TicketsPage() {
                                 <Clock className="w-4 h-4 mr-1" />
                                 {game.time}
                               </div>
-                              <div className="inline-block px-3 py-1 bg-primary-100 text-primary-700 text-xs font-semibold rounded-full">
+                              <div className="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">
                                 {game.gameCategory}
                               </div>
                             </div>
                             
                             <div className="text-center mb-3">
                               <div className="text-lg font-semibold text-gray-900 mb-1">{game.home}</div>
-                              <div className="text-xl font-bold text-primary-600">VS</div>
+                              <div className="text-xl font-bold text-red-600">VS</div>
                               <div className="text-lg font-semibold text-gray-900 mt-1">{game.away}</div>
                             </div>
                             
@@ -421,11 +421,11 @@ export default function TicketsPage() {
                               <button 
                                 className={`px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
                                   game.available 
-                                    ? 'bg-primary-600 text-white hover:bg-primary-700' 
+                                    ? 'bg-red-600 text-white hover:bg-red-700' 
                                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                                 }`}
-                                disabled={!game.available}
-                                onClick={() => game.available && setShowPurchaseForm(true)}
+                              disabled={!game.available}
+                              onClick={() => game.available && setShowPurchaseForm(true)}
                               >
                                 {game.available ? 'Buy Now' : 'Coming Soon'}
                               </button>
@@ -487,13 +487,29 @@ export default function TicketsPage() {
                           Personal Information
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="md:col-span-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Ticket Category *</label>
+                            <select
+                              value={formData.selectedTicketCategory}
+                              onChange={(e) => setFormData({ ...formData, selectedTicketCategory: e.target.value })}
+                              className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                            >
+                              <option value="">Select a category</option>
+                              {ticketCategories.map(cat => (
+                                <option key={cat.id} value={cat.id} disabled={!cat.available}>
+                                  {cat.name} - {formatPrice(cat.price, cat.currency)} {cat.available ? '' : '(Not Available)'}
+                                </option>
+                              ))}
+                            </select>
+                            {formErrors.selectedTicketCategory && <p className="text-red-500 text-sm mt-1">{formErrors.selectedTicketCategory}</p>}
+                          </div>
                           <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
                             <input
                               type="text"
                               value={formData.fullName}
                               onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 ${
+                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
                                 formErrors.fullName ? 'border-red-500' : 'border-gray-300'
                               }`}
                               placeholder="Enter your full name"
@@ -506,7 +522,7 @@ export default function TicketsPage() {
                               type="email"
                               value={formData.email}
                               onChange={(e) => setFormData({...formData, email: e.target.value})}
-                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 ${
+                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
                                 formErrors.email ? 'border-red-500' : 'border-gray-300'
                               }`}
                               placeholder="Enter your email"
@@ -519,7 +535,7 @@ export default function TicketsPage() {
                               type="tel"
                               value={formData.phone}
                               onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 ${
+                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
                                 formErrors.phone ? 'border-red-500' : 'border-gray-300'
                               }`}
                               placeholder="Enter your phone number"
@@ -534,7 +550,7 @@ export default function TicketsPage() {
                               max="10"
                               value={formData.quantity}
                               onChange={(e) => setFormData({...formData, quantity: parseInt(e.target.value)})}
-                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 ${
+                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
                                 formErrors.quantity ? 'border-red-500' : 'border-gray-300'
                               }`}
                             />
@@ -550,13 +566,25 @@ export default function TicketsPage() {
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="md:col-span-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Payment Method *</label>
+                            <select
+                              value={formData.paymentMethod}
+                              onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
+                              className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                            >
+                              <option value="credit_card">Credit Card</option>
+                              <option value="orange_money">Orange Money</option>
+                              <option value="mtn_money">MTN Money</option>
+                            </select>
+                          </div>
+                          <div className="md:col-span-2">
                             <label className="block text-sm font-medium text-gray-700 mb-2">Card Number *</label>
                             <input
                               type="text"
                               placeholder="1234 5678 9012 3456"
                               value={formData.cardNumber}
                               onChange={(e) => setFormData({...formData, cardNumber: e.target.value})}
-                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 ${
+                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
                                 formErrors.cardNumber ? 'border-red-500' : 'border-gray-300'
                               }`}
                             />
@@ -569,7 +597,7 @@ export default function TicketsPage() {
                               placeholder="MM/YY"
                               value={formData.expiryDate}
                               onChange={(e) => setFormData({...formData, expiryDate: e.target.value})}
-                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 ${
+                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
                                 formErrors.expiryDate ? 'border-red-500' : 'border-gray-300'
                               }`}
                             />
@@ -582,7 +610,7 @@ export default function TicketsPage() {
                               placeholder="123"
                               value={formData.cvv}
                               onChange={(e) => setFormData({...formData, cvv: e.target.value})}
-                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 ${
+                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
                                 formErrors.cvv ? 'border-red-500' : 'border-gray-300'
                               }`}
                             />
@@ -594,13 +622,28 @@ export default function TicketsPage() {
                               type="text"
                               value={formData.cardholderName}
                               onChange={(e) => setFormData({...formData, cardholderName: e.target.value})}
-                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 ${
+                              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
                                 formErrors.cardholderName ? 'border-red-500' : 'border-gray-300'
                               }`}
                               placeholder="Enter cardholder name"
                             />
                             {formErrors.cardholderName && <p className="text-red-500 text-sm mt-1">{formErrors.cardholderName}</p>}
                           </div>
+                          {formData.paymentMethod !== 'credit_card' && (
+                            <div className="md:col-span-2">
+                              <label className="block text-sm font-medium text-gray-700 mb-2">Mobile Money Number *</label>
+                              <input
+                                type="tel"
+                                value={formData.mobileMoneyNumber}
+                                onChange={(e) => setFormData({ ...formData, mobileMoneyNumber: e.target.value })}
+                                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                                  formErrors.mobileMoneyNumber ? 'border-red-500' : 'border-gray-300'
+                                }`}
+                                placeholder="Enter mobile money number"
+                              />
+                              {formErrors.mobileMoneyNumber && <p className="text-red-500 text-sm mt-1">{formErrors.mobileMoneyNumber}</p>}
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -629,7 +672,7 @@ export default function TicketsPage() {
                       <button
                         onClick={processPayment}
                         disabled={isProcessing}
-                        className="w-full bg-primary-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                        className="w-full bg-red-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                       >
                         {isProcessing ? (
                           <>
@@ -692,7 +735,7 @@ export default function TicketsPage() {
                              mobileMoneyNumber: ''
                            })
                          }}
-                        className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors"
+                        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                       >
                         Close
                       </button>

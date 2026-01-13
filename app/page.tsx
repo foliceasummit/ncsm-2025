@@ -151,60 +151,10 @@ const HomePage = () => {
   return (
     <NoHydrationWrapper>
       <div suppressHydrationWarning={true}>
-      {/* Hero Section with Slider */}
-      <section className="relative min-h-screen">
-        {/* Hero Slider */}
-        <div className="relative h-screen">
-          {heroImages.map((image, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 bg-gradient-to-br from-primary-600 to-secondary-600 ${
-                index === currentSlide ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              <img
-                src={image.url}
-                alt={image.title}
-                className="w-full h-full object-contain md:object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/60" />
-            </div>
-          ))}
-          
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl z-20"
-          >
-            <ArrowRight className="h-6 w-6 rotate-180" />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl z-20"
-          >
-            <ArrowRight className="h-6 w-6" />
-          </button>
-
-          {/* Slide Indicators */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
-            {heroImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentSlide ? 'bg-primary-400' : 'bg-white bg-opacity-50'
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-        
-        {/* Hero Content Overlay */}
-        <div className="absolute inset-0 z-10 flex flex-col justify-center pt-32 pb-8">
+      {/* Hero Section simplified (reduced height, no slider) */}
+      <section className="relative min-h-[60vh]">
+        <div className="absolute inset-0 bg-gradient-to-br from-red-900 via-white/10 to-blue-900" />
+        <div className="absolute inset-0 z-10 flex flex-col justify-center pt-28 pb-8">
           <div className="container-custom text-center text-white flex-1 flex flex-col justify-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -215,25 +165,25 @@ const HomePage = () => {
 
 
                              {/* Title Above Countdown */}
-               <div className="mb-6 sm:mb-8">
-                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-3">
+                <div className="mb-4 sm:mb-6">
+                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-2">
                    National County Sports Meet 2025
                  </h1>
-                 <p className="text-lg sm:text-xl md:text-2xl text-white/90 font-medium">
+                 <p className="text-base sm:text-lg md:text-xl text-white/90 font-medium">
                    The Pride of Our Counties, The Spirit of Liberia
                  </p>
-               </div>
+                </div>
 
                {/* Countdown */}
                {isClient && (
-                 <div className="mb-6 sm:mb-8">
-                   <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 max-w-2xl mx-auto border border-white/20 hover:bg-white/20 hover:backdrop-blur-md transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-white/40">
-                     <h3 className="text-lg md:text-2xl font-bold text-white mb-4 md:mb-6 hover:text-yellow-300 transition-colors duration-300">Kickoff Countdown</h3>
-                     <div className="grid grid-cols-4 gap-4">
-                       <div className="text-center group">
-                         <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.days}</div>
-                         <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">DAYS</div>
-                       </div>
+                <div className="mb-4 sm:mb-6">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 md:p-6 max-w-2xl mx-auto border border-white/20">
+                    <h3 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-5">Kickoff Countdown</h3>
+                    <div className="grid grid-cols-4 gap-4">
+                      <div className="text-center group">
+                        <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.days}</div>
+                        <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">DAYS</div>
+                      </div>
                        <div className="text-center group">
                          <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:scale-110 transition-all duration-300">{countdown.hours.toString().padStart(2, '0')}</div>
                          <div className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">HOURS</div>
@@ -252,25 +202,25 @@ const HomePage = () => {
                )}
 
                {/* Subtitle Under Countdown */}
-               <div className="mb-6 sm:mb-8">
-                 <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+                <div className="mb-4 sm:mb-6">
+                 <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
                    Don't miss Liberia's biggest sporting festival – where passion, pride, and county spirit come alive!
                  </p>
-               </div>
+                </div>
 
               
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   href="/counties"
-                  className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="bg-red-600 hover:bg-red-700 text-white px-7 py-3 rounded-lg text-base font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   Explore Counties
                 </Link>
                 <Link
                   href="/results"
-                  className="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105"
+                  className="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white px-7 py-3 rounded-lg text-base font-semibold transition-all duration-300 transform hover:scale-105"
                 >
                   View Results
                 </Link>
@@ -336,19 +286,19 @@ const HomePage = () => {
       </section>
 
       {/* About NCSM Section */}
-      <section className="section-padding bg-white pt-16 sm:pt-20">
+      <section className="section-padding bg-white pt-10 sm:pt-14">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-10"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Welcome to the National County Sports Meet
             </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
               The National County Sports Meet is Liberia's premier sporting event that brings together all 15 counties in a celebration of athletic excellence, unity, and community spirit.
             </p>
           </motion.div>
@@ -358,41 +308,41 @@ const HomePage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-r from-primary-600/10 to-secondary-600/10 rounded-2xl p-8 md:p-12 mb-16"
+            className="bg-gradient-to-r from-red-50 to-blue-50 rounded-2xl p-6 md:p-8 mb-10 border border-blue-100"
           >
-            <h3 className="text-3xl font-bold text-gray-900 mb-6 text-center">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 text-center">
               "Celebrating Talent, Inspiring Unity"
             </h3>
-            <p className="text-lg text-gray-700 text-center max-w-3xl mx-auto">
+            <p className="text-base text-gray-700 text-center max-w-3xl mx-auto">
               Showcasing Liberia's finest athletes and rich cultural traditions.
             </p>
           </motion.div>
 
           <div className="text-center">
-            <Link href="/about" className="btn-primary text-lg px-8 py-4">
+            <Link href="/about" className="btn-primary text-base px-7 py-3">
               Learn More About NCSM
             </Link>
           </div>
         </div>
       </section>
 
-             {/* Our Mission Section */}
-       <section className="py-8 sm:py-12 bg-gray-50">
-         <div className="container-custom">
-           <motion.div
-             initial={{ opacity: 0, y: 20 }}
-             whileInView={{ opacity: 1, y: 0 }}
-             transition={{ duration: 0.8 }}
-             viewport={{ once: true }}
-             className="text-center mb-8 sm:mb-12"
-           >
-             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-               Our Mission
-             </h2>
-             <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
-               To unite Liberia through sports excellence and foster national pride across all 15 counties.
-             </p>
-           </motion.div>
+      {/* Our Mission Section */}
+      <section className="py-8 sm:py-10 bg-gray-50">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-6 sm:mb-8"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+              Our Mission
+            </h2>
+            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
+              To unite Liberia through sports excellence and foster national pride across all 15 counties.
+            </p>
+          </motion.div>
 
                        <div className="max-w-6xl mx-auto">
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -515,6 +465,47 @@ const HomePage = () => {
                Sponsorship Opportunities
              </Link>
            </div>
+        </div>
+      </section>
+
+      {/* Latest News preview */}
+      <section className="py-10 bg-white">
+        <div className="container-custom">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Latest News</h2>
+            <p className="text-gray-600">Read updates from the tournament</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[{
+              title:'County Registration Opens',
+              image:'https://ik.imagekit.io/foliceasummit/mysncsm/APM-Terminals.jpg.gif?updatedAt=1756427571024',
+              date:'2024-08-01'
+            },{
+              title:'New Venues Announced',
+              image:'https://ik.imagekit.io/foliceasummit/mysncsm/images-1.jpg?updatedAt=1756427575553',
+              date:'2024-07-28'
+            },{
+              title:'Montserrado Wins 2023',
+              image:'https://ik.imagekit.io/foliceasummit/mysncsm/495822530_1269835475150700_6768048624691836323_n.jpg?updatedAt=1756754277667',
+              date:'2024-07-25'
+            }].map((post, idx) => (
+              <motion.article
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-transform hover:-translate-y-1 border border-gray-100"
+              >
+                <img src={post.image} alt={post.title} className="w-full h-40 object-cover" />
+                <div className="p-5">
+                  <span className="text-xs text-gray-500">{new Date(post.date).toLocaleDateString()}</span>
+                  <h3 className="text-lg font-bold text-gray-900 mt-2">{post.title}</h3>
+                  <Link href="/blog" className="text-blue-600 hover:text-blue-700 font-semibold text-sm mt-3 inline-block">View more</Link>
+                </div>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </section>
 

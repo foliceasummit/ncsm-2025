@@ -18,13 +18,13 @@ export default function VideoHighlightsPage() {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       <main className="pt-16 lg:pt-20">
-        <section className="py-20 bg-gradient-to-br from-red-900 via-red-800 to-orange-900 relative overflow-hidden">
+        <section className="py-20 bg-gradient-to-br from-blue-900 via-slate-900 to-red-900 relative overflow-hidden">
           <div className="absolute inset-0">
-            <motion.div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl" animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 15, repeat: Infinity }} />
+            <motion.div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 15, repeat: Infinity }} />
           </div>
           <div className="container-custom relative z-10">
             <motion.div className="text-center text-white" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Video <span className="text-gradient bg-gradient-to-r from-orange-300 to-yellow-300 bg-clip-text text-transparent">Highlights</span></h1>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Video <span className="text-gradient bg-gradient-to-r from-blue-300 to-red-300 bg-clip-text text-transparent">Highlights</span></h1>
               <p className="text-lg md:text-xl text-red-100 max-w-2xl mx-auto">Watch match replays, goals, and exclusive moments on YouTube.</p>
             </motion.div>
           </div>

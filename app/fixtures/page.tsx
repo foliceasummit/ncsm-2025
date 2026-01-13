@@ -153,17 +153,16 @@ export default function FixturesPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      <main className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Match Fixtures
-            </h1>
-            <p className="text-lg text-gray-600">
-              Complete schedule of matches for the National County Sports Meet
-            </p>
+      <main className="pt-16 lg:pt-20">
+        <section className="py-16 bg-gradient-to-br from-blue-900 via-slate-900 to-red-900 relative overflow-hidden">
+          <div className="container-custom">
+            <div className="text-center text-white">
+              <h1 className="text-4xl font-bold mb-4">Match <span className="text-gradient bg-gradient-to-r from-blue-300 to-red-300 bg-clip-text text-transparent">Fixtures</span></h1>
+              <p className="text-lg text-blue-100">Complete schedule of matches for the National County Sports Meet</p>
+            </div>
           </div>
+        </section>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Filters */}
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -207,7 +206,8 @@ export default function FixturesPage() {
           {/* Fixtures List */}
           <div className="space-y-6">
             {filteredFixtures.map((fixture) => (
-              <div key={fixture.id} className="card hover:shadow-lg transition-shadow">
+              <div key={fixture.id} className="card hover:shadow-2xl transition-shadow border border-gray-100 rounded-2xl overflow-hidden">
+                <div className="h-1 bg-gradient-to-r from-blue-600 to-red-600"></div>
                 <div className="flex flex-col md:flex-row md:items-center justify-between">
                   {/* Match Details */}
                   <div className="flex-1">
@@ -233,7 +233,7 @@ export default function FixturesPage() {
                       </div>
                     </div>
                     <div className="mx-6 text-center">
-                      <span className="text-2xl font-bold text-primary-600">VS</span>
+                      <span className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-red-600">VS</span>
                     </div>
                     <div className="flex-1 text-left">
                       <div className="inline-flex items-center gap-2">

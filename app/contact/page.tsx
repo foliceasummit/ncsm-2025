@@ -147,17 +147,15 @@ export default function ContactPage() {
                      </div>
                   </div>
 
-                  {/* Media Accreditation */}
-                  <div className="bg-gradient-to-r from-red-600 to-blue-600 rounded-lg p-6 text-white">
-                    <h3 className="text-lg font-semibold mb-4">Media Accreditation</h3>
-                    <p className="mb-4">
-                      Journalists and media personnel can apply for tournament accreditation through our online form.
+                  {/* Media Accreditation info */}
+                  <div className="bg-white rounded-lg p-6 border border-gray-200">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Media Accreditation</h3>
+                    <p className="text-gray-700 mb-4">
+                      Journalists and media personnel can apply for tournament accreditation through our online page.
                     </p>
                     <a
-                      href="https://forms.gle/DkWExB2hQchXemFf7"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center bg-white text-red-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors"
+                      href="/media-accreditation"
+                      className="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
                     >
                       Apply for Media Accreditation
                       <ExternalLink className="w-4 h-4 ml-2" />

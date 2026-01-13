@@ -372,9 +372,9 @@ const Standings: React.FC = () => {
       <Navigation />
       <main className="pt-16 lg:pt-20">
         {/* Hero Section */}
-        <section className="section-padding bg-gradient-to-br from-primary-900 via-primary-800 to-secondary-900 relative overflow-hidden">
+        <section className="section-padding bg-gradient-to-br from-blue-900 via-slate-900 to-red-900 relative overflow-hidden">
           <div className="absolute inset-0">
-            <div className="absolute top-20 right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+            <div className="absolute top-20 right-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
           </div>
           
           <div className="container-custom relative z-10">
